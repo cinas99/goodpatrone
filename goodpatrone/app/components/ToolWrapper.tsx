@@ -1,6 +1,7 @@
 import AdSlot from './AdSlot';
 import Image from 'next/image';
 import { Leaf } from 'lucide-react';
+import Footer from './Footer';
 
 interface ToolWrapperProps {
   title: string;
@@ -12,26 +13,30 @@ interface ToolWrapperProps {
 
 export default function ToolWrapper({ title, subtitle, icon, adSlot, children }: ToolWrapperProps) {
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-start p-4 md:p-6 pt-8 md:pt-10">
+    <div className="relative min-h-screen flex flex-col items-center justify-start px-4 md:px-8 lg:px-12 pt-8 md:pt-10 pb-4">
+
+      {/* Background */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/jungle.png"
-          alt=""                   // decorative — empty alt is correct
+          alt=""
           fill
           className="object-cover opacity-20"
-          priority                 // marks as LCP — preloads immediately
-          fetchPriority="high"     // fetchpriority=high on the <img> tag
-          quality={60}             // was 75 — drops ~30% size, no visible diff at 20% opacity
-          sizes="100vw"            // tells browser full-width — picks correct srcset
+          priority
+          fetchPriority="high"
+          quality={60}
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-[#0a0a0a]" style={{ opacity: 0.82 }} />
       </div>
 
-      <div className="relative z-10 w-full max-w-xl mb-4">
+      {/* Top ad */}
+      <div className="relative z-10 w-full max-w-2xl mb-4">
         <AdSlot format="banner" slot={adSlot ? `${adSlot}-top` : 'tool-top'} />
       </div>
 
-      <div className="relative z-10 w-full max-w-xl mb-5">
+      {/* Title */}
+      <div className="relative z-10 w-full max-w-2xl mb-5">
         <div className="flex items-center gap-1.5 mb-2">
           <Leaf size={11} className="text-emerald-600" strokeWidth={2.5} />
           <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-700">Good Patrone</span>
@@ -49,15 +54,23 @@ export default function ToolWrapper({ title, subtitle, icon, adSlot, children }:
         </div>
       </div>
 
-      <div className="relative z-10 w-full max-w-xl">
+      {/* Tool card */}
+      <div className="relative z-10 w-full max-w-2xl">
         <div className="bg-white/5 border border-white/10 backdrop-blur-2xl rounded-2xl shadow-2xl p-5 md:p-7">
           {children}
         </div>
       </div>
 
-      <div className="relative z-10 w-full max-w-xl mt-4">
+      {/* Bottom ad */}
+      <div className="relative z-10 w-full max-w-2xl mt-4">
         <AdSlot format="banner" slot={adSlot ? `${adSlot}-bottom` : 'tool-bottom'} />
       </div>
+
+      {/* Footer */}
+      <div className="relative z-10 w-full max-w-2xl">
+        <Footer />
+      </div>
+
     </div>
   );
 }

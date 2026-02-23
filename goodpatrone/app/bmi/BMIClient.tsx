@@ -59,7 +59,7 @@ export default function BMIClient() {
     >
 
       {/* Unit + Gender row */}
-      <div className="flex items-center justify-between mb-6 gap-4">
+      <div className="flex items-center justify-between 8 gap-4">
 
         <div className="flex flex-col gap-1">
           <span className="text-[10px] text-gray-600 uppercase tracking-widest">Unit</span>
@@ -99,7 +99,7 @@ export default function BMIClient() {
       </div>
 
       {/* Sliders */}
-      <div className="space-y-5 mb-6">
+      <div className="space-y-5 mb-8">
         {[
           { label: 'Age',    val: age,    set: setAge,    min: 10,           max: 100,           step: 1,            unit: 'yrs'        },
           { label: 'Weight', val: weight, set: setWeight, min: r.weight.min, max: r.weight.max,  step: r.weight.step, unit: r.weight.unit },

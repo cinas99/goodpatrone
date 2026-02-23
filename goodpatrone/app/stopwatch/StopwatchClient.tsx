@@ -91,7 +91,7 @@ export default function StopwatchClient() {
       </div>
 
       {/* Controls */}
-      <div className="flex items-center justify-center gap-3 mb-6">
+      <div className="flex items-center justify-center gap-3 mb-8">
 
         {/* Lap / Reset */}
         <button
