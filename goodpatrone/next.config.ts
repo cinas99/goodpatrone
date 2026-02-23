@@ -1,10 +1,6 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  // Target modern browsers — eliminates legacy polyfill warnings
-  experimental: {
-    browsersListForSwc: true,
-  },
 
   images: {
     formats: ['image/avif', 'image/webp'], // serve avif/webp instead of png
