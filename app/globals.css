@@ -2,12 +2,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #1a1a1a;
-  --accent: #2563eb;
-  --accent-light: #dbeafe;
-  --border: #e5e7eb;
-  --text-secondary: #6b7280;
+  --background: #0f1117;
+  --background-secondary: #1a1d27;
+  --background-card: #1e2130;
+  --foreground: #f1f5f9;
+  --accent: #10b981;
+  --accent-hover: #059669;
+  --accent-light: #d1fae5;
+  --border: #2a2d3e;
+  --border-hover: #10b981;
+  --text-secondary: #94a3b8;
+  --shadow-accent: rgba(16, 185, 129, 0.12);
 }
 
 @theme inline {
@@ -32,15 +37,151 @@ body {
   color: var(--foreground);
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
-  line-height: 1.6;
-  letter-spacing: -0.3px;
+  font-size: 17px;
+  line-height: 1.7;
+  letter-spacing: -0.2px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1 {
+  font-size: 2.25rem;
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.8px;
+  line-height: 1.15;
+}
+
+h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+  line-height: 1.2;
+}
+
+h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  line-height: 1.3;
 }
 
 button, input, textarea, select {
   font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+}
+
+/* Main content container — wider to fill sidebar layout properly */
+.content-wrapper {
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+}
+
+/* Tool card buttons */
+.tool-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: var(--background-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.6rem 2rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: all 0.22s ease;
+  width: 100%;
+}
+
+.tool-card:hover {
+  background: var(--background-secondary);
+  border-color: var(--border-hover);
+  box-shadow: 0 6px 32px var(--shadow-accent);
+  transform: translateY(-3px);
+}
+
+.tool-card .tool-card-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.tool-card .tool-card-title {
+  font-weight: 600;
+  font-size: 1.0625rem;
+  transition: color 0.2s ease;
+}
+
+.tool-card:hover .tool-card-title {
+  color: var(--accent);
+}
+
+.tool-card .tool-card-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+  line-height: 1.5;
+}
+
+.tool-card .tool-card-arrow {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.tool-card:hover .tool-card-arrow {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+/* Page header section */
+.page-header {
+  margin-bottom: 2.5rem;
+}
+
+.page-header p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* Section label */
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  margin-top: 2.5rem;
+}
+
+/* Ad placeholders */
+.ad-banner {
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  padding: 1.25rem;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  margin: 2rem 0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }

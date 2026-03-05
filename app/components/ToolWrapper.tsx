@@ -13,10 +13,10 @@ interface ToolWrapperProps {
 
 export default function ToolWrapper({ title, subtitle, icon, adSlot, children }: ToolWrapperProps) {
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-start px-4 md:px-8 lg:px-12 pt-8 md:pt-10 pb-4">
+    <div className="relative w-full">
 
       {/* Background */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <Image
           src="/jungle.png"
           alt=""
@@ -30,46 +30,49 @@ export default function ToolWrapper({ title, subtitle, icon, adSlot, children }:
         <div className="absolute inset-0 bg-[#0a0a0a]" style={{ opacity: 0.82 }} />
       </div>
 
-      {/* Top ad */}
-      <div className="relative z-10 w-full max-w-2xl mb-4">
-        <AdSlot format="banner" slot={adSlot ? `${adSlot}-top` : 'tool-top'} />
-      </div>
+      {/* Main content — grows to fill available height */}
+      <div className="relative z-10 flex flex-col flex-1 items-center px-4 sm:px-6 md:px-10 pt-8 md:pt-12 pb-6">
 
-      {/* Title */}
-      <div className="relative z-10 w-full max-w-2xl mb-5">
-        <div className="flex items-center gap-1.5 mb-2">
-          <Leaf size={11} className="text-emerald-600" strokeWidth={2.5} />
-          <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-700">Good Patrone</span>
+        {/* Top ad */}
+        <div className="w-full max-w-2xl mb-6">
+          <AdSlot format="banner" slot={adSlot ? `${adSlot}-top` : 'tool-top'} />
         </div>
-        <div className="flex items-center gap-2.5">
-          {icon && (
-            <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-              {icon}
+
+        {/* Title */}
+        <div className="w-full max-w-2xl mb-4">
+          <div className="flex items-center gap-1.5 mb-2">
+            <Leaf size={11} className="text-emerald-600" strokeWidth={2.5} />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-700">Good Patrone</span>
+          </div>
+          <div className="flex items-center gap-3">
+            {icon && (
+              <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
+                {icon}
+              </div>
+            )}
+            <div>
+              <h2 className="text-2xl font-black text-white tracking-tight leading-none">{title}</h2>
+              {subtitle && <p className="text-gray-500 text-xs mt-1">{subtitle}</p>}
             </div>
-          )}
-          <div>
-            <h2 className="text-2xl font-black text-white tracking-tight leading-none">{title}</h2>
-            {subtitle && <p className="text-gray-500 text-xs mt-0.5">{subtitle}</p>}
           </div>
         </div>
-      </div>
 
-      {/* Tool card */}
-      <div className="relative z-10 w-full max-w-2xl">
-        <div className="bg-white/5 border border-white/10 backdrop-blur-2xl rounded-2xl shadow-2xl p-5 md:p-7">
-          {children}
+        {/* Tool card */}
+        <div className="w-full max-w-2xl">
+          <div className="bg-white/5 border border-white/10 backdrop-blur-2xl rounded-2xl shadow-2xl p-6 sm:p-8 md:p-10">
+            {children}
+          </div>
         </div>
+
+        {/* Bottom ad */}
+        <div className="w-full max-w-2xl mt-6">
+          <AdSlot format="banner" slot={adSlot ? `${adSlot}-bottom` : 'tool-bottom'} />
+        </div>
+
+        {/* Pushes footer to bottom when content is short */}
+        <div className="flex-1" />
       </div>
 
-      {/* Bottom ad */}
-      <div className="relative z-10 w-full max-w-2xl mt-4">
-        <AdSlot format="banner" slot={adSlot ? `${adSlot}-bottom` : 'tool-bottom'} />
-      </div>
-
-      {/* Footer */}
-      <div className="relative z-10 w-full max-w-2xl">
-        <Footer />
-      </div>
 
     </div>
   );

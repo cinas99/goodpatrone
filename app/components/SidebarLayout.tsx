@@ -7,6 +7,7 @@ import {
   TrendingUp, Triangle, Shuffle, DollarSign, Menu, X,
   Info, Mail, ShieldCheck,
 } from 'lucide-react';
+import Footer from './Footer';
 
 const tools = [
   { href: '/bmi',       label: 'BMI Calculator', Icon: Scale         },
@@ -52,11 +53,10 @@ function SectionDivider({ label }: { label: string }) {
 
 function Sidebar({ onClose }: { onClose?: () => void }) {
   return (
-    <div className="w-60 flex flex-col py-6 px-3 h-full">
+    <div className="w-64 flex flex-col py-6 px-3 h-full">
 
       {/* Logo */}
       <div className="flex items-center justify-between mb-8 px-2">
-
         <Link href="/" onClick={onClose} className="flex items-center gap-2.5 group">
           <div className="w-8 h-8 rounded-lg bg-emerald-950 border border-emerald-800/50 flex items-center justify-center group-hover:border-emerald-600 transition-all flex-shrink-0">
             <Leaf size={16} className="text-emerald-400" strokeWidth={2} />
@@ -75,14 +75,11 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
 
       {/* Nav */}
       <nav className="flex flex-col flex-1 overflow-y-auto gap-0.5">
-
         <NavLink href="/" label="Dashboard" Icon={Home} onClose={onClose} />
-
         <SectionDivider label="Tools" />
         {tools.map(({ href, label, Icon }) => (
           <NavLink key={href} href={href} label={label} Icon={Icon} onClose={onClose} />
         ))}
-
         <div className="mt-3 mb-1 px-3">
           <span className="text-[9px] font-bold text-gray-800 uppercase tracking-widest">Coming soon</span>
         </div>
@@ -93,12 +90,10 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
             {label}
           </div>
         ))}
-
         <SectionDivider label="Info" />
         {pages.map(({ href, label, Icon }) => (
           <NavLink key={href} href={href} label={label} Icon={Icon} onClose={onClose} />
         ))}
-
       </nav>
 
       {/* Ad */}
@@ -110,7 +105,6 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
       <div className="text-[10px] text-gray-800 px-3 pt-3 border-t border-white/5 mt-3">
         © 2026 Good Patrone
       </div>
-
     </div>
   );
 }
@@ -136,25 +130,31 @@ export default function SidebarLayout({ children }: { children: React.ReactNode 
         </div>
       )}
 
-      {/* Content */}
+      {/* Content area — constrained width, centered */}
       <div className="flex-1 flex flex-col overflow-hidden min-w-0">
 
-        {/* Mobile topbar */}
-        <div className="md:hidden flex items-center gap-3 px-4 py-3 bg-[#0f0f0f] border-b border-white/5 z-30">
-          <button onClick={() => setMobileOpen(true)} className="text-gray-400 hover:text-white p-1">
-            <Menu size={22} />
-          </button>
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-emerald-950 border border-emerald-800/50 flex items-center justify-center">
-              <Leaf size={12} className="text-emerald-400" strokeWidth={2} />
-            </div>
-            <span className="text-white font-black text-sm">Good Patrone</span>
-          </div>
-        </div>
-
-        <main className="flex-1 overflow-y-auto w-full">{children}</main>
+       {/* Mobile topbar */}
+  <div className="md:hidden flex items-center gap-3 px-4 py-3 bg-[#0f0f0f] border-b border-white/5 z-30">
+    <button onClick={() => setMobileOpen(true)} className="text-gray-400 hover:text-white p-1">
+      <Menu size={22} />
+    </button>
+    <div className="flex items-center gap-2">
+      <div className="w-6 h-6 rounded-md bg-emerald-950 border border-emerald-800/50 flex items-center justify-center">
+        <Leaf size={12} className="text-emerald-400" strokeWidth={2} />
       </div>
+      <span className="text-white font-black text-sm">Good Patrone</span>
+    </div>
+  </div>
 
+       {/* Scroll container — flex col so footer sticks to bottom */}
+  <div className="flex-1 overflow-y-auto flex flex-col">
+    <main className="flex-1">
+      {children}
+    </main>
+    <Footer />
+  </div>
+
+      </div>
     </div>
   );
 }
