@@ -2,7 +2,5 @@
   "/_not-found/page": "app/_not-found/page.js",
   "/bmi/page": "app/bmi/page.js",
   "/countdown/page": "app/countdown/page.js",
-  "/days/page": "app/days/page.js",
-  "/page": "app/page.js",
-  "/stopwatch/page": "app/stopwatch/page.js"
+  "/page": "app/page.js"
 }
