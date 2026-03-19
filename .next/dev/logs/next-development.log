@@ -1,65 +1,9 @@
-[00:00:01.370] Server  LOG     ✓ Ready in 1000ms
-[00:00:01.815] Server  WARN    ⚠ Cross origin request detected from 192.168.1.10 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+[00:00:01.443] Server  LOG     ✓ Ready in 1020ms
+[00:00:06.627] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:40.789] Server  WARN    ⚠ Cross origin request detected from 192.168.1.10 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
 Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
-[00:00:03.163] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:03.163] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-https://react.dev/link/hydration-mismatch
-
-  ...
-    <ScrollAndFocusHandler segmentPath={[...]}>
-      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
-        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
-          <LoadingBoundary name="countdown/" loading={null}>
-            <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
-              <RedirectBoundary>
-                <RedirectErrorBoundary router={{...}}>
-                  <InnerLayoutRouter url="/countdown" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} ...>
-                    <SegmentViewNode type="page" pagePath="countdown/...">
-                      <SegmentTrieNode>
-                      <CountdownPage>
-                        <CountdownClient>
-                          <ToolWrapper title="Countdown" subtitle="Set a time..." icon={<Clock>} adSlot="countdown">
-                            <div style={{width:"100%", ...}}>
-                              <div>
-                              <div>
-                              <div className="space-y-8">
-                                <div>
-                                <div
-+                                 className="space-y-3"
--                                 className="space-y-4"
-                                >
-                                  <p>
-                                  <div>
-                                  <div
-+                                   className="flex items-center gap-4"
--                                   className="grid grid-cols-4 gap-3"
-                                  >
-                                    <button
-                                      onClick={function onClick}
-+                                     className="text-sm text-emerald-500 hover:text-emerald-400 font-semibold transit..."
--                                     className="relative h-24 rounded-2xl overflow-hidden border-2 transition-all act..."
--                                     style={{background-image:"url(\"/sou...",background-size:"cover",background-position-x:"c...", ...}}
-                                    >
-+                                     Preview
--                                     Sound 1
-                                    ...
-                                ...
-                    ...
-                  ...
-        ...
-
-[00:00:03.163] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:03.244] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:03.244] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:01:40.832] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:41.864] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -119,8 +63,9 @@ It can also happen if the client has a browser extension installed which messes 
                 ...
               ...
 
-[00:00:03.314] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:03.314] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+[00:01:43.251] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:43.318] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:43.856] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -165,5 +110,163 @@ https://react.dev/link/hydration-mismatch
                 ...
               ...
 
-[00:00:24.612] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:25.791] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:43.868] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ScrollAndFocusHandler segmentPath={[...]}>
+      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="countdown/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <InnerLayoutRouter url="/countdown" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} ...>
+                    <SegmentViewNode type="page" pagePath="countdown/...">
+                      <SegmentTrieNode>
+                      <CountdownPage>
+                        <CountdownClient>
+                          <ToolWrapper title="Countdown" subtitle="Set a time..." icon={<Clock>} adSlot="countdown">
+                            <div style={{width:"100%", ...}}>
+                              <div>
+                              <div>
+                              <div className="space-y-8">
+                                <div>
+                                <div
++                                 className="space-y-3"
+-                                 className="space-y-4"
+                                >
+                                  <p>
+                                  <div>
+                                  <div
++                                   className="flex items-center gap-4"
+-                                   className="grid grid-cols-4 gap-3"
+                                  >
+                                    <button
+                                      onClick={function onClick}
++                                     className="text-sm text-emerald-500 hover:text-emerald-400 font-semibold transit..."
+-                                     className="relative h-24 rounded-2xl overflow-hidden border-2 transition-all act..."
+-                                     style={{background-image:"url(\"/sou...",background-size:"cover",background-position-x:"c...", ...}}
+                                    >
++                                     Preview
+-                                     Sound 1
+                                    ...
+                                ...
+                    ...
+                  ...
+        ...
+
+[00:02:10.099] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:10.952] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+      <LoadingBoundary name="countdown/" loading={null}>
+        <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+          <RedirectBoundary>
+            <RedirectErrorBoundary router={{...}}>
+              <InnerLayoutRouter url="/countdown" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} ...>
+                <SegmentViewNode type="page" pagePath="countdown/...">
+                  <SegmentTrieNode>
+                  <CountdownPage>
+                    <CountdownClient>
+                      <ToolWrapper title="Countdown" subtitle="Set a time..." icon={<Clock>} adSlot="countdown">
+                        <div style={{width:"100%", ...}}>
+                          <div>
+                          <div>
+                          <div className="space-y-8">
+                            <div className="space-y-3">
+                              <p>
+                              <div className="flex flex-...">
+                                <button>
+                                <button>
+                                <button>
+                                <button
+                                  onClick={function onClick}
+                                  className="px-6 py-3 rounded-full border text-sm font-medium transition-all active:s..."
+                                >
++                                 20 min
+-                                 30 min
+                                ...
+                            ...
+                ...
+              ...
+
+[00:02:14.878] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:14.878] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ScrollAndFocusHandler segmentPath={[...]}>
+      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="countdown/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <InnerLayoutRouter url="/countdown" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} ...>
+                    <SegmentViewNode type="page" pagePath="countdown/...">
+                      <SegmentTrieNode>
+                      <CountdownPage>
+                        <CountdownClient>
+                          <ToolWrapper title="Countdown" subtitle="Set a time..." icon={<Clock>} adSlot="countdown">
+                            <div style={{width:"100%", ...}}>
+                              <div>
+                              <div>
+                              <div className="space-y-8">
+                                <div>
+                                <div
++                                 className="space-y-3"
+-                                 className="space-y-4"
+                                >
+                                  <p>
+                                  <div>
+                                  <div
++                                   className="flex items-center gap-4"
+-                                   className="grid grid-cols-4 gap-3"
+                                  >
+                                    <button
+                                      onClick={function onClick}
++                                     className="text-sm text-emerald-500 hover:text-emerald-400 font-semibold transit..."
+-                                     className="relative h-24 rounded-2xl overflow-hidden border-2 transition-all act..."
+-                                     style={{background-image:"url(\"/sou...",background-size:"cover",background-position-x:"c...", ...}}
+                                    >
++                                     Preview
+-                                     Sound 1
+                                    ...
+                                ...
+                    ...
+                  ...
+        ...
+
+[00:02:53.404] Server  LOG     ✓ Compiled in 108ms
+[00:05:53.632] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:05:57.386] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
