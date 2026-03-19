@@ -22,13 +22,13 @@ export default function HomePage() {
       <div className="grid grid-cols-1 gap-3">
         {tools.map(({ href, label, Icon, desc }) => (
           <Link key={href} href={href}
-            className="flex items-center gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-emerald-700/50 group transition-all">
-            <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-emerald-700/50 transition-all flex-shrink-0">
-              <Icon size={18} className="text-gray-400 group-hover:text-emerald-400 transition-colors" strokeWidth={1.8} />
+            className="flex items-center gap-5 p-5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-emerald-700/50 group transition-all">
+            <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-emerald-700/50 transition-all flex-shrink-0">
+              <Icon size={22} className="text-gray-400 group-hover:text-emerald-400 transition-colors" strokeWidth={1.8} />
             </div>
             <div>
-              <div className="font-bold text-white text-sm">{label}</div>
-              <div className="text-gray-500 text-xs">{desc}</div>
+              <div className="font-bold text-white text-base">{label}</div>
+              <div className="text-gray-400 text-sm mt-0.5">{desc}</div>
             </div>
             <ChevronRight size={16} className="ml-auto text-gray-700 group-hover:text-emerald-400 transition-colors" />
           </Link>

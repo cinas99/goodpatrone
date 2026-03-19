@@ -1,7 +1,3 @@
-[00:00:00.948] Server  LOG     ✓ Ready in 720ms
-[00:00:06.162] Server  WARN    Image with src "/jungle.png" is using quality "60" which is not configured in images.qualities [75]. Please update your config to [60, 75].
-Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
-[00:00:06.403] Server  ERROR   ⨯ "The requested resource isn't a valid image for" "/jungle.png" "received" null
-[00:00:06.410] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:06.527] Browser WARN    Image with src "/jungle.png" is using quality "60" which is not configured in images.qualities [75]. Please update your config to [60, 75].
-Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[00:00:00.666] Server  LOG     ✓ Ready in 487ms
+[00:00:02.378] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:03.640] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold

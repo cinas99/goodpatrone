@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import ToolWrapper from '../components/ToolWrapper';
 import { CalendarDays, Calculator, RefreshCw } from 'lucide-react';
 
@@ -20,36 +20,15 @@ function formatDate(str: string) {
   if (!str) return '';
   return new Date(str).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
-function getContext(days: number) {
-  const abs = Math.abs(days);
-  if (abs === 0)  return { label: 'Same day',          color: 'text-gray-400' };
-  if (abs <= 7)   return { label: 'Less than a week',  color: 'text-gray-300' };
-  if (abs <= 30)  return { label: 'Less than a month', color: 'text-gray-300' };
-  if (abs <= 90)  return { label: 'A few months away', color: 'text-slate-300' };
-  if (abs <= 365) return { label: 'Within the year',   color: 'text-slate-300' };
-  if (abs <= 730) return { label: 'Over a year',       color: 'text-slate-400' };
-  return           { label: 'Several years',           color: 'text-slate-400' };
-}
 
 export default function DaysClient() {
-  const [start,  setStart]  = useState('');
-  const [end,    setEnd]    = useState('');
-  const [today,  setToday]  = useState('');
-  const [result, setResult] = useState<{
-    days: number; weeks: number; months: number; hours: number; isPast: boolean;
-  } | null>(null);
+  const [start, setStart] = useState('');
+  const [end,   setEnd]   = useState('');
 
-  // Client-only init to avoid hydration mismatch
-  useEffect(() => {
-    const t = toInput(new Date());
-    setToday(t);
-    setStart(t);
-  }, []);
-
-  useEffect(() => {
-    if (!start || !end) { setResult(null); return; }
+  const result = useMemo(() => {
+    if (!start || !end) return null;
     const days = Math.round((new Date(end).getTime() - new Date(start).getTime()) / 86400000);
-    setResult({ days, weeks: Math.floor(Math.abs(days) / 7), months: Math.floor(Math.abs(days) / 30.44), hours: Math.abs(days) * 24, isPast: days < 0 });
+    return { days, weeks: Math.floor(Math.abs(days) / 7), months: Math.floor(Math.abs(days) / 30.44), hours: Math.abs(days) * 24, isPast: days < 0 };
   }, [start, end]);
 
   const applyPreset = (days: number) => {
@@ -57,141 +36,102 @@ export default function DaysClient() {
     setStart(t);
     setEnd(addDays(new Date(), days));
   };
-  const reset = () => { setStart(today); setEnd(''); setResult(null); };
 
-  const ctx        = result ? getContext(result.days) : null;
-  const barPct     = result ? Math.min(100, (Math.abs(result.days) / 365) * 100) : 0;
-  const isOverYear = result ? Math.abs(result.days) > 365 : false;
+  const reset = () => { setStart(toInput(new Date())); setEnd(''); };
 
   return (
     <ToolWrapper
       title="Days Between"
       subtitle="How much time between two dates?"
-      icon={<CalendarDays size={17} className="text-gray-400" />}
+      icon={<CalendarDays size={22} className="text-emerald-400" />}
       adSlot="days"
     >
+      <div className="space-y-12">
 
-      {/* Presets */}
-      <div className="mb-7">
-        <p className="text-[10px] text-gray-600 uppercase tracking-widest mb-3">Quick presets from today</p>
-        <div className="flex flex-wrap gap-2">
-          {PRESETS.map(p => (
-            <button key={p.days} onClick={() => applyPreset(p.days)}
-              className="px-3.5 py-1.5 rounded-full bg-white/5 border border-white/8 text-gray-400 text-xs font-semibold hover:bg-emerald-900/40 hover:border-emerald-700/40 hover:text-white transition-all active:scale-95">
-              {p.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Date inputs */}
-      <div className="flex items-center gap-3 mb-1">
-        <div className="flex-1 min-w-0">
-          <div className="flex justify-between items-center mb-1.5">
-            <label className="text-[10px] text-gray-600 uppercase tracking-wider font-semibold">From</label>
-            <button onClick={() => setStart(today)} className="text-[10px] text-emerald-700 hover:text-emerald-400 font-bold uppercase tracking-wider transition-colors">Today</button>
-          </div>
-          <input type="date" value={start} onChange={e => setStart(e.target.value)}
-            className="w-full px-4 py-3.5 bg-white/5 border border-white/8 rounded-xl text-white text-base focus:ring-2 focus:ring-emerald-600 outline-none transition-all" />
-        </div>
-
-        <div className="flex-shrink-0 mt-5 text-gray-700">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M5 12h14M13 6l6 6-6 6"/>
-          </svg>
-        </div>
-
-        <div className="flex-1 min-w-0">
-          <div className="flex justify-between items-center mb-1.5">
-            <label className="text-[10px] text-gray-600 uppercase tracking-wider font-semibold">To</label>
-            <button onClick={() => setEnd(today)} className="text-[10px] text-emerald-700 hover:text-emerald-400 font-bold uppercase tracking-wider transition-colors">Today</button>
-          </div>
-          <input type="date" value={end} onChange={e => setEnd(e.target.value)}
-            className="w-full px-4 py-3.5 bg-white/5 border border-white/8 rounded-xl text-white text-base focus:ring-2 focus:ring-emerald-600 outline-none transition-all" />
-        </div>
-      </div>
-
-      {(start || end) && (
-        <div className="flex justify-between text-[10px] text-gray-700 mb-6 px-1">
-          <span>{formatDate(start)}</span>
-          <span>{formatDate(end)}</span>
-        </div>
-      )}
-
-      {/* Buttons */}
-      <div className="flex gap-3 mb-7">
-        <button onClick={() => {
-          if (!start || !end) return;
-          const days = Math.round((new Date(end).getTime() - new Date(start).getTime()) / 86400000);
-          setResult({ days, weeks: Math.floor(Math.abs(days) / 7), months: Math.floor(Math.abs(days) / 30.44), hours: Math.abs(days) * 24, isPast: days < 0 });
-        }} className="flex-1 flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-4 rounded-xl text-sm transition-all active:scale-95">
-          <Calculator size={15} strokeWidth={2} /> Calculate
-        </button>
-        <button onClick={reset}
-          className="flex items-center justify-center px-5 bg-white/5 hover:bg-white/10 border border-white/8 text-gray-500 py-4 rounded-xl transition-all">
-          <RefreshCw size={14} strokeWidth={2} />
-        </button>
-      </div>
-
-      {/* Result */}
-      {result && ctx && (
-        <div className="space-y-5 border-t border-white/8 pt-6">
-
-          <div className="flex items-end justify-between">
-            <div>
-              <div className="text-[10px] text-gray-600 uppercase tracking-widest mb-1">
-                {result.isPast ? 'Days ago' : 'Days from now'}
-              </div>
-              <div className="text-6xl font-black tracking-tighter tabular-nums text-white">
-                {Math.abs(result.days)}
-              </div>
-            </div>
-            <div className="text-right">
-              <div className={`text-base font-bold ${ctx.color}`}>{ctx.label}</div>
-              {result.isPast && <div className="text-xs text-gray-600 mt-1">This date has passed</div>}
-            </div>
-          </div>
-
-          {/* Date strip */}
-          <div className="flex items-center justify-between px-5 py-4 rounded-xl bg-white/5 border border-white/8">
-            <span className="text-sm font-semibold text-gray-300">{formatDate(start)}</span>
-            <div className="flex items-center gap-1.5">
-              <div className="w-6 h-px bg-white/10" />
-              <span className="text-xs font-bold text-gray-500 tabular-nums">{Math.abs(result.days)}d</span>
-              <div className="w-6 h-px bg-white/10" />
-            </div>
-            <span className="text-sm font-semibold text-gray-300">{formatDate(end)}</span>
-          </div>
-
-          {/* Bar */}
-          <div>
-            <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-              <div className="h-full rounded-full transition-all duration-700 bg-slate-500"
-                style={{ width: `${barPct}%` }} />
-            </div>
-            <div className="flex justify-between text-[10px] text-gray-700 mt-1.5">
-              <span>0d</span><span>3 mo</span><span>6 mo</span><span>9 mo</span>
-              <span className={isOverYear ? 'text-orange-600 font-bold' : ''}>1 yr+</span>
-            </div>
-          </div>
-
-          {/* Stat cards */}
-          <div className="grid grid-cols-4 gap-3">
-            {[
-              { val: Math.abs(result.days),        label: 'Days'   },
-              { val: result.weeks,                  label: 'Weeks'  },
-              { val: result.months,                 label: 'Months' },
-              { val: result.hours.toLocaleString(), label: 'Hours'  },
-            ].map(r => (
-              <div key={r.label} className="flex flex-col items-center p-4 bg-white/5 border border-white/8 rounded-xl text-center">
-                <span className="text-base font-black tabular-nums text-white">{r.val}</span>
-                <span className="text-[10px] text-gray-600 mt-1 uppercase tracking-wider">{r.label}</span>
-              </div>
+        {/* Presets */}
+        <div className="space-y-5 pb-4">
+          <p className="text-sm text-zinc-500 uppercase tracking-widest font-medium mb-3">
+            Quick presets from today
+          </p>
+          <div className="flex flex-wrap gap-3">
+            {PRESETS.map(p => (
+              <button key={p.days} onClick={() => applyPreset(p.days)}
+                className="px-6 py-3 rounded-full border border-zinc-700 text-zinc-300 text-sm font-medium hover:border-emerald-500 hover:text-emerald-400 hover:bg-emerald-950/30 transition-all">
+                {p.label}
+              </button>
             ))}
           </div>
-
         </div>
-      )}
+
+        {/* Date inputs */}
+        <div className="grid grid-cols-2 gap-8">
+          <div className="space-y-2">
+            <div className="flex justify-between items-center">
+              <label className="text-sm text-zinc-400 font-semibold uppercase tracking-wider">From</label>
+              <button onClick={() => setStart(toInput(new Date()))} className="text-sm text-emerald-500 hover:text-emerald-400 font-semibold transition-colors">Today</button>
+            </div>
+            <input type="date" value={start} onChange={e => setStart(e.target.value)}
+              className="w-full px-5 py-4 bg-zinc-900 border border-zinc-700 rounded-2xl text-white text-base focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all" />
+          </div>
+          <div className="space-y-2">
+            <div className="flex justify-between items-center">
+              <label className="text-sm text-zinc-400 font-semibold uppercase tracking-wider">To</label>
+              <button onClick={() => setEnd(toInput(new Date()))} className="text-sm text-emerald-500 hover:text-emerald-400 font-semibold transition-colors">Today</button>
+            </div>
+            <input type="date" value={end} onChange={e => setEnd(e.target.value)}
+              className="w-full px-5 py-4 bg-zinc-900 border border-zinc-700 rounded-2xl text-white text-base focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all" />
+          </div>
+        </div>
+
+        {/* Buttons */}
+        <div className="flex justify-center gap-3 pt-2">
+          <button
+            onClick={() => {/* result derived via useMemo */}}
+            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-8 py-3 rounded-xl text-sm transition-all active:scale-[0.98]"
+            style={{ minWidth: '160px' }}
+          >
+            <Calculator size={16} strokeWidth={2} /> Calculate
+          </button>
+          <button onClick={reset}
+            className="flex items-center justify-center w-11 h-11 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-400 hover:text-white rounded-xl transition-all">
+            <RefreshCw size={14} strokeWidth={2} />
+          </button>
+        </div>
+
+        {/* Result */}
+        {result && (
+          <div className="space-y-8 pt-10 border-t border-zinc-800">
+
+            <div className="text-center space-y-3">
+              <p className="text-sm text-zinc-500 uppercase tracking-widest font-medium">
+                {result.isPast ? 'Days ago' : 'Days from now'}
+              </p>
+              <p className="text-[96px] font-black tracking-tighter text-white leading-none tabular-nums">
+                {Math.abs(result.days)}
+              </p>
+              <p className="text-base text-zinc-500">
+                {formatDate(start)} → {formatDate(end)}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-4 gap-4">
+              {[
+                { val: Math.abs(result.days),        label: 'Days'   },
+                { val: result.weeks,                  label: 'Weeks'  },
+                { val: result.months,                 label: 'Months' },
+                { val: result.hours.toLocaleString(), label: 'Hours'  },
+              ].map(r => (
+                <div key={r.label} className="flex flex-col items-center py-6 px-3 bg-zinc-900 border border-zinc-800 rounded-2xl text-center hover:border-zinc-600 transition-colors">
+                  <span className="text-3xl font-black tabular-nums text-white">{r.val}</span>
+                  <span className="text-xs text-zinc-500 mt-2 uppercase tracking-widest font-medium">{r.label}</span>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        )}
+
+      </div>
     </ToolWrapper>
   );
 }
