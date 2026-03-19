@@ -23,14 +23,21 @@ export default function ContactPage() {
           Drop us an email — we read every message.
         </p>
 
+        <div className="p-3 bg-emerald-950/30 border border-emerald-800/50 rounded-xl">
+          <p className="text-xs text-emerald-400 uppercase tracking-widest font-medium mb-1">Recently added</p>
+          <p className="text-xs text-zinc-400 leading-relaxed">
+            Currency Converter · Water Usage Calculator · Electricity Bill Estimator
+          </p>
+        </div>
+
         {/* Email */}
-        <a href="mailto:hello@goodpatrone.com"
+        <a href="mailto:maichejn@gmail.com"
           className="flex items-center gap-3 p-4 bg-white/5 border border-white/8 hover:border-emerald-700/50 hover:bg-white/10 rounded-xl transition-all group">
           <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/8 flex items-center justify-center group-hover:border-emerald-700/50 transition-all flex-shrink-0">
             <Mail size={16} className="text-gray-500 group-hover:text-emerald-400 transition-colors" />
           </div>
           <div>
-            <div className="text-white font-bold text-sm">hello@goodpatrone.com</div>
+            <div className="text-white font-bold text-sm">maichejn@gmail.com</div>
             <div className="text-gray-600 text-xs">We typically reply within 48 hours</div>
           </div>
         </a>

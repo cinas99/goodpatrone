@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import ToolWrapper from './components/ToolWrapper';
 import Link from 'next/link';
-import { Scale, CalendarDays, Leaf, Timer, Clock, ArrowRight } from 'lucide-react';
+import { Scale, CalendarDays, Leaf, Timer, Clock, ArrowRight, DollarSign, Droplets, Zap } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Free Online Tools – BMI, Date Calculator, Stopwatch & Timer',
-  description: 'Good Patrone offers free online tools: BMI calculator with ideal weight, days between dates, online stopwatch with lap tracking, and countdown timer with sound alerts.',
+  title: 'Free Online Tools – BMI, Date Calculator, Stopwatch, Timer & More',
+  description: 'Good Patrone offers free online tools: BMI calculator, days between dates, stopwatch, countdown timer, currency converter, water usage calculator, and electricity bill estimator.',
   alternates: { canonical: 'https://goodpatrone.com' },
 };
 
@@ -25,7 +25,7 @@ const tools = [
     href: '/stopwatch',
     label: 'Stopwatch',
     Icon: Timer,
-    desc: 'Precision timing with lap timestamps',
+    desc: 'Precision timing with millisecond accuracy',
     accent: 'text-amber-400',
     bg: 'bg-amber-500/10',
     border: 'border-amber-500/20',
@@ -53,6 +53,39 @@ const tools = [
     border: 'border-blue-500/20',
     hoverBorder: 'hover:border-blue-500/40',
     glow: 'hover:shadow-blue-500/10',
+  },
+  {
+    href: '/currency',
+    label: 'Currency',
+    Icon: DollarSign,
+    desc: 'Live EUR, USD, GBP, JPY & CHF exchange rates',
+    accent: 'text-violet-400',
+    bg: 'bg-violet-500/10',
+    border: 'border-violet-500/20',
+    hoverBorder: 'hover:border-violet-500/40',
+    glow: 'hover:shadow-violet-500/10',
+  },
+  {
+    href: '/water',
+    label: 'Water Usage',
+    Icon: Droplets,
+    desc: 'Estimate daily consumption & monthly bill',
+    accent: 'text-cyan-400',
+    bg: 'bg-cyan-500/10',
+    border: 'border-cyan-500/20',
+    hoverBorder: 'hover:border-cyan-500/40',
+    glow: 'hover:shadow-cyan-500/10',
+  },
+  {
+    href: '/electricity',
+    label: 'Electricity',
+    Icon: Zap,
+    desc: 'Monthly cost by appliance & solar tip',
+    accent: 'text-yellow-400',
+    bg: 'bg-yellow-500/10',
+    border: 'border-yellow-500/20',
+    hoverBorder: 'hover:border-yellow-500/40',
+    glow: 'hover:shadow-yellow-500/10',
   },
 ];
 

@@ -1,11 +1,1 @@
-{
-  "version": 4,
-  "routes": {},
-  "dynamicRoutes": {},
-  "notFoundRoutes": [],
-  "preview": {
-    "previewModeId": "e7f4c6cbf803efeb55cd399a7d3c360c",
-    "previewModeSigningKey": "be7d198e6efcca418d3c094e673a8d3ab76333cd0a6d56053ce4e9ed7df0401e",
-    "previewModeEncryptionKey": "b2177fe5fdb0d787cd860c642814bdada4a939610345c6d95aa089fe2105e349"
-  }
-}
+{"version":4,"routes":{"/blog/how-to-use-a-countdown-timer":{},"/blog/understanding-your-bmi":{},"/blog/days-between-dates":{},"/blog/stopwatch-for-interval-training":{},"/blog/currency-conversion-basics":{},"/blog/how-much-water-do-you-really-use":{},"/blog/reduce-your-electricity-bill":{},"/blog/understanding-exchange-rates":{}},"dynamicRoutes":{"/blog/[slug]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/blog/[slug]","routeRegex":"^\\/blog\\/([^/]+?)(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"f470d9d46f5e1aba521a0d79e0100e90","previewModeSigningKey":"260a48e1754da8d310af1b47fde4f38a178d3898dfb0436c6775ecdbb136f63a","previewModeEncryptionKey":"e074f5ee1f7be65a3cbe9a88fe55ef2f285e9234b7ef34f358fba536178f295d"}}

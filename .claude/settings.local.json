@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(find /c/Users/marci/goodpatrone/app -type f -name *.tsx -o -name *.ts)",
-      "Bash(grep -r \"formatTime\\\\|formatDisplay\\\\|PRESETS\\\\|RANGES\\\\|DEFAULTS\" /c/Users/marci/goodpatrone/app --include=*.tsx --include=*.ts)"
+      "Bash(grep -r \"formatTime\\\\|formatDisplay\\\\|PRESETS\\\\|RANGES\\\\|DEFAULTS\" /c/Users/marci/goodpatrone/app --include=*.tsx --include=*.ts)",
+      "Bash(npm install:*)"
     ]
   }
 }

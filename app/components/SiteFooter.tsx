@@ -8,8 +8,9 @@ const toolLinks = [
 ];
 
 const companyLinks = [
-  { href: '/about',          label: 'About'          },
-  { href: '/privacy-policy', label: 'Privacy Policy' },
+  { href: '/blog',           label: 'Blog'            },
+  { href: '/about',          label: 'About'           },
+  { href: '/privacy-policy', label: 'Privacy Policy'  },
   { href: '/contact',        label: 'Contact'         },
 ];
 

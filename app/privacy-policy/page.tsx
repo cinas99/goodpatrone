@@ -73,7 +73,7 @@ export default function PrivacyPolicyPage() {
           },
           {
             title: '9. Contact',
-            content: `If you have any questions about this Privacy Policy, please contact us at: hello@goodpatrone.com`,
+            content: `If you have any questions about this Privacy Policy, please contact us at: maichejn@gmail.com`,
           },
         ].map(section => (
           <div key={section.title}>

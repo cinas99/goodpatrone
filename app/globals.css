@@ -190,6 +190,38 @@ input[type="range"].bmi-slider::-moz-range-thumb {
   cursor: pointer;
 }
 
+/* Blog prose */
+.prose-blog { color: #a1a1aa; font-size: 0.9375rem; line-height: 1.85; }
+.prose-blog h2 { color: #f4f4f5; font-size: 1.15rem; font-weight: 700; margin-top: 2.75rem; margin-bottom: 1rem; letter-spacing: -0.3px; padding-bottom: 0.5rem; border-bottom: 1px solid #27272a; }
+.prose-blog h3 { color: #e4e4e7; font-size: 1rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.6rem; }
+.prose-blog p { margin-bottom: 1.5rem; }
+.prose-blog ul, .prose-blog ol { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+.prose-blog li { margin-bottom: 0.5rem; }
+.prose-blog ul li { list-style-type: disc; }
+.prose-blog ol li { list-style-type: decimal; }
+.prose-blog strong { color: #e4e4e7; font-weight: 600; }
+.prose-blog a { color: #10b981; text-decoration: underline; text-underline-offset: 3px; }
+.prose-blog a:hover { color: #34d399; }
+.prose-blog code { background: #27272a; color: #a3e635; font-size: 0.85em; padding: 0.15em 0.45em; border-radius: 5px; font-family: 'Geist Mono', monospace; }
+.prose-blog pre { background: #18181b; border: 1px solid #3f3f46; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; overflow-x: auto; }
+.prose-blog pre code { background: none; padding: 0; color: #d4d4d8; font-size: 0.875rem; }
+.prose-blog table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.875rem; }
+.prose-blog th { text-align: left; color: #e4e4e7; font-weight: 600; padding: 0.625rem 0.875rem; border-bottom: 1px solid #3f3f46; }
+.prose-blog td { padding: 0.5rem 0.875rem; border-bottom: 1px solid #27272a; }
+.prose-blog tr:last-child td { border-bottom: none; }
+.prose-blog blockquote { border-left: 3px solid #10b981; padding: 0.75rem 1.25rem; color: #71717a; margin: 2rem 0; background: rgba(5,46,22,0.25); border-radius: 0 8px 8px 0; }
+.prose-blog hr { border: none; border-top: 1px solid #27272a; margin: 2.5rem 0; }
+
+/* Date input — white calendar icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.6;
+  cursor: pointer;
+}
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

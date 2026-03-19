@@ -182,8 +182,25 @@ function BMIClient() {
     ]);
     const reset = ()=>switchUnit(unit);
     const cat = bmi !== null ? getCategory(bmi) : null;
-    const displayColor = cat?.color ?? 'text-emerald-400';
     const r = RANGES[unit];
+    const wThresholds = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
+        const hM = unit === 'metric' ? height / 100 : height * 2.54 / 100;
+        return [
+            18.5,
+            25,
+            30,
+            35
+        ].map((b)=>{
+            let w = b * hM * hM;
+            if (unit === 'imperial') w = w / 0.453592;
+            return Math.min(100, Math.max(0, (w - r.weight.min) / (r.weight.max - r.weight.min) * 100));
+        });
+    }, [
+        height,
+        unit,
+        r.weight.min,
+        r.weight.max
+    ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ToolWrapper$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
         title: "BMI Calculator",
         subtitle: "Body mass index from height and weight",
@@ -192,7 +209,7 @@ function BMIClient() {
             className: "text-gray-400"
         }, void 0, false, {
             fileName: "[project]/app/bmi/bmi-client.tsx",
-            lineNumber: 53,
+            lineNumber: 62,
             columnNumber: 13
         }, void 0),
         adSlot: "bmi",
@@ -213,12 +230,12 @@ function BMIClient() {
                                     children: u === 'metric' ? 'kg / cm' : 'lbs / in'
                                 }, u, false, {
                                     fileName: "[project]/app/bmi/bmi-client.tsx",
-                                    lineNumber: 62,
+                                    lineNumber: 71,
                                     columnNumber: 15
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/app/bmi/bmi-client.tsx",
-                            lineNumber: 60,
+                            lineNumber: 69,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -229,36 +246,24 @@ function BMIClient() {
                                 strokeWidth: 2
                             }, void 0, false, {
                                 fileName: "[project]/app/bmi/bmi-client.tsx",
-                                lineNumber: 74,
+                                lineNumber: 83,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/bmi/bmi-client.tsx",
-                            lineNumber: 72,
+                            lineNumber: 81,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/bmi/bmi-client.tsx",
-                    lineNumber: 59,
+                    lineNumber: 68,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "space-y-7",
                     children: [
-                        {
-                            label: 'Weight',
-                            val: weight,
-                            set: setWeight,
-                            cfg: r.weight
-                        },
-                        {
-                            label: 'Height',
-                            val: height,
-                            set: setHeight,
-                            cfg: r.height
-                        }
-                    ].map((s)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "space-y-3",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -266,90 +271,206 @@ function BMIClient() {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             className: "text-sm text-zinc-500 uppercase tracking-widest font-medium",
-                                            children: s.label
+                                            children: "Height"
                                         }, void 0, false, {
                                             fileName: "[project]/app/bmi/bmi-client.tsx",
-                                            lineNumber: 86,
-                                            columnNumber: 17
+                                            lineNumber: 92,
+                                            columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: `text-3xl font-black tabular-nums transition-colors duration-300 ${displayColor}`,
+                                            className: "text-3xl font-black tabular-nums text-white",
                                             children: [
-                                                s.val,
+                                                height,
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: "text-base font-normal text-zinc-500 ml-1",
-                                                    children: s.cfg.unit
+                                                    children: r.height.unit
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/bmi/bmi-client.tsx",
-                                                    lineNumber: 88,
-                                                    columnNumber: 26
+                                                    lineNumber: 94,
+                                                    columnNumber: 25
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/bmi/bmi-client.tsx",
-                                            lineNumber: 87,
-                                            columnNumber: 17
+                                            lineNumber: 93,
+                                            columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/bmi/bmi-client.tsx",
-                                    lineNumber: 85,
-                                    columnNumber: 15
+                                    lineNumber: 91,
+                                    columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                     type: "range",
-                                    min: s.cfg.min,
-                                    max: s.cfg.max,
-                                    step: s.cfg.step,
-                                    value: s.val,
-                                    onChange: (e)=>s.set(Number(e.target.value)),
+                                    min: r.height.min,
+                                    max: r.height.max,
+                                    step: r.height.step,
+                                    value: height,
+                                    onChange: (e)=>setHeight(Number(e.target.value)),
                                     className: "bmi-slider w-full h-1.5 rounded-full appearance-none bg-zinc-800 cursor-pointer",
                                     suppressHydrationWarning: true
                                 }, void 0, false, {
                                     fileName: "[project]/app/bmi/bmi-client.tsx",
-                                    lineNumber: 91,
-                                    columnNumber: 15
+                                    lineNumber: 97,
+                                    columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "flex justify-between text-xs text-zinc-600",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             children: [
-                                                s.cfg.min,
+                                                r.height.min,
                                                 " ",
-                                                s.cfg.unit
+                                                r.height.unit
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/bmi/bmi-client.tsx",
-                                            lineNumber: 101,
-                                            columnNumber: 17
+                                            lineNumber: 106,
+                                            columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             children: [
-                                                s.cfg.max,
+                                                r.height.max,
                                                 " ",
-                                                s.cfg.unit
+                                                r.height.unit
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/bmi/bmi-client.tsx",
-                                            lineNumber: 102,
-                                            columnNumber: 17
+                                            lineNumber: 107,
+                                            columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/bmi/bmi-client.tsx",
-                                    lineNumber: 100,
-                                    columnNumber: 15
+                                    lineNumber: 105,
+                                    columnNumber: 13
                                 }, this)
                             ]
-                        }, s.label, true, {
+                        }, void 0, true, {
                             fileName: "[project]/app/bmi/bmi-client.tsx",
-                            lineNumber: 84,
-                            columnNumber: 13
-                        }, this))
-                }, void 0, false, {
+                            lineNumber: 90,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "space-y-3",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex items-baseline justify-between",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "text-sm text-zinc-500 uppercase tracking-widest font-medium",
+                                            children: "Weight"
+                                        }, void 0, false, {
+                                            fileName: "[project]/app/bmi/bmi-client.tsx",
+                                            lineNumber: 114,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "text-3xl font-black tabular-nums text-white",
+                                            children: [
+                                                weight,
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "text-base font-normal text-zinc-500 ml-1",
+                                                    children: r.weight.unit
+                                                }, void 0, false, {
+                                                    fileName: "[project]/app/bmi/bmi-client.tsx",
+                                                    lineNumber: 116,
+                                                    columnNumber: 25
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/app/bmi/bmi-client.tsx",
+                                            lineNumber: 115,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/app/bmi/bmi-client.tsx",
+                                    lineNumber: 113,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "relative",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                            type: "range",
+                                            min: r.weight.min,
+                                            max: r.weight.max,
+                                            step: r.weight.step,
+                                            value: weight,
+                                            onChange: (e)=>setWeight(Number(e.target.value)),
+                                            className: "bmi-slider w-full h-1.5 rounded-full appearance-none bg-zinc-800 cursor-pointer",
+                                            suppressHydrationWarning: true
+                                        }, void 0, false, {
+                                            fileName: "[project]/app/bmi/bmi-client.tsx",
+                                            lineNumber: 120,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "h-2 mt-1 rounded-full",
+                                            style: {
+                                                opacity: 0.3,
+                                                background: `linear-gradient(to right,
+                    #facc15 0%, #facc15 ${wThresholds[0]}%,
+                    #34d399 ${wThresholds[0]}%, #34d399 ${wThresholds[1]}%,
+                    #f59e0b ${wThresholds[1]}%, #f59e0b ${wThresholds[2]}%,
+                    #fb923c ${wThresholds[2]}%, #fb923c ${wThresholds[3]}%,
+                    #f87171 ${wThresholds[3]}%, #f87171 100%
+                  )`
+                                            }
+                                        }, void 0, false, {
+                                            fileName: "[project]/app/bmi/bmi-client.tsx",
+                                            lineNumber: 128,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/app/bmi/bmi-client.tsx",
+                                    lineNumber: 119,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex justify-between text-xs text-zinc-600",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            children: [
+                                                r.weight.min,
+                                                " ",
+                                                r.weight.unit
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/app/bmi/bmi-client.tsx",
+                                            lineNumber: 142,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            children: [
+                                                r.weight.max,
+                                                " ",
+                                                r.weight.unit
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/app/bmi/bmi-client.tsx",
+                                            lineNumber: 143,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/app/bmi/bmi-client.tsx",
+                                    lineNumber: 141,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/app/bmi/bmi-client.tsx",
+                            lineNumber: 112,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
                     fileName: "[project]/app/bmi/bmi-client.tsx",
-                    lineNumber: 79,
+                    lineNumber: 88,
                     columnNumber: 9
                 }, this),
                 bmi !== null && cat && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -360,7 +481,7 @@ function BMIClient() {
                             children: "Your BMI"
                         }, void 0, false, {
                             fileName: "[project]/app/bmi/bmi-client.tsx",
-                            lineNumber: 111,
+                            lineNumber: 151,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -368,7 +489,7 @@ function BMIClient() {
                             children: bmi
                         }, void 0, false, {
                             fileName: "[project]/app/bmi/bmi-client.tsx",
-                            lineNumber: 112,
+                            lineNumber: 152,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -376,7 +497,7 @@ function BMIClient() {
                             children: cat.label
                         }, void 0, false, {
                             fileName: "[project]/app/bmi/bmi-client.tsx",
-                            lineNumber: 115,
+                            lineNumber: 155,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -384,24 +505,32 @@ function BMIClient() {
                             children: cat.tip
                         }, void 0, false, {
                             fileName: "[project]/app/bmi/bmi-client.tsx",
-                            lineNumber: 116,
+                            lineNumber: 156,
+                            columnNumber: 13
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-xs text-zinc-600 mt-4 max-w-sm mx-auto leading-relaxed border-t border-zinc-800 pt-4",
+                            children: "Note: BMI is designed for people with average muscle mass. For athletes or highly muscular individuals the result may not accurately reflect body fat levels."
+                        }, void 0, false, {
+                            fileName: "[project]/app/bmi/bmi-client.tsx",
+                            lineNumber: 157,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/bmi/bmi-client.tsx",
-                    lineNumber: 110,
+                    lineNumber: 150,
                     columnNumber: 11
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/bmi/bmi-client.tsx",
-            lineNumber: 56,
+            lineNumber: 65,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/bmi/bmi-client.tsx",
-        lineNumber: 50,
+        lineNumber: 59,
         columnNumber: 5
     }, this);
 }

@@ -41,10 +41,13 @@ export default function AboutPage() {
           </div>
           <div className="grid grid-cols-1 gap-2">
             {[
-              { label: 'BMI Calculator',    desc: 'Calculate Body Mass Index with ideal weight — metric & imperial'  },
-              { label: 'Days Between',      desc: 'Count days, weeks, months and hours between any two dates'        },
-              { label: 'Stopwatch',         desc: 'Precise stopwatch with lap tracking and split time analysis'      },
-              { label: 'Countdown Timer',   desc: 'Countdown with presets, custom time, and sound alerts'            },
+              { label: 'Days Between',              desc: 'Count days, weeks, months and hours between any two dates'                   },
+              { label: 'Stopwatch',                 desc: 'Precise stopwatch with mark tracking and reference timestamps'              },
+              { label: 'Countdown Timer',           desc: 'Countdown with presets, custom time, and sound alerts'                      },
+              { label: 'BMI Calculator',            desc: 'Calculate Body Mass Index with ideal weight — metric & imperial'             },
+              { label: 'Currency Converter',        desc: 'Live EUR, USD, GBP, JPY and CHF exchange rates via Frankfurter API'         },
+              { label: 'Water Usage Calculator',    desc: 'Estimate daily water consumption and monthly bill by fixture'               },
+              { label: 'Electricity Bill Estimator',desc: 'Calculate monthly electricity cost by appliance with solar savings tip'     },
             ].map(t => (
               <div key={t.label} className="flex flex-col p-3 bg-white/5 border border-white/8 rounded-xl">
                 <span className="text-white font-bold text-xs">{t.label}</span>
@@ -63,9 +66,9 @@ export default function AboutPage() {
             <h2 className="text-white font-bold text-sm uppercase tracking-widest">Why we built it</h2>
           </div>
           <p>
-            Most online tools are cluttered with ads, require accounts, or demand permissions
-            they don't need. Good Patrone exists to offer a cleaner alternative — lightweight
-            tools that work instantly in your browser, with no strings attached.
+            Most online tools require accounts or demand permissions they don't need.
+            Good Patrone exists to offer a cleaner alternative — lightweight tools that
+            work instantly in your browser, with no strings attached.
           </p>
         </div>
 

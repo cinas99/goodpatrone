@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import ToolWrapper from '../components/ToolWrapper';
-import { Timer, Flag, Trash2, Play, Pause, RotateCcw } from 'lucide-react';
+import { Timer, Flag, Play, Pause, RotateCcw } from 'lucide-react';
 
 function formatTime(ms: number) {
   const h  = Math.floor(ms / 3600000);
@@ -59,7 +59,7 @@ export default function StopwatchClient() {
   return (
     <ToolWrapper
       title="Stopwatch"
-      subtitle="Measure time and mark moments"
+      subtitle="Measure elapsed time with precision"
       icon={<Timer size={17} className="text-gray-400" />}
       adSlot="stopwatch"
     >
@@ -105,30 +105,19 @@ export default function StopwatchClient() {
           <span className="text-[10px] text-gray-600 uppercase tracking-widest">{running ? 'Pause' : 'Start'}</span>
         </div>
 
-        {/* Flag */}
+        {/* Mark */}
         <div className="flex flex-col items-center gap-1.5">
           <button
             onClick={handleFlag}
             disabled={!running}
-            className={`w-20 h-20 rounded-full flex items-center justify-center transition-all active:scale-95 shadow-lg disabled:opacity-20 ${
+            className={`w-14 h-14 rounded-full flex items-center justify-center transition-all active:scale-95 disabled:opacity-20 ${
               running
-                ? 'bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-amber-400 hover:text-amber-300'
+                ? 'bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-amber-400'
                 : 'bg-white/5 border border-white/10 text-gray-500'
             }`}>
-            <Flag size={26} strokeWidth={1.8} />
+            <Flag size={18} strokeWidth={1.8} />
           </button>
           <span className="text-[10px] text-gray-600 uppercase tracking-widest">Mark</span>
-        </div>
-
-        {/* Trash */}
-        <div className="flex flex-col items-center gap-1.5">
-          <button
-            onClick={() => setFlags([])}
-            disabled={flags.length === 0}
-            className="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-red-600/20 hover:border-red-500/30 hover:text-red-400 transition-all disabled:opacity-20 active:scale-95">
-            <Trash2 size={18} strokeWidth={1.8} />
-          </button>
-          <span className="text-[10px] text-gray-600 uppercase tracking-widest">Clear</span>
         </div>
 
       </div>
@@ -137,7 +126,7 @@ export default function StopwatchClient() {
       {flags.length > 0 && (
         <div className="rounded-xl overflow-hidden border border-white/8">
 
-          {/* First flag — reference / winner, pinned */}
+          {/* First flag — reference */}
           <div className="flex items-center justify-between px-4 py-3.5 bg-yellow-500/10 border-b border-yellow-500/20">
             <span className="text-xs font-bold text-yellow-400 flex items-center gap-1.5">
               <span>🥇</span> Reference
@@ -147,12 +136,12 @@ export default function StopwatchClient() {
             </span>
           </div>
 
-          {/* Rest — scrollable */}
+          {/* Rest */}
           {flags.length > 1 && (
             <div className="max-h-52 overflow-y-auto">
               {flags.slice(1).map((ms, i) => (
                 <div key={i}
-                  className="flex items-center justify-between px-4 py-3 border-b border-white/5 last:border-0 hover:bg-white/3">
+                  className="flex items-center justify-between px-4 py-3 border-b border-white/5 last:border-0 hover:bg-white/[0.03]">
                   <span className="text-xs text-gray-500 flex items-center gap-1.5">
                     <Flag size={11} strokeWidth={1.8} className="text-gray-600" />
                     {i + 2}

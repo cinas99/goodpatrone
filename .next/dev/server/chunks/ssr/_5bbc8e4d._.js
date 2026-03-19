@@ -98,7 +98,7 @@ const PRESETS = [
     },
     {
         label: '1 month',
-        days: 30
+        months: 1
     },
     {
         label: '100 days',
@@ -106,11 +106,11 @@ const PRESETS = [
     },
     {
         label: '6 months',
-        days: 182
+        months: 6
     },
     {
         label: '1 year',
-        days: 365
+        years: 1
     },
     {
         label: '500 days',
@@ -118,24 +118,26 @@ const PRESETS = [
     },
     {
         label: '5 years',
-        days: 1825
+        years: 5
     },
     {
         label: '10 years',
-        days: 3650
+        years: 10
     },
     {
         label: '15 years',
-        days: 5475
+        years: 15
     }
 ];
 function toInput(date) {
-    return date.toISOString().split('T')[0];
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
 }
 function addDays(base, days) {
-    const d = new Date(base);
-    d.setDate(d.getDate() + days);
-    return toInput(d);
+    const d = new Date(Date.UTC(base.getFullYear(), base.getMonth(), base.getDate() + days));
+    return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
 }
 function formatDate(str) {
     if (!str) return '';
@@ -162,10 +164,14 @@ function DaysClient() {
         start,
         end
     ]);
-    const applyPreset = (days)=>{
-        const t = toInput(new Date());
-        setStart(t);
-        setEnd(addDays(new Date(), days));
+    const applyPreset = (p)=>{
+        const today = new Date();
+        const end = new Date(today);
+        if (p.years) end.setFullYear(end.getFullYear() + p.years);
+        else if (p.months) end.setMonth(end.getMonth() + p.months);
+        else if (p.days) end.setDate(end.getDate() + p.days);
+        setStart(toInput(today));
+        setEnd(toInput(end));
     };
     const reset = ()=>{
         setStart(toInput(new Date()));
@@ -179,12 +185,12 @@ function DaysClient() {
             className: "text-emerald-400"
         }, void 0, false, {
             fileName: "[project]/app/days/DaysView.tsx",
-            lineNumber: 49,
+            lineNumber: 59,
             columnNumber: 13
         }, void 0),
         adSlot: "days",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "space-y-12",
+            className: "space-y-6",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "space-y-5 pb-4",
@@ -194,33 +200,33 @@ function DaysClient() {
                             children: "Quick presets from today"
                         }, void 0, false, {
                             fileName: "[project]/app/days/DaysView.tsx",
-                            lineNumber: 56,
+                            lineNumber: 66,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex flex-wrap gap-3",
                             children: PRESETS.map((p)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: ()=>applyPreset(p.days),
+                                    onClick: ()=>applyPreset(p),
                                     className: "px-6 py-3 rounded-full border border-zinc-700 text-zinc-300 text-sm font-medium hover:border-emerald-500 hover:text-emerald-400 hover:bg-emerald-950/30 transition-all",
                                     children: p.label
                                 }, p.label, false, {
                                     fileName: "[project]/app/days/DaysView.tsx",
-                                    lineNumber: 61,
+                                    lineNumber: 71,
                                     columnNumber: 15
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/app/days/DaysView.tsx",
-                            lineNumber: 59,
+                            lineNumber: 69,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/days/DaysView.tsx",
-                    lineNumber: 55,
+                    lineNumber: 65,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "grid grid-cols-2 gap-8",
+                    className: "flex flex-col sm:grid sm:grid-cols-2 gap-4",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "space-y-2",
@@ -230,10 +236,10 @@ function DaysClient() {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                             className: "text-sm text-zinc-400 font-semibold uppercase tracking-wider",
-                                            children: "From"
+                                            children: "Date from"
                                         }, void 0, false, {
                                             fileName: "[project]/app/days/DaysView.tsx",
-                                            lineNumber: 73,
+                                            lineNumber: 83,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -242,29 +248,38 @@ function DaysClient() {
                                             children: "Today"
                                         }, void 0, false, {
                                             fileName: "[project]/app/days/DaysView.tsx",
-                                            lineNumber: 74,
+                                            lineNumber: 84,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/days/DaysView.tsx",
-                                    lineNumber: 72,
+                                    lineNumber: 82,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                     type: "date",
                                     value: start,
-                                    onChange: (e)=>setStart(e.target.value),
+                                    min: "1800-01-01",
+                                    max: "2100-12-31",
+                                    onChange: (e)=>{
+                                        const val = e.target.value;
+                                        if (val) {
+                                            const y = parseInt(val.split('-')[0]);
+                                            if (y < 1800 || y > 2100) return;
+                                        }
+                                        setStart(val);
+                                    },
                                     className: "w-full px-5 py-4 bg-zinc-900 border border-zinc-700 rounded-2xl text-white text-base focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all"
                                 }, void 0, false, {
                                     fileName: "[project]/app/days/DaysView.tsx",
-                                    lineNumber: 76,
+                                    lineNumber: 86,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/days/DaysView.tsx",
-                            lineNumber: 71,
+                            lineNumber: 81,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -275,10 +290,10 @@ function DaysClient() {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                             className: "text-sm text-zinc-400 font-semibold uppercase tracking-wider",
-                                            children: "To"
+                                            children: "Date to"
                                         }, void 0, false, {
                                             fileName: "[project]/app/days/DaysView.tsx",
-                                            lineNumber: 81,
+                                            lineNumber: 96,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -287,167 +302,152 @@ function DaysClient() {
                                             children: "Today"
                                         }, void 0, false, {
                                             fileName: "[project]/app/days/DaysView.tsx",
-                                            lineNumber: 82,
+                                            lineNumber: 97,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/days/DaysView.tsx",
-                                    lineNumber: 80,
+                                    lineNumber: 95,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                     type: "date",
                                     value: end,
-                                    onChange: (e)=>setEnd(e.target.value),
+                                    min: "1800-01-01",
+                                    max: "2100-12-31",
+                                    onChange: (e)=>{
+                                        const val = e.target.value;
+                                        if (val) {
+                                            const y = parseInt(val.split('-')[0]);
+                                            if (y < 1800 || y > 2100) return;
+                                        }
+                                        setEnd(val);
+                                    },
                                     className: "w-full px-5 py-4 bg-zinc-900 border border-zinc-700 rounded-2xl text-white text-base focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all"
                                 }, void 0, false, {
                                     fileName: "[project]/app/days/DaysView.tsx",
-                                    lineNumber: 84,
+                                    lineNumber: 99,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/days/DaysView.tsx",
-                            lineNumber: 79,
+                            lineNumber: 94,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/days/DaysView.tsx",
-                    lineNumber: 70,
-                    columnNumber: 9
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex justify-center pt-2",
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: reset,
-                        className: "flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-8 py-3 rounded-xl text-sm transition-all active:scale-[0.98]",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$refresh$2d$cw$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__RefreshCw$3e$__["RefreshCw"], {
-                                size: 14,
-                                strokeWidth: 2
-                            }, void 0, false, {
-                                fileName: "[project]/app/days/DaysView.tsx",
-                                lineNumber: 95,
-                                columnNumber: 13
-                            }, this),
-                            "Reload"
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/app/days/DaysView.tsx",
-                        lineNumber: 91,
-                        columnNumber: 11
-                    }, this)
-                }, void 0, false, {
-                    fileName: "[project]/app/days/DaysView.tsx",
-                    lineNumber: 90,
+                    lineNumber: 80,
                     columnNumber: 9
                 }, this),
                 result && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "space-y-8 pt-10 border-t border-zinc-800",
+                    className: "space-y-8 pt-6 border-t border-zinc-800",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "text-center space-y-3",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-sm text-zinc-500 uppercase tracking-widest font-medium",
-                                    children: result.isPast ? 'Days ago' : 'Days from now'
-                                }, void 0, false, {
-                                    fileName: "[project]/app/days/DaysView.tsx",
-                                    lineNumber: 105,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-[96px] font-black tracking-tighter text-white leading-none tabular-nums",
-                                    children: Math.abs(result.days)
-                                }, void 0, false, {
-                                    fileName: "[project]/app/days/DaysView.tsx",
-                                    lineNumber: 108,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-base text-zinc-500",
-                                    children: [
-                                        formatDate(start),
-                                        " → ",
-                                        formatDate(end)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/app/days/DaysView.tsx",
-                                    lineNumber: 111,
-                                    columnNumber: 15
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/app/days/DaysView.tsx",
-                            lineNumber: 104,
-                            columnNumber: 13
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "grid grid-cols-4 gap-4",
+                            className: "grid grid-cols-2 gap-x-6 gap-y-8 pt-4",
                             children: [
                                 {
-                                    val: Math.abs(result.days),
-                                    label: 'Days'
+                                    label: result.isPast ? 'Days ago' : 'Days from now',
+                                    val: String(Math.abs(result.days)),
+                                    mono: true
                                 },
                                 {
-                                    val: result.weeks,
-                                    label: 'Weeks'
+                                    label: 'Date from',
+                                    val: formatDate(start),
+                                    mono: false
                                 },
                                 {
-                                    val: result.months,
-                                    label: 'Months'
+                                    label: 'Weeks',
+                                    val: String(result.weeks),
+                                    mono: true
                                 },
                                 {
+                                    label: 'Date to',
+                                    val: formatDate(end),
+                                    mono: false
+                                },
+                                {
+                                    label: 'Months',
+                                    val: String(result.months),
+                                    mono: true
+                                },
+                                {
+                                    label: 'Hours',
                                     val: result.hours.toLocaleString(),
-                                    label: 'Hours'
+                                    mono: true
                                 }
-                            ].map((r)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex flex-col items-center py-6 px-3 bg-zinc-900 border border-zinc-800 rounded-2xl text-center hover:border-zinc-600 transition-colors",
+                            ].map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "text-3xl font-black tabular-nums text-white",
-                                            children: r.val
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-xs text-zinc-500 uppercase tracking-widest font-medium mb-2",
+                                            children: item.label
                                         }, void 0, false, {
                                             fileName: "[project]/app/days/DaysView.tsx",
                                             lineNumber: 124,
                                             columnNumber: 19
                                         }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "text-xs text-zinc-500 mt-2 uppercase tracking-widest font-medium",
-                                            children: r.label
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: `text-2xl font-black text-white leading-none ${item.mono ? 'tabular-nums tracking-tighter' : ''}`,
+                                            children: item.val
                                         }, void 0, false, {
                                             fileName: "[project]/app/days/DaysView.tsx",
                                             lineNumber: 125,
                                             columnNumber: 19
                                         }, this)
                                     ]
-                                }, r.label, true, {
+                                }, item.label, true, {
                                     fileName: "[project]/app/days/DaysView.tsx",
                                     lineNumber: 123,
                                     columnNumber: 17
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/app/days/DaysView.tsx",
-                            lineNumber: 116,
+                            lineNumber: 114,
+                            columnNumber: 13
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex justify-center pt-2",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: reset,
+                                className: "flex flex-row items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-[8.75rem] py-2 rounded-xl text-sm transition-all active:scale-[0.98]",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$refresh$2d$cw$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__RefreshCw$3e$__["RefreshCw"], {
+                                        size: 16,
+                                        strokeWidth: 2
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/days/DaysView.tsx",
+                                        lineNumber: 137,
+                                        columnNumber: 17
+                                    }, this),
+                                    "Reload"
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/app/days/DaysView.tsx",
+                                lineNumber: 133,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/app/days/DaysView.tsx",
+                            lineNumber: 132,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/days/DaysView.tsx",
-                    lineNumber: 102,
+                    lineNumber: 111,
                     columnNumber: 11
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/days/DaysView.tsx",
-            lineNumber: 52,
+            lineNumber: 62,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/days/DaysView.tsx",
-        lineNumber: 46,
+        lineNumber: 56,
         columnNumber: 5
     }, this);
 }

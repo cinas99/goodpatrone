@@ -4,26 +4,29 @@ import { useState } from 'react';
 import {
   Leaf, Home, Scale, CalendarDays, Timer, Clock as CountdownIcon,
   TrendingUp, Triangle, Shuffle, DollarSign, Menu, X,
-  Info, Mail, ShieldCheck,
+  Info, Mail, ShieldCheck, BookOpen, Droplets, Zap,
 } from 'lucide-react';
 import Footer from './SiteFooter';
 
 const tools = [
-  { href: '/bmi',       label: 'BMI Calculator', Icon: Scale         },
-  { href: '/days',      label: 'Days Between',   Icon: CalendarDays  },
-  { href: '/stopwatch', label: 'Stopwatch',       Icon: Timer         },
-  { href: '/countdown', label: 'Countdown',       Icon: CountdownIcon },
+  { href: '/days',         label: 'Days Between',   Icon: CalendarDays  },
+  { href: '/stopwatch',    label: 'Stopwatch',       Icon: Timer         },
+  { href: '/countdown',    label: 'Countdown',       Icon: CountdownIcon },
+  { href: '/bmi',          label: 'BMI Calculator',  Icon: Scale         },
+  { href: '/currency',     label: 'Currency',        Icon: DollarSign    },
+  { href: '/water',        label: 'Water Usage',     Icon: Droplets      },
+  { href: '/electricity',  label: 'Electricity',     Icon: Zap           },
 ];
 
 const comingSoon = [
-  { label: 'Currency',         Icon: DollarSign },
   { label: 'Calories',         Icon: TrendingUp },
   { label: 'Geometry',         Icon: Triangle   },
   { label: 'Random Generator', Icon: Shuffle    },
 ];
 
 const pages = [
-  { href: '/about',          label: 'About',         Icon: Info        },
+  { href: '/blog',           label: 'Blog',           Icon: BookOpen    },
+  { href: '/about',          label: 'About',          Icon: Info        },
   { href: '/contact',        label: 'Contact',        Icon: Mail        },
   { href: '/privacy-policy', label: 'Privacy Policy', Icon: ShieldCheck },
 ];

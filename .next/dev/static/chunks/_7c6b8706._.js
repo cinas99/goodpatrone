@@ -140,57 +140,36 @@ const PRESETS = [
         ms: 5 * 3600000
     }
 ];
-const SYNTH_OPTIONS = [
-    {
-        key: 'off',
-        label: 'Silence',
-        emoji: '🔇'
-    },
-    {
-        key: 'chime',
-        label: 'Chime',
-        emoji: '🔔'
-    },
-    {
-        key: 'fanfare',
-        label: 'Fanfare',
-        emoji: '🎵'
-    },
-    {
-        key: 'sonar',
-        label: 'Sonar',
-        emoji: '📡'
-    },
-    {
-        key: 'siren',
-        label: 'Siren',
-        emoji: '🚨'
-    }
-];
 const MP3_SOUNDS = [
     {
-        key: 'mp3-1',
-        label: 'Sound 1',
-        src: '/sounds/sound1.mp3',
-        img: '/sounds/img/sound1.jpg'
+        key: 'canal',
+        label: 'Stock Music',
+        src: '/sounds/canal.mp3',
+        img: '/sounds/img/canal.png'
     },
     {
-        key: 'mp3-2',
-        label: 'Sound 2',
-        src: '/sounds/sound2.mp3',
-        img: '/sounds/img/sound2.jpg'
+        key: 'kids',
+        label: 'Kids',
+        src: '/sounds/kids.mp3',
+        img: '/sounds/img/kids.png'
     },
     {
-        key: 'mp3-3',
-        label: 'Sound 3',
-        src: '/sounds/sound3.mp3',
-        img: '/sounds/img/sound3.jpg'
+        key: 'pop',
+        label: 'Pop',
+        src: '/sounds/pop.mp3',
+        img: '/sounds/img/pop.png'
     },
     {
-        key: 'mp3-4',
-        label: 'Sound 4',
-        src: '/sounds/sound4.mp3',
-        img: '/sounds/img/sound4.jpg'
+        key: 'soft',
+        label: 'Soft',
+        src: '/sounds/soft.mp3',
+        img: '/sounds/img/soft.png'
+    },
+    {
+        key: 'villageParty',
+        label: 'Village Party',
+        src: '/sounds/villageParty.mp3',
+        img: '/sounds/img/villageParty.png'
     }
 ];
 function formatDisplay(ms) {
@@ -201,116 +180,31 @@ function formatDisplay(ms) {
     const ss = String(s).padStart(2, '0');
     return h > 0 ? `${String(h).padStart(2, '0')}:${mm}:${ss}` : `${mm}:${ss}`;
 }
-function stopSound(ref) {
-    if (ref.current) {
-        clearInterval(ref.current);
-        ref.current = null;
-    }
-}
-function playSound(mode, loop, ref) {
-    if (mode === 'off' || mode.startsWith('mp3-')) return;
-    stopSound(ref);
-    try {
-        const fire = ()=>{
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = (freq, start, dur, vol = 0.4, type = 'sine')=>{
-                const o = ctx.createOscillator();
-                const g = ctx.createGain();
-                o.connect(g);
-                g.connect(ctx.destination);
-                o.type = type;
-                o.frequency.setValueAtTime(freq, start);
-                g.gain.setValueAtTime(vol, start);
-                g.gain.exponentialRampToValueAtTime(0.001, start + dur);
-                o.start(start);
-                o.stop(start + dur);
-            };
-            const t = ctx.currentTime;
-            if (mode === 'chime') {
-                osc(523, t + 0.0, 3.5, 0.6);
-                osc(1047, t + 0.0, 2.8, 0.25);
-                osc(1568, t + 0.0, 2.2, 0.12);
-                osc(2093, t + 0.0, 1.5, 0.06);
-            }
-            if (mode === 'fanfare') {
-                osc(523, t + 0.00, 0.35, 0.5);
-                osc(659, t + 0.22, 0.35, 0.5);
-                osc(784, t + 0.44, 0.35, 0.5);
-                osc(1047, t + 0.66, 0.9, 0.55);
-                osc(1047, t + 0.66, 0.9, 0.2, 'triangle');
-            }
-            if (mode === 'sonar') {
-                [
-                    0,
-                    1.1,
-                    2.2
-                ].forEach((offset)=>{
-                    const o = ctx.createOscillator();
-                    const g = ctx.createGain();
-                    o.connect(g);
-                    g.connect(ctx.destination);
-                    o.type = 'sine';
-                    o.frequency.setValueAtTime(900, t + offset);
-                    o.frequency.exponentialRampToValueAtTime(320, t + offset + 0.7);
-                    g.gain.setValueAtTime(0.55, t + offset);
-                    g.gain.exponentialRampToValueAtTime(0.001, t + offset + 0.9);
-                    o.start(t + offset);
-                    o.stop(t + offset + 1.0);
-                });
-            }
-            if (mode === 'siren') {
-                for(let i = 0; i < 4; i++){
-                    osc(960, t + i * 0.55 + 0.00, 0.25, 0.55, 'sawtooth');
-                    osc(1280, t + i * 0.55 + 0.28, 0.25, 0.55, 'sawtooth');
-                }
-            }
-        };
-        fire();
-        if (loop) {
-            const intervals = {
-                chime: 4500,
-                fanfare: 3000,
-                sonar: 3500,
-                siren: 2400
-            };
-            const interval = intervals[mode] ?? 4000;
-            let total = 0;
-            ref.current = setInterval(()=>{
-                total += interval;
-                if (total >= 30000) {
-                    stopSound(ref);
-                    return;
-                }
-                fire();
-            }, interval);
-        }
-    } catch (e) {}
-}
 function CountdownClient() {
     _s();
     const [target, setTarget] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(600000);
     const [elapsed, setElapsed] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
     const [running, setRunning] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [done, setDone] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [soundMode, setSoundMode] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('chime');
-    const [loopSound, setLoopSound] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [soundMode, setSoundMode] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('off');
+    const [loopSound, setLoopSound] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [customH, setCustomH] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('0');
     const [customM, setCustomM] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('10');
     const [customS, setCustomS] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('0');
     const startRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     const baseRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
     const frameRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const soundRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const loopSoundRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(loopSound);
     const mp3Ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     const mp3LoopRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const loopSoundRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(loopSound);
     const stopMp3 = ()=>{
         if (mp3Ref.current) {
+            mp3Ref.current.onended = null;
             mp3Ref.current.pause();
             mp3Ref.current = null;
         }
         if (mp3LoopRef.current) {
-            clearInterval(mp3LoopRef.current);
+            clearTimeout(mp3LoopRef.current);
             mp3LoopRef.current = null;
         }
     };
@@ -319,28 +213,18 @@ function CountdownClient() {
         const fire = ()=>{
             const audio = new Audio(src);
             mp3Ref.current = audio;
+            if (loop) audio.onended = ()=>fire();
             audio.play().catch(()=>{});
         };
         fire();
         if (loop) {
-            let total = 0;
-            mp3LoopRef.current = setInterval(()=>{
-                total += 5000;
-                if (total >= 30000) {
-                    stopMp3();
-                    return;
-                }
-                fire();
-            }, 5000);
+            // hard-stop after 60 s so it doesn't run forever
+            mp3LoopRef.current = setTimeout(()=>stopMp3(), 60000);
         }
-    };
-    const stopAll = ()=>{
-        stopSound(soundRef);
-        stopMp3();
     };
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "CountdownClient.useEffect": ()=>({
-                "CountdownClient.useEffect": ()=>stopAll()
+                "CountdownClient.useEffect": ()=>stopMp3()
             })["CountdownClient.useEffect"]
     }["CountdownClient.useEffect"], []);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
@@ -354,14 +238,11 @@ function CountdownClient() {
                             setElapsed(target);
                             setRunning(false);
                             setDone(true);
-                            const mode = soundMode;
-                            if (mode.startsWith('mp3-')) {
+                            if (soundMode !== 'off') {
                                 const mp3 = MP3_SOUNDS.find({
-                                    "CountdownClient.useEffect.tick.mp3": (s)=>s.key === mode
+                                    "CountdownClient.useEffect.tick.mp3": (s)=>s.key === soundMode
                                 }["CountdownClient.useEffect.tick.mp3"]);
                                 if (mp3) playMp3(mp3.src, loopSoundRef.current);
-                            } else {
-                                playSound(mode, loopSoundRef.current, soundRef);
                             }
                             return;
                         }
@@ -387,7 +268,7 @@ function CountdownClient() {
     ]);
     const applyMs = (ms)=>{
         if (ms <= 0) return;
-        stopAll();
+        stopMp3();
         setRunning(false);
         setElapsed(0);
         baseRef.current = 0;
@@ -405,7 +286,7 @@ function CountdownClient() {
         applyMs(ms);
     };
     const reset = ()=>{
-        stopAll();
+        stopMp3();
         setRunning(false);
         setElapsed(0);
         baseRef.current = 0;
@@ -413,17 +294,20 @@ function CountdownClient() {
     };
     const handleSelectSound = (mode)=>{
         setSoundMode(mode);
-        // preview on select
-        if (mode.startsWith('mp3-')) {
+        if (mode !== 'off') {
             const mp3 = MP3_SOUNDS.find((s)=>s.key === mode);
             if (mp3) playMp3(mp3.src, false);
-        } else if (mode !== 'off') {
-            playSound(mode, false, soundRef);
+        } else {
+            stopMp3();
         }
+    };
+    const preview = ()=>{
+        if (soundMode === 'off') return;
+        const mp3 = MP3_SOUNDS.find((s)=>s.key === soundMode);
+        if (mp3) playMp3(mp3.src, false);
     };
     const remaining = Math.max(0, target - elapsed);
     const isNearEnd = remaining < 10000 && running && !done;
-    const isMp3Mode = soundMode.startsWith('mp3-');
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ToolWrapper$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
         title: "Countdown",
         subtitle: "Set a timer with presets or custom time",
@@ -432,7 +316,7 @@ function CountdownClient() {
             className: "text-gray-400"
         }, void 0, false, {
             fileName: "[project]/app/countdown/CountdownClient.tsx",
-            lineNumber: 218,
+            lineNumber: 143,
             columnNumber: 13
         }, void 0),
         adSlot: "countdown",
@@ -447,7 +331,7 @@ function CountdownClient() {
                             children: "Presets"
                         }, void 0, false, {
                             fileName: "[project]/app/countdown/CountdownClient.tsx",
-                            lineNumber: 225,
+                            lineNumber: 150,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -458,285 +342,177 @@ function CountdownClient() {
                                     children: p.label
                                 }, p.ms, false, {
                                     fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                    lineNumber: 228,
+                                    lineNumber: 153,
                                     columnNumber: 15
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/app/countdown/CountdownClient.tsx",
-                            lineNumber: 226,
+                            lineNumber: 151,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/countdown/CountdownClient.tsx",
-                    lineNumber: 224,
+                    lineNumber: 149,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "space-y-4",
+                    className: "space-y-3",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "text-sm text-zinc-500 uppercase tracking-widest font-medium",
                             children: "Alert sound"
                         }, void 0, false, {
                             fileName: "[project]/app/countdown/CountdownClient.tsx",
-                            lineNumber: 242,
+                            lineNumber: 167,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex flex-wrap gap-3",
-                            children: SYNTH_OPTIONS.map((s)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: ()=>handleSelectSound(s.key),
-                                    className: `px-5 py-3 rounded-full border text-sm font-medium transition-all flex items-center gap-2 ${soundMode === s.key ? 'border-emerald-500 text-emerald-400 bg-emerald-950/30' : 'border-zinc-700 text-zinc-300 hover:border-emerald-500 hover:text-emerald-400 hover:bg-emerald-950/30'}`,
+                            className: "grid grid-cols-3 sm:grid-cols-6 gap-3",
+                            style: {
+                                gridAutoRows: '96px'
+                            },
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    onClick: ()=>handleSelectSound('off'),
+                                    className: `relative rounded-2xl overflow-hidden border-2 transition-all active:scale-95 flex flex-col items-center justify-center gap-1.5 ${soundMode === 'off' ? 'border-emerald-500 bg-zinc-800 shadow-lg shadow-emerald-500/20' : 'border-zinc-700 bg-zinc-900 hover:border-zinc-500'}`,
                                     children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            children: s.emoji
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$volume$2d$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__VolumeX$3e$__["VolumeX"], {
+                                            size: 22,
+                                            className: soundMode === 'off' ? 'text-emerald-400' : 'text-zinc-500',
+                                            strokeWidth: 1.7
                                         }, void 0, false, {
                                             fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                            lineNumber: 253,
-                                            columnNumber: 17
-                                        }, this),
-                                        s.label
-                                    ]
-                                }, s.key, true, {
-                                    fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                    lineNumber: 247,
-                                    columnNumber: 15
-                                }, this))
-                        }, void 0, false, {
-                            fileName: "[project]/app/countdown/CountdownClient.tsx",
-                            lineNumber: 245,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "grid grid-cols-4 gap-3",
-                            children: MP3_SOUNDS.map((s)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: ()=>handleSelectSound(s.key),
-                                    className: `relative h-24 rounded-2xl overflow-hidden border-2 transition-all active:scale-95 ${soundMode === s.key ? 'border-emerald-500 shadow-lg shadow-emerald-500/20' : 'border-zinc-700 hover:border-zinc-500'}`,
-                                    style: {
-                                        backgroundImage: `url(${s.img})`,
-                                        backgroundSize: 'cover',
-                                        backgroundPosition: 'center'
-                                    },
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: `absolute inset-0 transition-colors ${soundMode === s.key ? 'bg-black/30' : 'bg-black/50'}`
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                            lineNumber: 269,
-                                            columnNumber: 17
+                                            lineNumber: 181,
+                                            columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "relative z-10 text-xs font-bold text-white drop-shadow",
-                                            children: s.label
+                                            className: `text-xs font-semibold ${soundMode === 'off' ? 'text-emerald-400' : 'text-zinc-500'}`,
+                                            children: "Silent"
                                         }, void 0, false, {
                                             fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                            lineNumber: 270,
-                                            columnNumber: 17
+                                            lineNumber: 182,
+                                            columnNumber: 15
                                         }, this),
-                                        soundMode === s.key && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-400 shadow-sm"
+                                        soundMode === 'off' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-400"
                                         }, void 0, false, {
                                             fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                            lineNumber: 272,
-                                            columnNumber: 19
+                                            lineNumber: 184,
+                                            columnNumber: 17
                                         }, this)
                                     ]
-                                }, s.key, true, {
+                                }, void 0, true, {
                                     fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                    lineNumber: 261,
-                                    columnNumber: 15
-                                }, this))
-                        }, void 0, false, {
+                                    lineNumber: 173,
+                                    columnNumber: 13
+                                }, this),
+                                MP3_SOUNDS.map((s)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: ()=>handleSelectSound(s.key),
+                                        className: `relative rounded-2xl overflow-hidden border-2 transition-all active:scale-95 flex items-center justify-center ${soundMode === s.key ? 'border-emerald-500 shadow-lg shadow-emerald-500/20' : 'border-zinc-700 hover:border-zinc-500'}`,
+                                        style: {
+                                            backgroundImage: `url(${s.img})`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center'
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: `absolute inset-0 pointer-events-none transition-colors ${soundMode === s.key ? 'bg-black/30' : 'bg-black/55'}`
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                                lineNumber: 198,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "relative z-10 text-xs font-bold text-white drop-shadow-md leading-tight px-1 text-center",
+                                                children: s.label
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                                lineNumber: 199,
+                                                columnNumber: 17
+                                            }, this),
+                                            soundMode === s.key && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-400 shadow-sm pointer-events-none"
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                                lineNumber: 201,
+                                                columnNumber: 19
+                                            }, this)
+                                        ]
+                                    }, s.key, true, {
+                                        fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                        lineNumber: 190,
+                                        columnNumber: 15
+                                    }, this))
+                            ]
+                        }, void 0, true, {
                             fileName: "[project]/app/countdown/CountdownClient.tsx",
-                            lineNumber: 259,
+                            lineNumber: 170,
                             columnNumber: 11
                         }, this),
                         soundMode !== 'off' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex items-center gap-4",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: ()=>{
-                                        if (isMp3Mode) {
-                                            const mp3 = MP3_SOUNDS.find((s)=>s.key === soundMode);
-                                            if (mp3) playMp3(mp3.src, false);
-                                        } else {
-                                            playSound(soundMode, false, soundRef);
-                                        }
-                                    },
+                                    onClick: preview,
                                     className: "text-sm text-emerald-500 hover:text-emerald-400 font-semibold transition-colors",
                                     children: "Preview"
                                 }, void 0, false, {
                                     fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                    lineNumber: 281,
+                                    lineNumber: 210,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "flex gap-1.5",
                                     children: [
                                         'Once',
-                                        '30s'
-                                    ].map((opt)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        '1 min'
+                                    ].map((opt)=>{
+                                        const isLoop = opt === '1 min';
+                                        const active = isLoop === loopSound;
+                                        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                             onClick: ()=>{
-                                                const v = opt === '30s';
-                                                setLoopSound(v);
-                                                loopSoundRef.current = v;
+                                                setLoopSound(isLoop);
+                                                loopSoundRef.current = isLoop;
                                             },
-                                            className: `px-3 py-1 rounded-full border text-xs font-medium transition-all ${opt === '30s' === loopSound ? 'border-emerald-500 text-emerald-400 bg-emerald-950/30' : 'border-zinc-700 text-zinc-600 hover:text-zinc-300 hover:border-zinc-500'}`,
+                                            className: `px-3 py-1 rounded-full border text-xs font-medium transition-all ${active ? 'border-emerald-500 text-emerald-400 bg-emerald-950/30' : 'border-zinc-700 text-zinc-600 hover:text-zinc-300 hover:border-zinc-500'}`,
                                             children: opt
                                         }, opt, false, {
                                             fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                            lineNumber: 295,
-                                            columnNumber: 19
-                                        }, this))
+                                            lineNumber: 220,
+                                            columnNumber: 21
+                                        }, this);
+                                    })
                                 }, void 0, false, {
                                     fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                    lineNumber: 293,
+                                    lineNumber: 215,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/countdown/CountdownClient.tsx",
-                            lineNumber: 280,
+                            lineNumber: 209,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/countdown/CountdownClient.tsx",
-                    lineNumber: 241,
+                    lineNumber: 166,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex flex-col items-center py-6",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: `text-[72px] md:text-[88px] font-black tracking-tighter tabular-nums leading-none transition-colors duration-500 ${done ? 'text-emerald-400' : isNearEnd ? 'text-red-400' : 'text-white'}`,
-                            children: formatDisplay(remaining)
-                        }, void 0, false, {
-                            fileName: "[project]/app/countdown/CountdownClient.tsx",
-                            lineNumber: 311,
-                            columnNumber: 11
-                        }, this),
-                        done && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-emerald-400 font-semibold text-sm mt-3 uppercase tracking-widest",
-                            children: "Time is up"
-                        }, void 0, false, {
-                            fileName: "[project]/app/countdown/CountdownClient.tsx",
-                            lineNumber: 317,
-                            columnNumber: 13
-                        }, this),
-                        isNearEnd && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-red-400 text-xs mt-2 uppercase tracking-widest font-bold",
-                            children: "Almost done…"
-                        }, void 0, false, {
-                            fileName: "[project]/app/countdown/CountdownClient.tsx",
-                            lineNumber: 320,
-                            columnNumber: 13
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/app/countdown/CountdownClient.tsx",
-                    lineNumber: 310,
-                    columnNumber: 9
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex items-center justify-center gap-3",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            onClick: reset,
-                            className: "w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white transition-all active:scale-95",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$rotate$2d$ccw$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__RotateCcw$3e$__["RotateCcw"], {
-                                size: 18,
-                                strokeWidth: 1.8
-                            }, void 0, false, {
-                                fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                lineNumber: 328,
-                                columnNumber: 13
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/app/countdown/CountdownClient.tsx",
-                            lineNumber: 326,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            onClick: ()=>{
-                                if (done) {
-                                    reset();
-                                    return;
-                                }
-                                setRunning((r)=>!r);
-                            },
-                            disabled: remaining === 0 && !done,
-                            className: `w-20 h-20 rounded-full flex items-center justify-center text-white transition-all active:scale-95 shadow-lg disabled:opacity-30 ${running ? 'bg-red-600/80 hover:bg-red-600 border border-red-500/50' : 'bg-emerald-700/80 hover:bg-emerald-700 border border-emerald-600/50'}`,
-                            children: done ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$refresh$2d$cw$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__RefreshCw$3e$__["RefreshCw"], {
-                                size: 24,
-                                strokeWidth: 2
-                            }, void 0, false, {
-                                fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                lineNumber: 339,
-                                columnNumber: 17
-                            }, this) : running ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$pause$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Pause$3e$__["Pause"], {
-                                size: 26,
-                                strokeWidth: 2
-                            }, void 0, false, {
-                                fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                lineNumber: 341,
-                                columnNumber: 17
-                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$play$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Play$3e$__["Play"], {
-                                size: 26,
-                                strokeWidth: 2,
-                                className: "ml-1"
-                            }, void 0, false, {
-                                fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                lineNumber: 342,
-                                columnNumber: 17
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/app/countdown/CountdownClient.tsx",
-                            lineNumber: 330,
-                            columnNumber: 11
-                        }, this),
-                        done && soundMode !== 'off' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            onClick: stopAll,
-                            className: "w-14 h-14 rounded-full bg-red-600/20 border border-red-500/30 flex items-center justify-center text-red-400 hover:bg-red-600/40 transition-all active:scale-95",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$volume$2d$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__VolumeX$3e$__["VolumeX"], {
-                                size: 18,
-                                strokeWidth: 1.8
-                            }, void 0, false, {
-                                fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                lineNumber: 348,
-                                columnNumber: 15
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/app/countdown/CountdownClient.tsx",
-                            lineNumber: 346,
-                            columnNumber: 13
-                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "w-14 h-14"
-                        }, void 0, false, {
-                            fileName: "[project]/app/countdown/CountdownClient.tsx",
-                            lineNumber: 351,
-                            columnNumber: 13
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/app/countdown/CountdownClient.tsx",
-                    lineNumber: 325,
-                    columnNumber: 9
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "space-y-3 pt-2 border-t border-zinc-800",
+                    className: "pt-4 pb-2 border-t border-zinc-800 space-y-4",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "text-sm text-zinc-500 uppercase tracking-widest font-medium pt-2",
-                            children: "Custom time"
+                            children: "Set Custom time"
                         }, void 0, false, {
                             fileName: "[project]/app/countdown/CountdownClient.tsx",
-                            lineNumber: 357,
+                            lineNumber: 238,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "grid grid-cols-3 gap-4",
+                            className: "flex items-center gap-3",
                             children: [
                                 {
                                     val: customH,
@@ -765,59 +541,205 @@ function CountdownClient() {
                                         onFieldChange(customH, customM, v);
                                     }
                                 }
-                            ].map((f)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "space-y-2",
+                            ].map((f, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex items-center gap-3",
                                     children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                            className: "text-xs text-zinc-500 uppercase tracking-widest font-medium block text-center",
-                                            children: f.label
+                                        i > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "text-zinc-600 text-xl font-bold pb-5",
+                                            children: ":"
                                         }, void 0, false, {
                                             fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                            lineNumber: 365,
-                                            columnNumber: 17
+                                            lineNumber: 246,
+                                            columnNumber: 27
                                         }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "number",
-                                            min: 0,
-                                            max: f.max,
-                                            value: f.val,
-                                            onChange: (e)=>f.onChange(e.target.value),
-                                            className: "w-full px-3 py-4 bg-zinc-900 border border-zinc-700 rounded-2xl text-white text-2xl font-black text-center tabular-nums focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                                        }, void 0, false, {
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "text-center",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                    type: "number",
+                                                    min: 0,
+                                                    max: f.max,
+                                                    value: f.val,
+                                                    onChange: (e)=>f.onChange(e.target.value),
+                                                    className: "w-20 px-2 py-3 bg-zinc-900 border border-zinc-700 rounded-2xl text-white text-lg font-bold text-center tabular-nums focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                                    lineNumber: 248,
+                                                    columnNumber: 19
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "text-xs text-zinc-500 uppercase tracking-widest mt-2",
+                                                    children: f.label
+                                                }, void 0, false, {
+                                                    fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                                    lineNumber: 253,
+                                                    columnNumber: 19
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
                                             fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                            lineNumber: 366,
+                                            lineNumber: 247,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, f.label, true, {
                                     fileName: "[project]/app/countdown/CountdownClient.tsx",
-                                    lineNumber: 364,
+                                    lineNumber: 245,
                                     columnNumber: 15
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/app/countdown/CountdownClient.tsx",
-                            lineNumber: 358,
+                            lineNumber: 239,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/countdown/CountdownClient.tsx",
-                    lineNumber: 356,
+                    lineNumber: 237,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "pt-4 border-t border-zinc-800 space-y-3",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-sm text-zinc-500 uppercase tracking-widest font-medium pt-2",
+                            children: "Countdown"
+                        }, void 0, false, {
+                            fileName: "[project]/app/countdown/CountdownClient.tsx",
+                            lineNumber: 262,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex items-center gap-3",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex-1 min-w-0",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: `text-[52px] sm:text-[72px] md:text-[88px] font-black tracking-tighter tabular-nums leading-none transition-colors duration-500 ${done ? 'text-emerald-400' : isNearEnd ? 'text-red-400' : 'text-white'}`,
+                                            children: formatDisplay(remaining)
+                                        }, void 0, false, {
+                                            fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                            lineNumber: 265,
+                                            columnNumber: 15
+                                        }, this),
+                                        done && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-emerald-400 font-semibold text-sm mt-3 uppercase tracking-widest",
+                                            children: "Time is up"
+                                        }, void 0, false, {
+                                            fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                            lineNumber: 271,
+                                            columnNumber: 17
+                                        }, this),
+                                        isNearEnd && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-red-400 text-xs mt-2 uppercase tracking-widest font-bold",
+                                            children: "Almost done…"
+                                        }, void 0, false, {
+                                            fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                            lineNumber: 274,
+                                            columnNumber: 17
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                    lineNumber: 264,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    onClick: ()=>{
+                                        if (done) {
+                                            reset();
+                                            return;
+                                        }
+                                        setRunning((r)=>!r);
+                                    },
+                                    disabled: remaining === 0 && !done,
+                                    className: `w-14 h-14 sm:w-20 sm:h-20 rounded-full flex items-center justify-center text-white transition-all active:scale-95 shadow-lg disabled:opacity-30 flex-shrink-0 ${running ? 'bg-red-600/80 hover:bg-red-600 border border-red-500/50' : 'bg-emerald-700/80 hover:bg-emerald-700 border border-emerald-600/50'}`,
+                                    children: done ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$refresh$2d$cw$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__RefreshCw$3e$__["RefreshCw"], {
+                                        size: 20,
+                                        strokeWidth: 2
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                        lineNumber: 286,
+                                        columnNumber: 19
+                                    }, this) : running ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$pause$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Pause$3e$__["Pause"], {
+                                        size: 20,
+                                        strokeWidth: 2
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                        lineNumber: 288,
+                                        columnNumber: 19
+                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$play$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Play$3e$__["Play"], {
+                                        size: 20,
+                                        strokeWidth: 2,
+                                        className: "ml-0.5"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                        lineNumber: 289,
+                                        columnNumber: 19
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                    lineNumber: 277,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    onClick: reset,
+                                    className: "w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white transition-all active:scale-95 flex-shrink-0",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$rotate$2d$ccw$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__RotateCcw$3e$__["RotateCcw"], {
+                                        size: 15,
+                                        strokeWidth: 1.8
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                        lineNumber: 294,
+                                        columnNumber: 15
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                    lineNumber: 292,
+                                    columnNumber: 13
+                                }, this),
+                                done && soundMode !== 'off' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    onClick: stopMp3,
+                                    className: "w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-red-600/20 border border-red-500/30 flex items-center justify-center text-red-400 hover:bg-red-600/40 transition-all active:scale-95 flex-shrink-0",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$volume$2d$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__VolumeX$3e$__["VolumeX"], {
+                                        size: 15,
+                                        strokeWidth: 1.8
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                        lineNumber: 299,
+                                        columnNumber: 17
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/app/countdown/CountdownClient.tsx",
+                                    lineNumber: 297,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/app/countdown/CountdownClient.tsx",
+                            lineNumber: 263,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/app/countdown/CountdownClient.tsx",
+                    lineNumber: 261,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/countdown/CountdownClient.tsx",
-            lineNumber: 221,
+            lineNumber: 146,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/countdown/CountdownClient.tsx",
-        lineNumber: 215,
+        lineNumber: 140,
         columnNumber: 5
     }, this);
 }
-_s(CountdownClient, "JNVYO91T6FHpU8n31RCsfH+i6mY=");
+_s(CountdownClient, "SF1+7G+ZJ2q2F3IcSdMDUeN1MdQ=");
 _c = CountdownClient;
 var _c;
 __turbopack_context__.k.register(_c, "CountdownClient");
