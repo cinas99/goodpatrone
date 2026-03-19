@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import BMIClient from './BMIClient';
+import BMIClient from './bmi-client';
 
 export const metadata: Metadata = {
   title: 'BMI Calculator – Calculate Your Body Mass Index Free',

@@ -20,7 +20,7 @@ export default function Footer() {
 
         <div>
           <p className="text-base font-semibold text-zinc-200 mb-3">Good Patrone</p>
-          <p className="text-sm text-zinc-500 leading-relaxed mb-3">Free online tools. No sign-up needed.</p>
+          <p className="text-sm text-zinc-500 leading-relaxed mb-3">Free online tools. <br></br> No sign-up needed.</p>
           <p className="text-sm text-zinc-600">© 2026</p>
         </div>
 

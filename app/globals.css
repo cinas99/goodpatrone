@@ -170,6 +170,26 @@
   margin: 2rem 0;
 }
 
+/* BMI slider thumb — black fill with white border */
+input[type="range"].bmi-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #000;
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
+input[type="range"].bmi-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #000;
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
