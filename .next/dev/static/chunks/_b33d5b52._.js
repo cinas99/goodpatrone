@@ -44,7 +44,7 @@ const companyLinks = [
 ];
 function Footer() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
-        className: "border-t border-zinc-800 px-8 py-12",
+        className: "border-t border-zinc-800 px-8 py-6",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "max-w-3xl mx-auto grid grid-cols-3 gap-10",
             children: [
@@ -60,16 +60,8 @@ function Footer() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "text-sm text-zinc-500 leading-relaxed mb-3",
-                            children: [
-                                "Free online tools. ",
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
-                                    fileName: "[project]/app/components/Footer.tsx",
-                                    lineNumber: 23,
-                                    columnNumber: 88
-                                }, this),
-                                " No sign-up needed."
-                            ]
-                        }, void 0, true, {
+                            children: "Free online tools. No sign-up needed."
+                        }, void 0, false, {
                             fileName: "[project]/app/components/Footer.tsx",
                             lineNumber: 23,
                             columnNumber: 11
@@ -2751,4 +2743,14 @@ const ShieldCheck = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_mod
  //# sourceMappingURL=shield-check.js.map
 }),
 "[project]/node_modules/lucide-react/dist/esm/icons/shield-check.js [app-client] (ecmascript) <export default as ShieldCheck>", ((__turbopack_context__) => {
-"use strict"
+"use strict";
+
+__turbopack_context__.s([
+    "ShieldCheck",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"]
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/shield-check.js [app-client] (ecmascript)");
+}),
+]);
+
+//# sourceMappingURL=_b33d5b52._.js.map

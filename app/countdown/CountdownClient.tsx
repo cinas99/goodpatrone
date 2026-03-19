@@ -15,14 +15,21 @@ const PRESETS = [
   { label: '5 hours', ms:  5 * 3600000 },
 ];
 
-type SoundMode = 'off' | 'chime' | 'fanfare' | 'sonar' | 'siren';
+type SoundMode = 'off' | 'chime' | 'fanfare' | 'sonar' | 'siren' | 'mp3-1' | 'mp3-2' | 'mp3-3' | 'mp3-4';
 
-const SOUND_OPTIONS: { key: SoundMode; label: string; emoji: string }[] = [
-  { key: 'off',    label: 'Silence', emoji: '🔇' },
-  { key: 'chime',  label: 'Chime',   emoji: '🔔' },
-  { key: 'fanfare',label: 'Fanfare', emoji: '🎵' },
-  { key: 'sonar',  label: 'Sonar',   emoji: '📡' },
-  { key: 'siren',  label: 'Siren',   emoji: '🚨' },
+const SYNTH_OPTIONS: { key: SoundMode; label: string; emoji: string }[] = [
+  { key: 'off',     label: 'Silence', emoji: '🔇' },
+  { key: 'chime',   label: 'Chime',   emoji: '🔔' },
+  { key: 'fanfare', label: 'Fanfare', emoji: '🎵' },
+  { key: 'sonar',   label: 'Sonar',   emoji: '📡' },
+  { key: 'siren',   label: 'Siren',   emoji: '🚨' },
+];
+
+const MP3_SOUNDS: { key: SoundMode; label: string; src: string; img: string }[] = [
+  { key: 'mp3-1', label: 'Sound 1', src: '/sounds/sound1.mp3', img: '/sounds/img/sound1.jpg' },
+  { key: 'mp3-2', label: 'Sound 2', src: '/sounds/sound2.mp3', img: '/sounds/img/sound2.jpg' },
+  { key: 'mp3-3', label: 'Sound 3', src: '/sounds/sound3.mp3', img: '/sounds/img/sound3.jpg' },
+  { key: 'mp3-4', label: 'Sound 4', src: '/sounds/sound4.mp3', img: '/sounds/img/sound4.jpg' },
 ];
 
 function formatDisplay(ms: number) {
@@ -41,7 +48,7 @@ function stopSound(ref: IntervalRef) {
 }
 
 function playSound(mode: SoundMode, loop: boolean, ref: IntervalRef) {
-  if (mode === 'off') return;
+  if (mode === 'off' || mode.startsWith('mp3-')) return;
   stopSound(ref);
   try {
     const fire = () => {
@@ -57,31 +64,19 @@ function playSound(mode: SoundMode, loop: boolean, ref: IntervalRef) {
         o.start(start); o.stop(start + dur);
       };
       const t = ctx.currentTime;
-
-      // 🔔 Chime — pure harmonic bell tone, natural decay
       if (mode === 'chime') {
-        osc(523,  t + 0.0, 3.5, 0.6);
-        osc(1047, t + 0.0, 2.8, 0.25);
-        osc(1568, t + 0.0, 2.2, 0.12);
-        osc(2093, t + 0.0, 1.5, 0.06);
+        osc(523, t + 0.0, 3.5, 0.6); osc(1047, t + 0.0, 2.8, 0.25);
+        osc(1568, t + 0.0, 2.2, 0.12); osc(2093, t + 0.0, 1.5, 0.06);
       }
-
-      // 🎵 Fanfare — ascending C-E-G-C arpeggio, uplifting
       if (mode === 'fanfare') {
-        osc(523,  t + 0.00, 0.35, 0.5);
-        osc(659,  t + 0.22, 0.35, 0.5);
-        osc(784,  t + 0.44, 0.35, 0.5);
-        osc(1047, t + 0.66, 0.9,  0.55);
-        osc(1047, t + 0.66, 0.9,  0.2, 'triangle');
+        osc(523, t + 0.00, 0.35, 0.5); osc(659, t + 0.22, 0.35, 0.5);
+        osc(784, t + 0.44, 0.35, 0.5); osc(1047, t + 0.66, 0.9, 0.55);
+        osc(1047, t + 0.66, 0.9, 0.2, 'triangle');
       }
-
-      // 📡 Sonar — three descending pings, distinct and audible
       if (mode === 'sonar') {
         [0, 1.1, 2.2].forEach(offset => {
-          const o = ctx.createOscillator();
-          const g = ctx.createGain();
-          o.connect(g); g.connect(ctx.destination);
-          o.type = 'sine';
+          const o = ctx.createOscillator(); const g = ctx.createGain();
+          o.connect(g); g.connect(ctx.destination); o.type = 'sine';
           o.frequency.setValueAtTime(900, t + offset);
           o.frequency.exponentialRampToValueAtTime(320, t + offset + 0.7);
           g.gain.setValueAtTime(0.55, t + offset);
@@ -89,25 +84,21 @@ function playSound(mode: SoundMode, loop: boolean, ref: IntervalRef) {
           o.start(t + offset); o.stop(t + offset + 1.0);
         });
       }
-
-      // 🚨 Siren — two-tone urgent alternating siren
       if (mode === 'siren') {
         for (let i = 0; i < 4; i++) {
-          osc(960,  t + i * 0.55 + 0.00, 0.25, 0.55, 'sawtooth');
+          osc(960, t + i * 0.55 + 0.00, 0.25, 0.55, 'sawtooth');
           osc(1280, t + i * 0.55 + 0.28, 0.25, 0.55, 'sawtooth');
         }
       }
     };
-
     fire();
-
     if (loop) {
-      const intervals: Record<SoundMode, number> = { off: 0, chime: 4500, fanfare: 3000, sonar: 3500, siren: 2400 };
-      const interval = intervals[mode];
-      let totalElapsed = 0;
+      const intervals: Record<string, number> = { chime: 4500, fanfare: 3000, sonar: 3500, siren: 2400 };
+      const interval = intervals[mode] ?? 4000;
+      let total = 0;
       ref.current = setInterval(() => {
-        totalElapsed += interval;
-        if (totalElapsed >= 30000) { stopSound(ref); return; }
+        total += interval;
+        if (total >= 30000) { stopSound(ref); return; }
         fire();
       }, interval);
     }
@@ -124,13 +115,40 @@ export default function CountdownClient() {
   const [customH,   setCustomH]   = useState('0');
   const [customM,   setCustomM]   = useState('10');
   const [customS,   setCustomS]   = useState('0');
-  const startRef    = useRef<number | null>(null);
-  const baseRef     = useRef(0);
-  const frameRef    = useRef<number | null>(null);
-  const soundRef    = useRef<ReturnType<typeof setInterval> | null>(null);
+  const startRef     = useRef<number | null>(null);
+  const baseRef      = useRef(0);
+  const frameRef     = useRef<number | null>(null);
+  const soundRef     = useRef<ReturnType<typeof setInterval> | null>(null);
   const loopSoundRef = useRef(loopSound);
+  const mp3Ref       = useRef<HTMLAudioElement | null>(null);
+  const mp3LoopRef   = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  useEffect(() => () => stopSound(soundRef), []);
+  const stopMp3 = () => {
+    if (mp3Ref.current) { mp3Ref.current.pause(); mp3Ref.current = null; }
+    if (mp3LoopRef.current) { clearInterval(mp3LoopRef.current); mp3LoopRef.current = null; }
+  };
+
+  const playMp3 = (src: string, loop: boolean) => {
+    stopMp3();
+    const fire = () => {
+      const audio = new Audio(src);
+      mp3Ref.current = audio;
+      audio.play().catch(() => {});
+    };
+    fire();
+    if (loop) {
+      let total = 0;
+      mp3LoopRef.current = setInterval(() => {
+        total += 5000;
+        if (total >= 30000) { stopMp3(); return; }
+        fire();
+      }, 5000);
+    }
+  };
+
+  const stopAll = () => { stopSound(soundRef); stopMp3(); };
+
+  useEffect(() => () => stopAll(), []);
 
   useEffect(() => {
     if (running) {
@@ -139,7 +157,14 @@ export default function CountdownClient() {
         const delta = baseRef.current + (performance.now() - startRef.current!);
         if (delta >= target) {
           setElapsed(target); setRunning(false); setDone(true);
-          playSound(soundMode, loopSoundRef.current, soundRef); return;
+          const mode = soundMode;
+          if (mode.startsWith('mp3-')) {
+            const mp3 = MP3_SOUNDS.find(s => s.key === mode);
+            if (mp3) playMp3(mp3.src, loopSoundRef.current);
+          } else {
+            playSound(mode, loopSoundRef.current, soundRef);
+          }
+          return;
         }
         setElapsed(delta);
         frameRef.current = requestAnimationFrame(tick);
@@ -154,8 +179,7 @@ export default function CountdownClient() {
 
   const applyMs = (ms: number) => {
     if (ms <= 0) return;
-    stopSound(soundRef);
-    setRunning(false); setElapsed(0); baseRef.current = 0; setDone(false); setTarget(ms);
+    stopAll(); setRunning(false); setElapsed(0); baseRef.current = 0; setDone(false); setTarget(ms);
   };
 
   const applyPreset = (ms: number) => {
@@ -166,16 +190,26 @@ export default function CountdownClient() {
   };
 
   const onFieldChange = (h: string, m: string, s: string) => {
-    const ms = (parseInt(h) || 0) * 3600000
-             + (parseInt(m) || 0) * 60000
-             + (parseInt(s) || 0) * 1000;
+    const ms = (parseInt(h) || 0) * 3600000 + (parseInt(m) || 0) * 60000 + (parseInt(s) || 0) * 1000;
     applyMs(ms);
   };
 
-  const reset = () => { stopSound(soundRef); setRunning(false); setElapsed(0); baseRef.current = 0; setDone(false); };
+  const reset = () => { stopAll(); setRunning(false); setElapsed(0); baseRef.current = 0; setDone(false); };
 
-  const remaining = Math.max(0, target - elapsed);
-  const isNearEnd = remaining < 10000 && running && !done;
+  const handleSelectSound = (mode: SoundMode) => {
+    setSoundMode(mode);
+    // preview on select
+    if (mode.startsWith('mp3-')) {
+      const mp3 = MP3_SOUNDS.find(s => s.key === mode);
+      if (mp3) playMp3(mp3.src, false);
+    } else if (mode !== 'off') {
+      playSound(mode, false, soundRef);
+    }
+  };
+
+  const remaining  = Math.max(0, target - elapsed);
+  const isNearEnd  = remaining < 10000 && running && !done;
+  const isMp3Mode  = soundMode.startsWith('mp3-');
 
   return (
     <ToolWrapper
@@ -204,11 +238,13 @@ export default function CountdownClient() {
         </div>
 
         {/* Sound */}
-        <div className="space-y-3">
+        <div className="space-y-4">
           <p className="text-sm text-zinc-500 uppercase tracking-widest font-medium">Alert sound</p>
+
+          {/* Synth options */}
           <div className="flex flex-wrap gap-3">
-            {SOUND_OPTIONS.map(s => (
-              <button key={s.key} onClick={() => setSoundMode(s.key)}
+            {SYNTH_OPTIONS.map(s => (
+              <button key={s.key} onClick={() => handleSelectSound(s.key)}
                 className={`px-5 py-3 rounded-full border text-sm font-medium transition-all flex items-center gap-2 ${
                   soundMode === s.key
                     ? 'border-emerald-500 text-emerald-400 bg-emerald-950/30'
@@ -219,10 +255,38 @@ export default function CountdownClient() {
             ))}
           </div>
 
-          {/* Once / 30s + preview — one minimal row */}
+          {/* MP3 image buttons */}
+          <div className="grid grid-cols-4 gap-3">
+            {MP3_SOUNDS.map(s => (
+              <button key={s.key} onClick={() => handleSelectSound(s.key)}
+                className={`relative h-24 rounded-2xl overflow-hidden border-2 transition-all active:scale-95 ${
+                  soundMode === s.key
+                    ? 'border-emerald-500 shadow-lg shadow-emerald-500/20'
+                    : 'border-zinc-700 hover:border-zinc-500'
+                }`}
+                style={{ backgroundImage: `url(${s.img})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+              >
+                <div className={`absolute inset-0 transition-colors ${soundMode === s.key ? 'bg-black/30' : 'bg-black/50'}`} />
+                <span className="relative z-10 text-xs font-bold text-white drop-shadow">{s.label}</span>
+                {soundMode === s.key && (
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-400 shadow-sm" />
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Preview + Once/30s */}
           {soundMode !== 'off' && (
             <div className="flex items-center gap-4">
-              <button onClick={() => playSound(soundMode, false, soundRef)}
+              <button
+                onClick={() => {
+                  if (isMp3Mode) {
+                    const mp3 = MP3_SOUNDS.find(s => s.key === soundMode);
+                    if (mp3) playMp3(mp3.src, false);
+                  } else {
+                    playSound(soundMode, false, soundRef);
+                  }
+                }}
                 className="text-sm text-emerald-500 hover:text-emerald-400 font-semibold transition-colors">
                 Preview
               </button>
@@ -279,7 +343,7 @@ export default function CountdownClient() {
             }
           </button>
           {done && soundMode !== 'off' ? (
-            <button onClick={() => stopSound(soundRef)}
+            <button onClick={stopAll}
               className="w-14 h-14 rounded-full bg-red-600/20 border border-red-500/30 flex items-center justify-center text-red-400 hover:bg-red-600/40 transition-all active:scale-95">
               <VolumeX size={18} strokeWidth={1.8} />
             </button>
@@ -288,7 +352,7 @@ export default function CountdownClient() {
           )}
         </div>
 
-        {/* Custom time — below controls, auto-apply on change */}
+        {/* Custom time */}
         <div className="space-y-3 pt-2 border-t border-zinc-800">
           <p className="text-sm text-zinc-500 uppercase tracking-widest font-medium pt-2">Custom time</p>
           <div className="grid grid-cols-3 gap-4">
@@ -298,9 +362,7 @@ export default function CountdownClient() {
               { val: customS, label: 'Seconds', max: 59, onChange: (v: string) => { setCustomS(v); onFieldChange(customH, customM, v); } },
             ].map(f => (
               <div key={f.label} className="space-y-2">
-                <label className="text-xs text-zinc-500 uppercase tracking-widest font-medium block text-center">
-                  {f.label}
-                </label>
+                <label className="text-xs text-zinc-500 uppercase tracking-widest font-medium block text-center">{f.label}</label>
                 <input
                   type="number" min={0} max={f.max} value={f.val}
                   onChange={e => f.onChange(e.target.value)}

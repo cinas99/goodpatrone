@@ -102,28 +102,26 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
-function formatTime(ms, showMs = true) {
+function formatTime(ms) {
     const h = Math.floor(ms / 3600000);
     const m = Math.floor(ms % 3600000 / 60000);
     const s = Math.floor(ms % 60000 / 1000);
-    const cs = Math.floor(ms % 1000 / 10);
     const hh = String(h).padStart(2, '0');
     const mm = String(m).padStart(2, '0');
     const ss = String(s).padStart(2, '0');
-    const cc = String(cs).padStart(2, '0');
-    if (!showMs) return h > 0 ? `${hh}:${mm}:${ss}` : `${mm}:${ss}`;
-    return h > 0 ? `${hh}:${mm}:${ss}.${cc}` : `${mm}:${ss}.${cc}`;
+    return h > 0 ? `${hh}:${mm}:${ss}` : `${mm}:${ss}`;
 }
-function formatLapDelta(delta) {
-    const sign = delta >= 0 ? '+' : '-';
-    const abs = Math.abs(delta);
-    return `${sign}${Math.floor(abs / 1000)}.${String(Math.floor(abs % 1000 / 10)).padStart(2, '0')}s`;
+function formatMs(ms) {
+    return String(Math.floor(ms % 1000)).padStart(3, '0');
+}
+function formatFlag(ms) {
+    return `${formatTime(ms)}.${formatMs(ms)}`;
 }
 function StopwatchClient() {
     _s();
     const [running, setRunning] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [elapsed, setElapsed] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
-    const [laps, setLaps] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [flags, setFlags] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const startRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     const baseRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
     const frameRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
@@ -151,43 +149,28 @@ function StopwatchClient() {
     }["StopwatchClient.useEffect"], [
         running
     ]);
-    const handleLap = ()=>{
+    const handleFlag = ()=>{
         if (!running) return;
-        const lastTotal = laps.length > 0 ? laps[laps.length - 1].total : 0;
-        setLaps((prev)=>[
+        setFlags((prev)=>[
                 ...prev,
-                {
-                    index: prev.length + 1,
-                    total: elapsed,
-                    split: elapsed - lastTotal
-                }
+                elapsed
             ]);
-    };
-    const handleTrash = ()=>{
-        setRunning(false);
-        baseRef.current = 0;
-        setElapsed(0);
-        setLaps([]);
     };
     const handleReset = ()=>{
         setRunning(false);
-        setElapsed(0);
         baseRef.current = 0;
-        setLaps([]);
+        setElapsed(0);
+        setFlags([]);
     };
-    const splits = laps.map((l)=>l.split);
-    const minSplit = laps.length > 1 ? Math.min(...splits) : null;
-    const maxSplit = laps.length > 1 ? Math.max(...splits) : null;
-    const avgSplit = laps.length > 0 ? splits.reduce((a, b)=>a + b, 0) / splits.length : null;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ToolWrapper$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
         title: "Stopwatch",
-        subtitle: "Measure time with lap tracking",
+        subtitle: "Measure time and mark moments",
         icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$timer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Timer$3e$__["Timer"], {
             size: 17,
             className: "text-gray-400"
         }, void 0, false, {
             fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-            lineNumber: 79,
+            lineNumber: 63,
             columnNumber: 13
         }, void 0),
         adSlot: "stopwatch",
@@ -197,265 +180,275 @@ function StopwatchClient() {
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "text-[64px] md:text-[80px] font-black tracking-tighter tabular-nums text-white leading-none",
-                        children: formatTime(elapsed).split('.')[0]
+                        children: formatTime(elapsed)
                     }, void 0, false, {
                         fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                        lineNumber: 85,
+                        lineNumber: 69,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "text-3xl font-bold text-gray-500 tabular-nums mt-1",
                         children: [
                             ".",
-                            formatTime(elapsed).split('.')[1] ?? '00'
+                            formatMs(elapsed)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                        lineNumber: 88,
+                        lineNumber: 72,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                lineNumber: 84,
+                lineNumber: 68,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex items-center justify-center gap-3 mb-8",
+                className: "flex items-end justify-center gap-5 mb-8",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: running ? handleLap : handleReset,
-                        disabled: !running && elapsed === 0,
-                        className: "w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white transition-all disabled:opacity-20 active:scale-95",
-                        children: running ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$flag$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Flag$3e$__["Flag"], {
-                            size: 18,
-                            strokeWidth: 1.8
-                        }, void 0, false, {
-                            fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                            lineNumber: 102,
-                            columnNumber: 15
-                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$rotate$2d$ccw$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__RotateCcw$3e$__["RotateCcw"], {
-                            size: 18,
-                            strokeWidth: 1.8
-                        }, void 0, false, {
-                            fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                            lineNumber: 103,
-                            columnNumber: 15
-                        }, this)
-                    }, void 0, false, {
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex flex-col items-center gap-1.5",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: handleReset,
+                                disabled: elapsed === 0,
+                                className: "w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white transition-all disabled:opacity-20 active:scale-95",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$rotate$2d$ccw$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__RotateCcw$3e$__["RotateCcw"], {
+                                    size: 18,
+                                    strokeWidth: 1.8
+                                }, void 0, false, {
+                                    fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                                    lineNumber: 86,
+                                    columnNumber: 13
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                                lineNumber: 82,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-[10px] text-gray-600 uppercase tracking-widest",
+                                children: "Reset"
+                            }, void 0, false, {
+                                fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                                lineNumber: 88,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                        lineNumber: 97,
+                        lineNumber: 81,
                         columnNumber: 9
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: ()=>setRunning((r)=>!r),
-                        className: `w-20 h-20 rounded-full flex items-center justify-center text-white transition-all active:scale-95 shadow-lg ${running ? 'bg-red-600/80 hover:bg-red-600 border border-red-500/50' : 'bg-emerald-700/80 hover:bg-emerald-700 border border-emerald-600/50'}`,
-                        children: running ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$pause$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Pause$3e$__["Pause"], {
-                            size: 26,
-                            strokeWidth: 2
-                        }, void 0, false, {
-                            fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                            lineNumber: 116,
-                            columnNumber: 15
-                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$play$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Play$3e$__["Play"], {
-                            size: 26,
-                            strokeWidth: 2,
-                            className: "ml-1"
-                        }, void 0, false, {
-                            fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                            lineNumber: 117,
-                            columnNumber: 15
-                        }, this)
-                    }, void 0, false, {
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex flex-col items-center gap-1.5",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: ()=>setRunning((r)=>!r),
+                                className: `w-20 h-20 rounded-full flex items-center justify-center text-white transition-all active:scale-95 shadow-lg ${running ? 'bg-red-600/80 hover:bg-red-600 border border-red-500/50' : 'bg-emerald-700/80 hover:bg-emerald-700 border border-emerald-600/50'}`,
+                                children: running ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$pause$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Pause$3e$__["Pause"], {
+                                    size: 26,
+                                    strokeWidth: 2
+                                }, void 0, false, {
+                                    fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                                    lineNumber: 101,
+                                    columnNumber: 17
+                                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$play$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Play$3e$__["Play"], {
+                                    size: 26,
+                                    strokeWidth: 2,
+                                    className: "ml-1"
+                                }, void 0, false, {
+                                    fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                                    lineNumber: 102,
+                                    columnNumber: 17
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                                lineNumber: 93,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-[10px] text-gray-600 uppercase tracking-widest",
+                                children: running ? 'Pause' : 'Start'
+                            }, void 0, false, {
+                                fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                                lineNumber: 105,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                        lineNumber: 108,
+                        lineNumber: 92,
                         columnNumber: 9
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: handleTrash,
-                        className: "w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-red-600/20 hover:border-red-500/30 hover:text-red-400 transition-all active:scale-95",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__["Trash2"], {
-                            size: 18,
-                            strokeWidth: 1.8
-                        }, void 0, false, {
-                            fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                            lineNumber: 125,
-                            columnNumber: 11
-                        }, this)
-                    }, void 0, false, {
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex flex-col items-center gap-1.5",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: handleFlag,
+                                disabled: !running,
+                                className: `w-20 h-20 rounded-full flex items-center justify-center transition-all active:scale-95 shadow-lg disabled:opacity-20 ${running ? 'bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-amber-400 hover:text-amber-300' : 'bg-white/5 border border-white/10 text-gray-500'}`,
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$flag$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Flag$3e$__["Flag"], {
+                                    size: 26,
+                                    strokeWidth: 1.8
+                                }, void 0, false, {
+                                    fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                                    lineNumber: 118,
+                                    columnNumber: 13
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                                lineNumber: 110,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-[10px] text-gray-600 uppercase tracking-widest",
+                                children: "Mark"
+                            }, void 0, false, {
+                                fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                                lineNumber: 120,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                        lineNumber: 122,
+                        lineNumber: 109,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex flex-col items-center gap-1.5",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: ()=>setFlags([]),
+                                disabled: flags.length === 0,
+                                className: "w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-red-600/20 hover:border-red-500/30 hover:text-red-400 transition-all disabled:opacity-20 active:scale-95",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__["Trash2"], {
+                                    size: 18,
+                                    strokeWidth: 1.8
+                                }, void 0, false, {
+                                    fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                                    lineNumber: 129,
+                                    columnNumber: 13
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                                lineNumber: 125,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-[10px] text-gray-600 uppercase tracking-widest",
+                                children: "Clear"
+                            }, void 0, false, {
+                                fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                                lineNumber: 131,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                        lineNumber: 124,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                lineNumber: 94,
+                lineNumber: 78,
                 columnNumber: 7
             }, this),
-            laps.length >= 2 && avgSplit !== null && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "grid grid-cols-3 gap-2 mb-4",
-                children: [
-                    {
-                        label: 'Fastest',
-                        val: formatTime(minSplit, false),
-                        color: 'text-emerald-400'
-                    },
-                    {
-                        label: 'Average',
-                        val: formatTime(Math.round(avgSplit), false),
-                        color: 'text-slate-300'
-                    },
-                    {
-                        label: 'Slowest',
-                        val: formatTime(maxSplit, false),
-                        color: 'text-red-400'
-                    }
-                ].map((s)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex flex-col items-center p-3 bg-white/5 border border-white/8 rounded-xl text-center",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: `text-sm font-black tabular-nums ${s.color}`,
-                                children: s.val
-                            }, void 0, false, {
-                                fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                                lineNumber: 139,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "text-[10px] text-gray-600 mt-0.5 uppercase tracking-wider",
-                                children: s.label
-                            }, void 0, false, {
-                                fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                                lineNumber: 140,
-                                columnNumber: 15
-                            }, this)
-                        ]
-                    }, s.label, true, {
-                        fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                        lineNumber: 138,
-                        columnNumber: 13
-                    }, this))
-            }, void 0, false, {
-                fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                lineNumber: 132,
-                columnNumber: 9
-            }, this),
-            laps.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "border border-white/8 rounded-xl overflow-hidden",
+            flags.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "rounded-xl overflow-hidden border border-white/8",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "grid grid-cols-4 px-4 py-2 bg-white/5 border-b border-white/8 text-[10px] text-gray-600 uppercase tracking-widest",
+                        className: "flex items-center justify-between px-4 py-3.5 bg-yellow-500/10 border-b border-yellow-500/20",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                children: "Lap"
-                            }, void 0, false, {
+                                className: "text-xs font-bold text-yellow-400 flex items-center gap-1.5",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        children: "🥇"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                                        lineNumber: 143,
+                                        columnNumber: 15
+                                    }, this),
+                                    " Reference"
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                                lineNumber: 150,
+                                lineNumber: 142,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "text-right",
-                                children: "Split"
+                                className: "text-sm font-black tabular-nums text-yellow-300 tracking-tight",
+                                children: formatFlag(flags[0])
                             }, void 0, false, {
                                 fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                                lineNumber: 151,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "text-right",
-                                children: "+/− avg"
-                            }, void 0, false, {
-                                fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                                lineNumber: 152,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "text-right",
-                                children: "Total"
-                            }, void 0, false, {
-                                fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                                lineNumber: 153,
+                                lineNumber: 145,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                        lineNumber: 149,
+                        lineNumber: 141,
                         columnNumber: 11
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    flags.length > 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "max-h-52 overflow-y-auto",
-                        children: [
-                            ...laps
-                        ].reverse().map((lap)=>{
-                            const isFastest = minSplit !== null && lap.split === minSplit && laps.length > 1;
-                            const isSlowest = maxSplit !== null && lap.split === maxSplit && laps.length > 1;
-                            const delta = avgSplit !== null ? lap.split - avgSplit : null;
-                            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: `grid grid-cols-4 px-4 py-2.5 border-b border-white/5 last:border-0 tabular-nums ${isFastest ? 'bg-emerald-950/40' : isSlowest ? 'bg-red-950/30' : 'hover:bg-white/3'}`,
+                        children: flags.slice(1).map((ms, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex items-center justify-between px-4 py-3 border-b border-white/5 last:border-0 hover:bg-white/3",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: `font-semibold text-xs ${isFastest ? 'text-emerald-400' : isSlowest ? 'text-red-400' : 'text-gray-500'}`,
+                                        className: "text-xs text-gray-500 flex items-center gap-1.5",
                                         children: [
-                                            isFastest ? '▲ ' : isSlowest ? '▼ ' : '',
-                                            lap.index
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$flag$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Flag$3e$__["Flag"], {
+                                                size: 11,
+                                                strokeWidth: 1.8,
+                                                className: "text-gray-600"
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
+                                                lineNumber: 157,
+                                                columnNumber: 21
+                                            }, this),
+                                            i + 2
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                                        lineNumber: 165,
+                                        lineNumber: 156,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "text-right text-white font-bold text-xs",
-                                        children: formatTime(lap.split, false)
+                                        className: "text-sm font-black tabular-nums text-white tracking-tight",
+                                        children: formatFlag(ms)
                                     }, void 0, false, {
                                         fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                                        lineNumber: 168,
-                                        columnNumber: 19
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: `text-right text-xs font-semibold ${delta === null ? 'text-gray-600' : delta <= 0 ? 'text-emerald-500' : 'text-red-400'}`,
-                                        children: delta !== null ? formatLapDelta(delta) : '—'
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                                        lineNumber: 169,
-                                        columnNumber: 19
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "text-right text-gray-500 text-xs",
-                                        children: formatTime(lap.total, false)
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                                        lineNumber: 174,
+                                        lineNumber: 160,
                                         columnNumber: 19
                                     }, this)
                                 ]
-                            }, lap.index, true, {
+                            }, i, true, {
                                 fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                                lineNumber: 161,
+                                lineNumber: 154,
                                 columnNumber: 17
-                            }, this);
-                        })
+                            }, this))
                     }, void 0, false, {
                         fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                        lineNumber: 155,
-                        columnNumber: 11
+                        lineNumber: 152,
+                        columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-                lineNumber: 148,
+                lineNumber: 138,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/stopwatch/StopwatchClient.tsx",
-        lineNumber: 76,
+        lineNumber: 60,
         columnNumber: 5
     }, this);
 }
-_s(StopwatchClient, "xWG+zpGNOsALiJdoUQl51MH7GXA=");
+_s(StopwatchClient, "4q826MFAgsBI6Y5ZoMhDWFvhloc=");
 _c = StopwatchClient;
 var _c;
 __turbopack_context__.k.register(_c, "StopwatchClient");

@@ -6,7 +6,7 @@ import {
   TrendingUp, Triangle, Shuffle, DollarSign, Menu, X,
   Info, Mail, ShieldCheck,
 } from 'lucide-react';
-import Footer from './Footer';
+import Footer from './SiteFooter';
 
 const tools = [
   { href: '/bmi',       label: 'BMI Calculator', Icon: Scale         },

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import DaysClient from './DaysClient';
+import DaysClient from './DaysView';
 
 export const metadata: Metadata = {
   title: 'Days Between Dates Calculator – Count Days, Weeks & Months Free',
