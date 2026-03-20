@@ -1,6 +1,28 @@
-[00:00:00.691] Server  LOG     ✓ Ready in 509ms
-[00:00:01.738] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:01.867] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+[00:00:00.669] Server  LOG     ✓ Ready in 490ms
+[00:00:05.121] Server  WARN    ⚠ Cross origin request detected from 192.168.1.10 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[00:00:05.152] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:16.438] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:21.348] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:27.807] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:07.051] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:08.191] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:11.869] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:05.080] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:10.045] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:18.925] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:55.177] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:05:29.162] Server  LOG     ✓ Compiled in 77ms
+[00:05:37.308] Server  LOG     ✓ Compiled in 67ms
+[00:07:40.636] Server  LOG     ✓ Compiled in 39ms
+[00:08:02.458] Server  LOG     ✓ Compiled in 59ms
+[00:08:11.309] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:08:33.357] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:00.454] Server  LOG     ✓ Compiled in 38ms
+[00:10:14.278] Server  LOG     ✓ Compiled in 37ms
+[00:10:19.982] Server  LOG     ✓ Compiled in 31ms
+[00:10:28.906] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:29.079] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -13,149 +35,41 @@ It can also happen if the client has a browser extension installed which messes 
 https://react.dev/link/hydration-mismatch
 
   ...
-    <LoadingBoundary name="bmi/" loading={null}>
-      <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
-        <RedirectBoundary>
-          <RedirectErrorBoundary router={{...}}>
-            <InnerLayoutRouter url="/bmi" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} segmentPath={[...]} ...>
-              <SegmentViewNode type="page" pagePath="bmi/page.tsx">
-                <SegmentTrieNode>
-                <BMIPage>
-                  <BMIClient>
-                    <ToolWrapper title="BMI Calcul..." subtitle="Body mass ..." icon={<Scale>} adSlot="bmi">
-                      <div style={{width:"100%", ...}}>
-                        <div>
-                        <div>
-                        <div className="space-y-8">
-                          <div>
-                          <div className="space-y-7">
-                            <div className="space-y-3">
-                              <div className="flex items...">
-                                <span className="text-sm text-zinc-500 uppercase tracking-widest font-medium">
-+                                 Weight
--                                 Height
-                                ...
-                              ...
-                            ...
-                          ...
-              ...
-            ...
-
-[00:00:05.497] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:37.756] Server  LOG     ✓ Compiled in 43ms
-[00:02:09.721] Server  LOG     ✓ Compiled in 40ms
-[00:03:56.050] Server  LOG     ✓ Compiled in 19ms
-[00:04:32.547] Server  LOG     ✓ Compiled in 35ms
-[00:05:03.154] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:05:03.275] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-https://react.dev/link/hydration-mismatch
-
-  ...
-    <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
-      <HTTPAccessFallbackErrorBoundary pathname="/currency" notFound={<NotAllowedRootHTTPFallbackError>} ...>
-        <RedirectBoundary>
-          <RedirectErrorBoundary router={{...}}>
-            <Head>
-            <__next_root_layout_boundary__>
-              <SegmentViewNode type="layout" pagePath="layout.tsx">
-                <SegmentTrieNode>
-                <link>
-                <script>
-                <script>
-                <RootLayout>
-                  <html lang="en">
-                    <head>
-                    <body>
-                      <SidebarLayout>
-                        <div className="flex min-h...">
-                          <aside className="hidden md:...">
-                            <Sidebar>
-                              <div className="flex flex-...">
-                                <div>
-                                <nav className="flex flex-...">
-                                  <NavLink>
-                                  <p>
-                                  <NavLink>
-                                  <NavLink>
-                                  <NavLink>
-                                  <NavLink>
-+                                 <p
-+                                   className="px-3 pt-4 pb-1 text-[10px] font-medium text-zinc-700 uppercase tracking..."
-+                                 >
--                                 <a
--                                   className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text..."
--                                   href="/currency"
--                                 >
+    <ScrollAndFocusHandler segmentPath={[...]}>
+      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="electricity/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <InnerLayoutRouter url="/electricity" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} ...>
+                    <SegmentViewNode type="page" pagePath="electricit...">
+                      <SegmentTrieNode>
+                      <ElectricityPage>
+                        <ElectricityClient>
+                          <ToolWrapper title="Electricity" subtitle="Estimate m..." icon={<Zap>} adSlot="electricity">
+                            <div style={{width:"100%", ...}}>
+                              <div>
+                              <div>
+                              <div className="space-y-8">
+                                <div
++                                 className="flex items-center gap-4"
+-                                 className="flex flex-wrap items-center gap-4"
+                                >
+                                  <p
+                                    className="text-sm text-zinc-500 uppercase tracking-widest font-medium whitespace-..."
+                                  >
++                                   Rate / kWh €
+-                                   Rate / kWh
                                   ...
                                 ...
-                          ...
-            ...
+                    ...
+                  ...
+        ...
 
-[00:05:10.974] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:05:11.106] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-https://react.dev/link/hydration-mismatch
-
-  ...
-    <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
-      <HTTPAccessFallbackErrorBoundary pathname="/currency" notFound={<NotAllowedRootHTTPFallbackError>} ...>
-        <RedirectBoundary>
-          <RedirectErrorBoundary router={{...}}>
-            <Head>
-            <__next_root_layout_boundary__>
-              <SegmentViewNode type="layout" pagePath="layout.tsx">
-                <SegmentTrieNode>
-                <link>
-                <script>
-                <script>
-                <RootLayout>
-                  <html lang="en">
-                    <head>
-                    <body>
-                      <SidebarLayout>
-                        <div className="flex min-h...">
-                          <aside className="hidden md:...">
-                            <Sidebar>
-                              <div className="flex flex-...">
-                                <div>
-                                <nav className="flex flex-...">
-                                  <NavLink>
-                                  <p>
-                                  <NavLink>
-                                  <NavLink>
-                                  <NavLink>
-                                  <NavLink>
-+                                 <p
-+                                   className="px-3 pt-4 pb-1 text-[10px] font-medium text-zinc-700 uppercase tracking..."
-+                                 >
--                                 <a
--                                   className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text..."
--                                   href="/currency"
--                                 >
-                                  ...
-                                ...
-                          ...
-            ...
-
-[00:05:11.855] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:05:11.978] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+[00:10:31.804] Server  LOG     ✓ Compiled in 36ms
+[00:10:35.438] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:35.593] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -168,48 +82,60 @@ It can also happen if the client has a browser extension installed which messes 
 https://react.dev/link/hydration-mismatch
 
   ...
-    <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
-      <HTTPAccessFallbackErrorBoundary pathname="/currency" notFound={<NotAllowedRootHTTPFallbackError>} ...>
-        <RedirectBoundary>
-          <RedirectErrorBoundary router={{...}}>
-            <Head>
-            <__next_root_layout_boundary__>
-              <SegmentViewNode type="layout" pagePath="layout.tsx">
-                <SegmentTrieNode>
-                <link>
-                <script>
-                <script>
-                <RootLayout>
-                  <html lang="en">
-                    <head>
-                    <body>
-                      <SidebarLayout>
-                        <div className="flex min-h...">
-                          <aside className="hidden md:...">
-                            <Sidebar>
-                              <div className="flex flex-...">
-                                <div>
-                                <nav className="flex flex-...">
-                                  <NavLink>
-                                  <p>
-                                  <NavLink>
-                                  <NavLink>
-                                  <NavLink>
-                                  <NavLink>
-+                                 <p
-+                                   className="px-3 pt-4 pb-1 text-[10px] font-medium text-zinc-700 uppercase tracking..."
-+                                 >
--                                 <a
--                                   className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text..."
--                                   href="/currency"
--                                 >
+    <ScrollAndFocusHandler segmentPath={[...]}>
+      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="electricity/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <InnerLayoutRouter url="/electricity" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} ...>
+                    <SegmentViewNode type="page" pagePath="electricit...">
+                      <SegmentTrieNode>
+                      <ElectricityPage>
+                        <ElectricityClient>
+                          <ToolWrapper title="Electricity" subtitle="Estimate m..." icon={<Zap>} adSlot="electricity">
+                            <div style={{width:"100%", ...}}>
+                              <div>
+                              <div>
+                              <div className="space-y-8">
+                                <div
++                                 className="flex items-center gap-4"
+-                                 className="flex flex-wrap items-center gap-4"
+                                >
+                                  <p
+                                    className="text-sm text-zinc-500 uppercase tracking-widest font-medium whitespace-..."
+                                  >
++                                   Rate / kWh €
+-                                   Rate / kWh
                                   ...
                                 ...
-                          ...
-            ...
+                    ...
+                  ...
+        ...
 
-[00:05:15.106] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:05:15.234] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+[00:10:36.622] Server  LOG     ✓ Compiled in 34ms
+[00:11:49.905] Server  LOG     ✓ Compiled in 36ms
+[00:12:01.263] Server  LOG     ✓ Compiled in 37ms
+[00:12:05.468] Server  LOG     ✓ Compiled in 18ms
+[00:12:51.513] Server  LOG     ✓ Compiled in 34ms
+[00:13:40.573] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:14:09.210] Server  LOG     ✓ Compiled in 36ms
+[00:14:14.102] Server  LOG     ✓ Compiled in 31ms
+[00:14:22.339] Server  LOG     ✓ Compiled in 60ms
+[00:15:21.430] Server  LOG     ✓ Compiled in 37ms
+[00:15:26.651] Server  LOG     ✓ Compiled in 37ms
+[00:15:34.174] Server  LOG     ✓ Compiled in 48ms
+[00:15:38.704] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:15:42.587] Server  LOG     ✓ Compiled in 34ms
+[00:15:43.250] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:15:50.869] Server  LOG     ✓ Compiled in 36ms
+[00:15:59.101] Server  LOG     ✓ Compiled in 38ms
+[00:17:20.568] Server  LOG     ✓ Compiled in 34ms
+[00:17:30.231] Server  LOG     ✓ Compiled in 35ms
+[00:17:38.724] Server  LOG     ✓ Compiled in 31ms
+[00:18:54.189] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:18:54.316] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -220,181 +146,6 @@ https://react.dev/link/hydration-mismatch
 It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
 
 https://react.dev/link/hydration-mismatch
-
-  ...
-    <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
-      <HTTPAccessFallbackErrorBoundary pathname="/currency" notFound={<NotAllowedRootHTTPFallbackError>} ...>
-        <RedirectBoundary>
-          <RedirectErrorBoundary router={{...}}>
-            <Head>
-            <__next_root_layout_boundary__>
-              <SegmentViewNode type="layout" pagePath="layout.tsx">
-                <SegmentTrieNode>
-                <link>
-                <script>
-                <script>
-                <RootLayout>
-                  <html lang="en">
-                    <head>
-                    <body>
-                      <SidebarLayout>
-                        <div className="flex min-h...">
-                          <aside className="hidden md:...">
-                            <Sidebar>
-                              <div className="flex flex-...">
-                                <div>
-                                <nav className="flex flex-...">
-                                  <NavLink>
-                                  <p>
-                                  <NavLink>
-                                  <NavLink>
-                                  <NavLink>
-                                  <NavLink>
-+                                 <p
-+                                   className="px-3 pt-4 pb-1 text-[10px] font-medium text-zinc-700 uppercase tracking..."
-+                                 >
--                                 <a
--                                   className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text..."
--                                   href="/currency"
--                                 >
-                                  ...
-                                ...
-                          ...
-            ...
-
-[00:05:24.989] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:06:12.629] Server  LOG     ✓ Compiled in 88ms
-[00:06:49.413] Server  LOG     ✓ Compiled in 51ms
-[00:07:06.041] Server  LOG     ✓ Compiled in 33ms
-[00:08:16.533] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:08:16.533] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-https://react.dev/link/hydration-mismatch
-
-  ...
-    <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
-      <HTTPAccessFallbackErrorBoundary pathname="/currency" notFound={<NotAllowedRootHTTPFallbackError>} ...>
-        <RedirectBoundary>
-          <RedirectErrorBoundary router={{...}}>
-            <Head>
-            <__next_root_layout_boundary__>
-              <SegmentViewNode type="layout" pagePath="layout.tsx">
-                <SegmentTrieNode>
-                <link>
-                <script>
-                <script>
-                <RootLayout>
-                  <html lang="en">
-                    <head>
-                    <body>
-                      <SidebarLayout>
-                        <div className="flex min-h...">
-                          <aside className="hidden md:...">
-                            <Sidebar>
-                              <div className="flex flex-...">
-                                <div>
-                                <nav className="flex flex-...">
-                                  <NavLink>
-                                  <p>
-                                  <NavLink>
-                                  <NavLink>
-                                  <NavLink>
-                                  <NavLink>
-+                                 <p
-+                                   className="px-3 pt-4 pb-1 text-[10px] font-medium text-zinc-700 uppercase tracking..."
-+                                 >
--                                 <a
--                                   className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text..."
--                                   href="/currency"
--                                 >
-                                  ...
-                                ...
-                          ...
-            ...
-
-[00:08:21.252] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:08:37.033] Server  LOG     ✓ Compiled in 51ms
-[04:59:13.614] Server  LOG     ✓ Compiled in 51ms
-[05:07:02.421] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[05:07:02.506] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-https://react.dev/link/hydration-mismatch
-
-  ...
-    <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
-      <HTTPAccessFallbackErrorBoundary pathname="/currency" notFound={<NotAllowedRootHTTPFallbackError>} ...>
-        <RedirectBoundary>
-          <RedirectErrorBoundary router={{...}}>
-            <Head>
-            <__next_root_layout_boundary__>
-              <SegmentViewNode type="layout" pagePath="layout.tsx">
-                <SegmentTrieNode>
-                <link>
-                <script>
-                <script>
-                <RootLayout>
-                  <html lang="en">
-                    <head>
-                    <body>
-                      <SidebarLayout>
-                        <div className="flex min-h...">
-                          <aside className="hidden md:...">
-                            <Sidebar>
-                              <div className="flex flex-...">
-                                <div>
-                                <nav className="flex flex-...">
-                                  <NavLink>
-                                  <p>
-                                  <NavLink>
-                                  <NavLink>
-                                  <NavLink>
-                                  <NavLink>
-+                                 <p
-+                                   className="px-3 pt-4 pb-1 text-[10px] font-medium text-zinc-700 uppercase tracking..."
-+                                 >
--                                 <a
--                                   className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text..."
--                                   href="/currency"
--                                 >
-                                  ...
-                                ...
-                          ...
-            ...
-
-[05:07:10.090] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[05:08:33.684] Server  LOG     ✓ Compiled in 53ms
-[05:09:19.841] Server  LOG     ✓ Compiled in 53ms
-[05:09:49.099] Server  LOG     ✓ Compiled in 28ms
-[05:10:01.558] Server  LOG     ✓ Compiled in 72ms
-[05:10:01.825] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[05:10:01.992] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[05:10:02.583] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-%s%s https://react.dev/link/hydration-mismatch 
 
   ...
     <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
@@ -410,24 +161,20 @@ It can also happen if the client has a browser extension installed which messes 
                       <CurrencyClient>
                         <ToolWrapper title="Currency" subtitle="Live excha..." icon={<DollarSign>} adSlot="currency">
                           <div style={{width:"100%", ...}}>
-                            <div>
-                            <div>
-                            <div className="space-y-8">
+                            <div className="flex items...">
                               <div>
-                              <div className="space-y-2">
-                                <p>
-                                <div
-+                                 className="relative"
--                                 className="relative w-56"
-                                >
-                              ...
+                              <div>
+                                <h1>
+                                <p className="text-base text-zinc-400 mt-2">
++                                 Live exchange rates — EUR, USD, GBP, JPY, CHF
+-                                 Exchange rates — EUR, USD, GBP, JPY, CHF
+                            ...
                   ...
                 ...
       ...
 
-[05:10:11.439] Server  LOG     ✓ Compiled in 35ms
-[05:11:18.324] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[05:11:18.324] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+[00:19:02.410] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:19:02.536] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -438,738 +185,31 @@ It can also happen if the client has a browser extension installed which messes 
 It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
 
 https://react.dev/link/hydration-mismatch
-
-  ...
-    <__next_root_layout_boundary__>
-      <SegmentViewNode type="layout" pagePath="layout.tsx">
-        <SegmentTrieNode>
-        <link>
-        <script>
-        <script>
-        <RootLayout>
-          <html lang="en">
-            <head>
-            <body>
-              <SidebarLayout>
-                <div className="flex min-h...">
-                  <aside className="hidden md:...">
-                    <Sidebar>
-                      <div className="flex flex-...">
-                        <div>
-                        <nav className="flex flex-...">
-                          <NavLink>
-                          <p>
-                          <NavLink href="/bmi" label="BMI Calcul..." Icon={{...}} onClose={undefined}>
-                            <LinkComponent href="/bmi" onClick={undefined} className="flex items...">
-                              <a
-                                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-whi..."
-                                ref={function}
-                                onClick={function onClick}
-                                onMouseEnter={function onMouseEnter}
-                                onTouchStart={function onTouchStart}
-+                               href="/bmi"
--                               href="/days"
-                              >
-                                <Scale size={15} className="flex-shrin..." strokeWidth={1.8}>
-                                  <svg
-                                    ref={null}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width={15}
-                                    height={15}
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth={1.8}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-+                                   className="lucide lucide-scale flex-shrink-0 group-hover:text-emerald-400 transiti..."
--                                   className="lucide lucide-calendar-days flex-shrink-0 group-hover:text-emerald-400 ..."
-                                    aria-hidden="true"
-                                  >
-                                    <path
-+                                     d="M12 3v18"
--                                     d="M8 2v4"
-                                    >
-                                    <path
-+                                     d="m19 8 3 8a5 5 0 0 1-6 0zV7"
--                                     d="M16 2v4"
-                                    >
-+                                   <path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1">
--                                   <rect width="18" height="18" x="3" y="4" rx="2">
-                                    ...
-                                ...
-                          ...
-                          ...
-                        ...
-                  ...
-
-[05:11:43.626] Server  LOG     ✓ Compiled in 31ms
-[05:11:44.628] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[05:11:44.740] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-https://react.dev/link/hydration-mismatch
-
-  ...
-    <__next_root_layout_boundary__>
-      <SegmentViewNode type="layout" pagePath="layout.tsx">
-        <SegmentTrieNode>
-        <link>
-        <script>
-        <script>
-        <RootLayout>
-          <html lang="en">
-            <head>
-            <body>
-              <SidebarLayout>
-                <div className="flex min-h...">
-                  <aside className="hidden md:...">
-                    <Sidebar>
-                      <div className="flex flex-...">
-                        <div>
-                        <nav className="flex flex-...">
-                          <NavLink>
-                          <p>
-                          <NavLink href="/bmi" label="BMI Calcul..." Icon={{...}} onClose={undefined}>
-                            <LinkComponent href="/bmi" onClick={undefined} className="flex items...">
-                              <a
-                                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-whi..."
-                                ref={function}
-                                onClick={function onClick}
-                                onMouseEnter={function onMouseEnter}
-                                onTouchStart={function onTouchStart}
-+                               href="/bmi"
--                               href="/days"
-                              >
-                                <Scale size={15} className="flex-shrin..." strokeWidth={1.8}>
-                                  <svg
-                                    ref={null}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width={15}
-                                    height={15}
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth={1.8}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-+                                   className="lucide lucide-scale flex-shrink-0 group-hover:text-emerald-400 transiti..."
--                                   className="lucide lucide-calendar-days flex-shrink-0 group-hover:text-emerald-400 ..."
-                                    aria-hidden="true"
-                                  >
-                                    <path
-+                                     d="M12 3v18"
--                                     d="M8 2v4"
-                                    >
-                                    <path
-+                                     d="m19 8 3 8a5 5 0 0 1-6 0zV7"
--                                     d="M16 2v4"
-                                    >
-+                                   <path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1">
--                                   <rect width="18" height="18" x="3" y="4" rx="2">
-                                    ...
-                                ...
-                          ...
-                          ...
-                        ...
-                  ...
-
-[05:11:45.243] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[05:11:45.371] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-https://react.dev/link/hydration-mismatch
-
-  ...
-    <__next_root_layout_boundary__>
-      <SegmentViewNode type="layout" pagePath="layout.tsx">
-        <SegmentTrieNode>
-        <link>
-        <script>
-        <script>
-        <RootLayout>
-          <html lang="en">
-            <head>
-            <body>
-              <SidebarLayout>
-                <div className="flex min-h...">
-                  <aside className="hidden md:...">
-                    <Sidebar>
-                      <div className="flex flex-...">
-                        <div>
-                        <nav className="flex flex-...">
-                          <NavLink>
-                          <p>
-                          <NavLink href="/bmi" label="BMI Calcul..." Icon={{...}} onClose={undefined}>
-                            <LinkComponent href="/bmi" onClick={undefined} className="flex items...">
-                              <a
-                                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-whi..."
-                                ref={function}
-                                onClick={function onClick}
-                                onMouseEnter={function onMouseEnter}
-                                onTouchStart={function onTouchStart}
-+                               href="/bmi"
--                               href="/days"
-                              >
-                                <Scale size={15} className="flex-shrin..." strokeWidth={1.8}>
-                                  <svg
-                                    ref={null}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width={15}
-                                    height={15}
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth={1.8}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-+                                   className="lucide lucide-scale flex-shrink-0 group-hover:text-emerald-400 transiti..."
--                                   className="lucide lucide-calendar-days flex-shrink-0 group-hover:text-emerald-400 ..."
-                                    aria-hidden="true"
-                                  >
-                                    <path
-+                                     d="M12 3v18"
--                                     d="M8 2v4"
-                                    >
-                                    <path
-+                                     d="m19 8 3 8a5 5 0 0 1-6 0zV7"
--                                     d="M16 2v4"
-                                    >
-+                                   <path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1">
--                                   <rect width="18" height="18" x="3" y="4" rx="2">
-                                    ...
-                                ...
-                          ...
-                          ...
-                        ...
-                  ...
-
-[05:11:51.534] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[05:11:58.773] Server  LOG     ✓ Compiled in 29ms
-[05:12:21.625] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[05:12:21.722] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-https://react.dev/link/hydration-mismatch
-
-  ...
-    <__next_root_layout_boundary__>
-      <SegmentViewNode type="layout" pagePath="layout.tsx">
-        <SegmentTrieNode>
-        <link>
-        <script>
-        <script>
-        <RootLayout>
-          <html lang="en">
-            <head>
-            <body>
-              <SidebarLayout>
-                <div className="flex min-h...">
-                  <aside className="hidden md:...">
-                    <Sidebar>
-                      <div className="flex flex-...">
-                        <div>
-                        <nav className="flex flex-...">
-                          <NavLink>
-                          <p>
-                          <NavLink href="/bmi" label="BMI Calcul..." Icon={{...}} onClose={undefined}>
-                            <LinkComponent href="/bmi" onClick={undefined} className="flex items...">
-                              <a
-                                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-whi..."
-                                ref={function}
-                                onClick={function onClick}
-                                onMouseEnter={function onMouseEnter}
-                                onTouchStart={function onTouchStart}
-+                               href="/bmi"
--                               href="/days"
-                              >
-                                <Scale size={15} className="flex-shrin..." strokeWidth={1.8}>
-                                  <svg
-                                    ref={null}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width={15}
-                                    height={15}
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth={1.8}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-+                                   className="lucide lucide-scale flex-shrink-0 group-hover:text-emerald-400 transiti..."
--                                   className="lucide lucide-calendar-days flex-shrink-0 group-hover:text-emerald-400 ..."
-                                    aria-hidden="true"
-                                  >
-                                    <path
-+                                     d="M12 3v18"
--                                     d="M8 2v4"
-                                    >
-                                    <path
-+                                     d="m19 8 3 8a5 5 0 0 1-6 0zV7"
--                                     d="M16 2v4"
-                                    >
-+                                   <path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1">
--                                   <rect width="18" height="18" x="3" y="4" rx="2">
-                                    ...
-                                ...
-                          ...
-                          ...
-                        ...
-                  ...
-
-[05:12:28.212] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[05:13:24.557] Server  LOG     ✓ Compiled in 20ms
-[05:13:56.738] Server  LOG     ✓ Compiled in 31ms
-[05:16:33.442] Server  LOG     ✓ Compiled in 94ms
-[06:48:35.367] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[06:48:35.367] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-https://react.dev/link/hydration-mismatch
-
-  ...
-    <__next_root_layout_boundary__>
-      <SegmentViewNode type="layout" pagePath="layout.tsx">
-        <SegmentTrieNode>
-        <link>
-        <script>
-        <script>
-        <RootLayout>
-          <html lang="en">
-            <head>
-            <body>
-              <SidebarLayout>
-                <div className="flex min-h...">
-                  <aside className="hidden md:...">
-                    <Sidebar>
-                      <div className="flex flex-...">
-                        <div>
-                        <nav className="flex flex-...">
-                          <NavLink>
-                          <p>
-                          <NavLink href="/bmi" label="BMI Calcul..." Icon={{...}} onClose={undefined}>
-                            <LinkComponent href="/bmi" onClick={undefined} className="flex items...">
-                              <a
-                                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-whi..."
-                                ref={function}
-                                onClick={function onClick}
-                                onMouseEnter={function onMouseEnter}
-                                onTouchStart={function onTouchStart}
-+                               href="/bmi"
--                               href="/days"
-                              >
-                                <Scale size={15} className="flex-shrin..." strokeWidth={1.8}>
-                                  <svg
-                                    ref={null}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width={15}
-                                    height={15}
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth={1.8}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-+                                   className="lucide lucide-scale flex-shrink-0 group-hover:text-emerald-400 transiti..."
--                                   className="lucide lucide-calendar-days flex-shrink-0 group-hover:text-emerald-400 ..."
-                                    aria-hidden="true"
-                                  >
-                                    <path
-+                                     d="M12 3v18"
--                                     d="M8 2v4"
-                                    >
-                                    <path
-+                                     d="m19 8 3 8a5 5 0 0 1-6 0zV7"
--                                     d="M16 2v4"
-                                    >
-+                                   <path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1">
--                                   <rect width="18" height="18" x="3" y="4" rx="2">
-                                    ...
-                                ...
-                          ...
-                          ...
-                        ...
-                  ...
-
-[06:48:40.394] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[06:51:23.420] Server  LOG     ✓ Compiled in 80ms
-[06:51:35.229] Server  LOG     ✓ Compiled in 22ms
-[06:51:43.596] Server  LOG     ✓ Compiled in 46ms
-[06:52:15.835] Server  LOG     ✓ Compiled in 109ms
-[06:53:00.279] Server  LOG     ✓ Compiled in 137ms
-[06:54:30.412] Server  LOG     ✓ Compiled in 51ms
-[06:54:38.738] Server  LOG     ✓ Compiled in 78ms
-[06:54:45.467] Server  LOG     ✓ Compiled in 39ms
-[06:54:51.587] Server  LOG     ✓ Compiled in 83ms
-[06:55:05.051] Server  LOG     ✓ Compiled in 33ms
-[06:55:10.736] Server  LOG     ✓ Compiled in 41ms
-[06:56:14.584] Server  LOG     ✓ Compiled in 94ms
-[06:57:40.213] Server  LOG     ✓ Compiled in 40ms
-[06:58:24.105] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[06:58:25.458] Server  LOG     ✓ Compiled in 88ms
-[06:59:42.423] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[06:59:42.561] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-https://react.dev/link/hydration-mismatch
-
-  ...
-    <__next_root_layout_boundary__>
-      <SegmentViewNode type="layout" pagePath="layout.tsx">
-        <SegmentTrieNode>
-        <link>
-        <script>
-        <script>
-        <RootLayout>
-          <html lang="en">
-            <head>
-            <body>
-              <SidebarLayout>
-                <div className="flex min-h...">
-                  <aside className="hidden md:...">
-                    <Sidebar>
-                      <div className="flex flex-...">
-                        <div>
-                        <nav className="flex flex-...">
-                          <NavLink>
-                          <p>
-                          <NavLink href="/bmi" label="BMI Calcul..." Icon={{...}} onClose={undefined}>
-                            <LinkComponent href="/bmi" onClick={undefined} className="flex items...">
-                              <a
-                                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-whi..."
-                                ref={function}
-                                onClick={function onClick}
-                                onMouseEnter={function onMouseEnter}
-                                onTouchStart={function onTouchStart}
-+                               href="/bmi"
--                               href="/days"
-                              >
-                                <Scale size={15} className="flex-shrin..." strokeWidth={1.8}>
-                                  <svg
-                                    ref={null}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width={15}
-                                    height={15}
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth={1.8}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-+                                   className="lucide lucide-scale flex-shrink-0 group-hover:text-emerald-400 transiti..."
--                                   className="lucide lucide-calendar-days flex-shrink-0 group-hover:text-emerald-400 ..."
-                                    aria-hidden="true"
-                                  >
-                                    <path
-+                                     d="M12 3v18"
--                                     d="M8 2v4"
-                                    >
-                                    <path
-+                                     d="m19 8 3 8a5 5 0 0 1-6 0zV7"
--                                     d="M16 2v4"
-                                    >
-+                                   <path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1">
--                                   <rect width="18" height="18" x="3" y="4" rx="2">
-                                    ...
-                                ...
-                          ...
-                          ...
-                        ...
-                  ...
-
-[06:59:50.098] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[07:00:33.622] Server  LOG     ✓ Compiled in 56ms
-[07:01:27.182] Server  LOG     ✓ Compiled in 123ms
-[07:01:57.015] Server  LOG     ✓ Compiled in 221ms
-[07:02:54.449] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[07:02:54.451] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-%s%s https://react.dev/link/hydration-mismatch 
 
   ...
     <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
       <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
-        <LoadingBoundary name="countdown/" loading={null}>
+        <LoadingBoundary name="currency/" loading={null}>
           <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
             <RedirectBoundary>
               <RedirectErrorBoundary router={{...}}>
-                <InnerLayoutRouter url="/countdown" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} ...>
-                  <SegmentViewNode type="page" pagePath="countdown/...">
+                <InnerLayoutRouter url="/currency" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} ...>
+                  <SegmentViewNode type="page" pagePath="currency/p...">
                     <SegmentTrieNode>
-                    <CountdownPage>
-                      <CountdownClient>
-                        <ToolWrapper title="Countdown" subtitle="Set a time..." icon={<Clock>} adSlot="countdown">
+                    <CurrencyPage>
+                      <CurrencyClient>
+                        <ToolWrapper title="Currency" subtitle="Live excha..." icon={<DollarSign>} adSlot="currency">
                           <div style={{width:"100%", ...}}>
-                            <div>
-                            <div>
-                            <div className="space-y-8">
+                            <div className="flex items...">
                               <div>
                               <div>
-                              <div>
-                              <div className="pt-4 borde...">
-                                <p>
-                                <div
-+                                 className="flex items-center gap-4"
--                                 className="flex items-center gap-3"
-                                >
-                                  <div
-+                                   className="flex-1"
--                                   className="flex-1 min-w-0"
-                                  >
-                                    <div
-+                                     className="text-[72px] md:text-[88px] font-black tracking-tighter tabular-nums l..."
--                                     className="text-[52px] sm:text-[72px] md:text-[88px] font-black tracking-tighter..."
-                                    >
-+                                     10:00
-                                  <button
-                                    onClick={function onClick}
-                                    disabled={false}
-+                                   className="w-20 h-20 rounded-full flex items-center justify-center text-white tran..."
--                                   className="w-14 h-14 sm:w-20 sm:h-20 rounded-full flex items-center justify-center..."
-                                  >
-                                    <Play size={26} strokeWidth={2} className="ml-1">
-                                      <svg
-                                        ref={null}
-                                        xmlns="http://www.w3.org/2000/svg"
-+                                       width={26}
--                                       width="20"
-+                                       height={26}
--                                       height="20"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth={2}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-+                                       className="lucide lucide-play ml-1"
--                                       className="lucide lucide-play ml-0.5"
-                                        aria-hidden="true"
-                                      >
-                                  <button
-                                    onClick={function reset}
-+                                   className="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-cen..."
--                                   className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-white/5 border border-white/1..."
-                                  >
-                                    <RotateCcw size={18} strokeWidth={1.8}>
-                                      <svg
-                                        ref={null}
-                                        xmlns="http://www.w3.org/2000/svg"
-+                                       width={18}
--                                       width="15"
-+                                       height={18}
--                                       height="15"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth={1.8}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        className="lucide lucide-rotate-ccw"
-                                        aria-hidden="true"
-                                      >
+                                <h1>
+                                <p className="text-base text-zinc-400 mt-2">
++                                 Live exchange rates — EUR, USD, GBP, JPY, CHF
+-                                 Exchange rates — EUR, USD, GBP, JPY, CHF
+                            ...
                   ...
                 ...
       ...
 
-[07:02:54.458] Server  LOG     ✓ Compiled in 124ms
-[07:03:00.737] Server  LOG     ✓ Compiled in 55ms
-[07:03:08.121] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[07:03:08.256] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-https://react.dev/link/hydration-mismatch
-
-  ...
-    <__next_root_layout_boundary__>
-      <SegmentViewNode type="layout" pagePath="layout.tsx">
-        <SegmentTrieNode>
-        <link>
-        <script>
-        <script>
-        <RootLayout>
-          <html lang="en">
-            <head>
-            <body>
-              <SidebarLayout>
-                <div className="flex min-h...">
-                  <aside className="hidden md:...">
-                    <Sidebar>
-                      <div className="flex flex-...">
-                        <div>
-                        <nav className="flex flex-...">
-                          <NavLink>
-                          <p>
-                          <NavLink href="/bmi" label="BMI Calcul..." Icon={{...}} onClose={undefined}>
-                            <LinkComponent href="/bmi" onClick={undefined} className="flex items...">
-                              <a
-                                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-whi..."
-                                ref={function}
-                                onClick={function onClick}
-                                onMouseEnter={function onMouseEnter}
-                                onTouchStart={function onTouchStart}
-+                               href="/bmi"
--                               href="/days"
-                              >
-                                <Scale size={15} className="flex-shrin..." strokeWidth={1.8}>
-                                  <svg
-                                    ref={null}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width={15}
-                                    height={15}
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth={1.8}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-+                                   className="lucide lucide-scale flex-shrink-0 group-hover:text-emerald-400 transiti..."
--                                   className="lucide lucide-calendar-days flex-shrink-0 group-hover:text-emerald-400 ..."
-                                    aria-hidden="true"
-                                  >
-                                    <path
-+                                     d="M12 3v18"
--                                     d="M8 2v4"
-                                    >
-                                    <path
-+                                     d="m19 8 3 8a5 5 0 0 1-6 0zV7"
--                                     d="M16 2v4"
-                                    >
-+                                   <path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1">
--                                   <rect width="18" height="18" x="3" y="4" rx="2">
-                                    ...
-                                ...
-                          ...
-                          ...
-                        ...
-                  ...
-
-[07:03:20.267] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[07:05:44.194] Server  LOG     ✓ Compiled in 111ms
-[07:05:54.343] Server  LOG     ✓ Compiled in 80ms
-[07:06:12.032] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[07:06:12.174] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-https://react.dev/link/hydration-mismatch
-
-  ...
-    <__next_root_layout_boundary__>
-      <SegmentViewNode type="layout" pagePath="layout.tsx">
-        <SegmentTrieNode>
-        <link>
-        <script>
-        <script>
-        <RootLayout>
-          <html lang="en">
-            <head>
-            <body>
-              <SidebarLayout>
-                <div className="flex min-h...">
-                  <aside className="hidden md:...">
-                    <Sidebar>
-                      <div className="flex flex-...">
-                        <div>
-                        <nav className="flex flex-...">
-                          <NavLink>
-                          <p>
-                          <NavLink href="/bmi" label="BMI Calcul..." Icon={{...}} onClose={undefined}>
-                            <LinkComponent href="/bmi" onClick={undefined} className="flex items...">
-                              <a
-                                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-whi..."
-                                ref={function}
-                                onClick={function onClick}
-                                onMouseEnter={function onMouseEnter}
-                                onTouchStart={function onTouchStart}
-+                               href="/bmi"
--                               href="/days"
-                              >
-                                <Scale size={15} className="flex-shrin..." strokeWidth={1.8}>
-                                  <svg
-                                    ref={null}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width={15}
-                                    height={15}
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth={1.8}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-+                                   className="lucide lucide-scale flex-shrink-0 group-hover:text-emerald-400 transiti..."
--                                   className="lucide lucide-calendar-days flex-shrink-0 group-hover:text-emerald-400 ..."
-                                    aria-hidden="true"
-                                  >
-                                    <path
-+                                     d="M12 3v18"
--                                     d="M8 2v4"
-                                    >
-                                    <path
-+                                     d="m19 8 3 8a5 5 0 0 1-6 0zV7"
--                                     d="M16 2v4"
-                                    >
-+                                   <path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1">
--                                   <rect width="18" height="18" x="3" y="4" rx="2">
-                                    ...
-                                ...
-                          ...
-                          ...
-                        ...
-                  ...
-
-[07:06:16.910] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:19:06.864] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold

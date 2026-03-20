@@ -262,7 +262,7 @@ export default function CountdownClient() {
           <p className="text-sm text-zinc-500 uppercase tracking-widest font-medium pt-2">Countdown</p>
           <div className="flex items-center gap-3">
             <div className="flex-1 min-w-0">
-              <div className={`text-[52px] sm:text-[72px] md:text-[88px] font-black tracking-tighter tabular-nums leading-none transition-colors duration-500 ${
+              <div className={`text-[40px] sm:text-[60px] md:text-[80px] font-black tracking-tighter tabular-nums leading-none transition-colors duration-500 ${
                 done ? 'text-emerald-400' : isNearEnd ? 'text-red-400' : 'text-white'
               }`}>
                 {formatDisplay(remaining)}

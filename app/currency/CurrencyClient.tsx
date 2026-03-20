@@ -31,7 +31,7 @@ export default function CurrencyClient() {
     setError(false);
     try {
       const targets = CURRENCIES.filter(c => c !== base).join(',');
-      const res = await fetch(`https://api.frankfurter.app/latest?from=${base}&to=${targets}`);
+      const res = await fetch(`https://api.frankfurter.app/latest?from=${base}&to=${targets}`, { cache: 'no-store' });
       if (!res.ok) throw new Error();
       const data = await res.json();
       // include base itself as 1
@@ -59,7 +59,7 @@ export default function CurrencyClient() {
   return (
     <ToolWrapper
       title="Currency"
-      subtitle="Live exchange rates — EUR, USD, GBP, JPY, CHF"
+      subtitle="Exchange rates — EUR, USD, GBP, JPY, CHF"
       icon={<DollarSign size={17} className="text-gray-400" />}
       adSlot="currency"
     >
@@ -105,17 +105,17 @@ export default function CurrencyClient() {
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <p className="text-sm text-zinc-500 uppercase tracking-widest font-medium">Conversions</p>
-            <div className="flex items-center gap-3">
-              {updatedAt && (
-                <span className="text-xs text-zinc-600">Updated {updatedAt}</span>
-              )}
-              <button onClick={fetchRates} disabled={loading}
-                className="flex items-center gap-1.5 text-xs text-emerald-500 hover:text-emerald-400 font-semibold transition-colors disabled:opacity-40">
-                <RefreshCw size={12} strokeWidth={2} className={loading ? 'animate-spin' : ''} />
-                Refresh
-              </button>
-            </div>
+            <button onClick={fetchRates} disabled={loading}
+              className="flex items-center gap-1.5 text-xs text-emerald-500 hover:text-emerald-400 font-semibold transition-colors disabled:opacity-40">
+              <RefreshCw size={12} strokeWidth={2} className={loading ? 'animate-spin' : ''} />
+              Refresh
+            </button>
           </div>
+          {updatedAt && (
+            <p className="text-xs text-zinc-600">
+              Rates from {updatedAt} · ECB publishes once daily at ~16:00 CET
+            </p>
+          )}
 
           {error && (
             <p className="text-sm text-red-400 py-4 text-center">Could not fetch rates. Check your connection and refresh.</p>

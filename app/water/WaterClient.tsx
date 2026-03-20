@@ -2,33 +2,38 @@
 import { useState, useMemo } from 'react';
 import ToolWrapper from '../components/ToolWrapper';
 import { Droplets } from 'lucide-react';
+import { CURRENCY_OPTIONS } from '../../lib/currencies';
 
-type Fixture = { id: string; icon: string; label: string; litersPerUse: number; timesPerDay: number };
+type Fixture = { id: string; icon: string; label: string; litersPerUse: number; timesPerDay: number; enabled: boolean };
 
 const INITIAL: Fixture[] = [
-  { id: 'shower',   icon: '🚿', label: 'Shower',            litersPerUse: 60,  timesPerDay: 1   },
-  { id: 'bath',     icon: '🛁', label: 'Bath',              litersPerUse: 150, timesPerDay: 0   },
-  { id: 'toilet',   icon: '🚽', label: 'Toilet Flush',      litersPerUse: 6,   timesPerDay: 5   },
-  { id: 'tap',      icon: '🚰', label: 'Tap', litersPerUse: 2,   timesPerDay: 8   },
-  { id: 'dishwash', icon: '🍽️', label: 'Dishwasher',        litersPerUse: 12,  timesPerDay: 1   },
-  { id: 'washing',  icon: '👕', label: 'Washing Machine',   litersPerUse: 50,  timesPerDay: 0.5 },
-  { id: 'garden',   icon: '🌱', label: 'Garden / Lawn',     litersPerUse: 500, timesPerDay: 0   },
-  { id: 'carwash',  icon: '🚗', label: 'Car Wash',          litersPerUse: 150, timesPerDay: 0   },
+  { id: 'shower',   icon: '🚿', label: 'Shower',       litersPerUse: 60,  timesPerDay: 1,   enabled: true  },
+  { id: 'bath',     icon: '🛁', label: 'Bath',          litersPerUse: 150, timesPerDay: 0,   enabled: false },
+  { id: 'toilet',   icon: '🚽', label: 'Toilet Flush',  litersPerUse: 6,   timesPerDay: 5,   enabled: true  },
+  { id: 'tap',      icon: '🚰', label: 'Tap',           litersPerUse: 2,   timesPerDay: 8,   enabled: true  },
+  { id: 'dishwash', icon: '🍽️', label: 'Dishes',        litersPerUse: 12,  timesPerDay: 1,   enabled: true  },
+  { id: 'washing',  icon: '👕', label: 'Washer',        litersPerUse: 50,  timesPerDay: 0.5, enabled: true  },
+  { id: 'garden',   icon: '🌱', label: 'Garden',        litersPerUse: 500, timesPerDay: 0,   enabled: false },
+  { id: 'carwash',  icon: '🚗', label: 'Car Wash',      litersPerUse: 150, timesPerDay: 0,   enabled: false },
 ];
 
-const inputCls = 'w-full bg-zinc-900 border border-zinc-800 rounded-lg text-white text-sm text-center px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none';
-
+const inputCls = 'w-full bg-zinc-900 border border-zinc-800 rounded-lg text-white text-sm text-center px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none disabled:opacity-40 disabled:cursor-not-allowed';
 export default function WaterClient() {
-  const [price, setPrice]     = useState(2.5);
+  const [price, setPrice]       = useState(2.5);
+  const [currency, setCurrency] = useState('€');
   const [fixtures, setFixtures] = useState<Fixture[]>(INITIAL);
+  const [showDisabled, setShowDisabled] = useState(false);
 
   const update = (id: string, field: 'litersPerUse' | 'timesPerDay', raw: string) => {
     const v = parseFloat(raw);
     setFixtures(prev => prev.map(f => f.id === id ? { ...f, [field]: isNaN(v) ? 0 : Math.max(0, v) } : f));
   };
 
+  const toggle = (id: string) =>
+    setFixtures(prev => prev.map(f => f.id === id ? { ...f, enabled: !f.enabled } : f));
+
   const { dailyL, monthlyL, bill, aboveAvg, diffPct } = useMemo(() => {
-    const dailyL   = fixtures.reduce((s, f) => s + f.litersPerUse * f.timesPerDay, 0);
+    const dailyL   = fixtures.reduce((s, f) => s + (f.enabled ? f.litersPerUse * f.timesPerDay : 0), 0);
     const monthlyL = dailyL * 30;
     const bill     = (monthlyL / 1000) * price;
     const aboveAvg = dailyL > 150;
@@ -45,14 +50,26 @@ export default function WaterClient() {
     >
       <div className="space-y-8">
 
-        {/* Price input */}
-        <div className="flex items-center gap-4">
-          <p className="text-sm text-zinc-500 uppercase tracking-widest font-medium whitespace-nowrap">Price / m³ €</p>
+        {/* Price + currency */}
+        <div className="flex flex-wrap items-center gap-4">
+          <p className="text-sm text-zinc-500 uppercase tracking-widest font-medium whitespace-nowrap">Price / m³</p>
           <input
             type="number" min={0} step={0.01} value={price}
             onChange={e => setPrice(parseFloat(e.target.value) || 0)}
             className="w-28 bg-zinc-900 border border-zinc-800 rounded-lg text-white text-sm px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
+          <div className="flex gap-1.5">
+            {CURRENCY_OPTIONS.map(({ code, symbol }) => (
+              <button key={code} onClick={() => setCurrency(symbol)}
+                className={`px-2.5 h-8 rounded-lg border text-sm font-semibold transition-all ${
+                  currency === symbol
+                    ? 'border-emerald-500 text-emerald-400 bg-emerald-950/30'
+                    : 'border-zinc-700 text-zinc-500 hover:border-zinc-500 hover:text-zinc-300'
+                }`}>
+                {symbol}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Fixtures table */}
@@ -65,22 +82,47 @@ export default function WaterClient() {
             <span className="text-xs text-zinc-600 uppercase tracking-widest text-right">L / day</span>
           </div>
 
-          {fixtures.map(f => {
-            const daily = f.litersPerUse * f.timesPerDay;
+          {fixtures.filter(f => showDisabled || f.enabled).map(f => {
+            const daily = f.enabled ? f.litersPerUse * f.timesPerDay : 0;
             return (
-              <div key={f.id} className="grid grid-cols-[1fr_80px_80px_64px] gap-2 items-center py-2.5 border-b border-zinc-800/50 last:border-0">
-                <div className="flex items-center gap-2">
-                  <span className="text-base leading-none">{f.icon}</span>
-                  <span className="text-sm text-zinc-300">{f.label}</span>
+              <div key={f.id} className={`grid grid-cols-[1fr_80px_80px_64px] gap-2 items-center py-2.5 border-b border-zinc-800/50 last:border-0 transition-opacity ${!f.enabled ? 'opacity-40' : ''}`}>
+                <div className="flex items-center gap-2 min-w-0">
+                  {/* Checkbox — inside the label column, no grid change */}
+                  <button
+                    onClick={() => toggle(f.id)}
+                    aria-label={f.enabled ? `Disable ${f.label}` : `Enable ${f.label}`}
+                    className={`w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 transition-all ${
+                      f.enabled ? 'bg-emerald-600 border-emerald-500' : 'bg-zinc-800 border-zinc-700'
+                    }`}
+                  >
+                    {f.enabled && (
+                      <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
+                        <path d="M1.5 5L4 7.5L8.5 2.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    )}
+                  </button>
+                  <span className="text-base leading-none flex-shrink-0">{f.icon}</span>
+                  <span className="text-sm text-zinc-300 truncate">{f.label}</span>
                 </div>
-                <input type="number" min={0} step={1}   value={f.litersPerUse} onChange={e => update(f.id, 'litersPerUse', e.target.value)} className={inputCls} />
-                <input type="number" min={0} step={0.1} value={f.timesPerDay}  onChange={e => update(f.id, 'timesPerDay',  e.target.value)} className={inputCls} />
+                <input type="number" min={0} step={1}   value={f.litersPerUse} disabled={!f.enabled} aria-label={`${f.label} liters per use`} onChange={e => update(f.id, 'litersPerUse', e.target.value)} onFocus={e => e.target.select()} className={inputCls} />
+                <input type="number" min={0} step={0.1} value={f.timesPerDay}  disabled={!f.enabled} aria-label={`${f.label} times per day`}  onChange={e => update(f.id, 'timesPerDay',  e.target.value)} onFocus={e => e.target.select()} className={inputCls} />
                 <span className={`text-sm font-semibold tabular-nums text-right ${daily > 0 ? 'text-white' : 'text-zinc-600'}`}>
                   {daily % 1 === 0 ? daily.toFixed(0) : daily.toFixed(1)} L
                 </span>
               </div>
             );
           })}
+
+          {(() => {
+            const hiddenCount = fixtures.filter(f => !f.enabled).length;
+            if (hiddenCount === 0) return null;
+            return (
+              <button onClick={() => setShowDisabled(v => !v)}
+                className="w-full py-2.5 text-xs text-zinc-600 hover:text-zinc-400 uppercase tracking-widest font-medium transition-colors border-t border-zinc-800/50">
+                {showDisabled ? 'Hide disabled fixtures' : `+ ${hiddenCount} disabled fixtures`}
+              </button>
+            );
+          })()}
         </div>
 
         {/* Summary */}
@@ -88,11 +130,11 @@ export default function WaterClient() {
           {[
             { label: 'Daily',   val: `${dailyL.toFixed(0)} L`  },
             { label: 'Monthly', val: `${monthlyL.toFixed(0)} L` },
-            { label: 'Bill',    val: `€${bill.toFixed(2)}`      },
+            { label: 'Bill',    val: `${currency}${bill.toFixed(2)}` },
           ].map(item => (
             <div key={item.label}>
               <p className="text-xs text-zinc-500 uppercase tracking-widest mb-1">{item.label}</p>
-              <p className="text-xl font-black text-white tabular-nums">{item.val}</p>
+              <p className="text-base font-semibold text-white tabular-nums">{item.val}</p>
             </div>
           ))}
         </div>

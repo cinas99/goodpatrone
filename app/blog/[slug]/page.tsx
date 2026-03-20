@@ -70,6 +70,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         className="prose-blog max-w-2xl"
         dangerouslySetInnerHTML={{ __html: html }}
       />
+
+      {/* Back to all articles */}
+      <div className="mt-12 pt-8 border-t border-zinc-800">
+        <Link
+          href="/blog"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-zinc-900 border border-zinc-700 text-sm font-semibold text-zinc-300 hover:border-emerald-600 hover:text-emerald-400 transition-all">
+          <ArrowLeft size={15} strokeWidth={2} />
+          All articles
+        </Link>
+      </div>
     </ToolWrapper>
   );
 }

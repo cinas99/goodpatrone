@@ -616,7 +616,7 @@ function CountdownClient() {
                                     className: "flex-1 min-w-0",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: `text-[52px] sm:text-[72px] md:text-[88px] font-black tracking-tighter tabular-nums leading-none transition-colors duration-500 ${done ? 'text-emerald-400' : isNearEnd ? 'text-red-400' : 'text-white'}`,
+                                            className: `text-[40px] sm:text-[60px] md:text-[80px] font-black tracking-tighter tabular-nums leading-none transition-colors duration-500 ${done ? 'text-emerald-400' : isNearEnd ? 'text-red-400' : 'text-white'}`,
                                             children: formatDisplay(remaining)
                                         }, void 0, false, {
                                             fileName: "[project]/app/countdown/CountdownClient.tsx",

@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import SidebarLayout from './components/SidebarLayout';
+import CookieBanner from './components/CookieBanner';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://goodpatrone.com'),
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* Preconnect to Google Fonts / AdSense if used */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <SidebarLayout>{children}</SidebarLayout>
+        <CookieBanner />
       </body>
     </html>
   );

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import {
   Leaf, Home, Scale, CalendarDays, Timer, Clock as CountdownIcon,
-  TrendingUp, Triangle, Shuffle, DollarSign, Menu, X,
+  DollarSign, Menu, X,
   Info, Mail, ShieldCheck, BookOpen, Droplets, Zap,
 } from 'lucide-react';
 import Footer from './SiteFooter';
@@ -16,12 +16,6 @@ const tools = [
   { href: '/currency',     label: 'Currency',        Icon: DollarSign    },
   { href: '/water',        label: 'Water Usage',     Icon: Droplets      },
   { href: '/electricity',  label: 'Electricity',     Icon: Zap           },
-];
-
-const comingSoon = [
-  { label: 'Calories',         Icon: TrendingUp },
-  { label: 'Geometry',         Icon: Triangle   },
-  { label: 'Random Generator', Icon: Shuffle    },
 ];
 
 const pages = [
@@ -68,22 +62,15 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
       {/* Nav */}
       <nav className="flex flex-col flex-1 overflow-y-auto gap-px">
         <NavLink href="/" label="Dashboard" Icon={Home} onClose={onClose} />
+        <NavLink href="/blog" label="Blog" Icon={BookOpen} onClose={onClose} />
 
         <p className="px-3 pt-4 pb-1 text-[10px] font-medium text-zinc-600 uppercase tracking-widest">Tools</p>
         {tools.map(({ href, label, Icon }) => (
           <NavLink key={href} href={href} label={label} Icon={Icon} onClose={onClose} />
         ))}
 
-        <p className="px-3 pt-4 pb-1 text-[10px] font-medium text-zinc-700 uppercase tracking-widest">Coming soon</p>
-        {comingSoon.map(({ label, Icon }) => (
-          <div key={label} className="flex items-center gap-3 px-3 py-2.5 text-zinc-700 text-sm cursor-not-allowed select-none">
-            <Icon size={15} strokeWidth={1.5} className="flex-shrink-0" />
-            {label}
-          </div>
-        ))}
-
         <p className="px-3 pt-4 pb-1 text-[10px] font-medium text-zinc-600 uppercase tracking-widest">Info</p>
-        {pages.map(({ href, label, Icon }) => (
+        {pages.filter(p => p.href !== '/blog').map(({ href, label, Icon }) => (
           <NavLink key={href} href={href} label={label} Icon={Icon} onClose={onClose} />
         ))}
       </nav>

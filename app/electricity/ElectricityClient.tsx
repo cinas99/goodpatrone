@@ -2,6 +2,7 @@
 import { useState, useMemo } from 'react';
 import ToolWrapper from '../components/ToolWrapper';
 import { Zap } from 'lucide-react';
+import { CURRENCY_OPTIONS } from '../../lib/currencies';
 
 type Appliance = {
   id: string;
@@ -27,12 +28,16 @@ const INITIAL: Appliance[] = [
 ];
 
 const SOLAR_3KW_MONTHLY = 300;
+const VISIBLE_DEFAULT = 5;
 
-const inputCls = 'w-full bg-zinc-900 border border-zinc-800 rounded-lg text-white text-sm text-center px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none disabled:opacity-40 disabled:cursor-not-allowed';
+const inputCls = 'w-full bg-zinc-900 border border-zinc-800 rounded-lg text-white text-xs sm:text-sm text-center px-1 sm:px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none disabled:opacity-40 disabled:cursor-not-allowed';
+
 
 export default function ElectricityClient() {
-  const [rate, setRate] = useState(0.30);
-  const [appliances, setAppliances] = useState<Appliance[]>(INITIAL);
+  const [rate, setRate]               = useState(0.30);
+  const [currency, setCurrency]       = useState('€');
+  const [appliances, setAppliances]   = useState<Appliance[]>(INITIAL);
+  const [showDisabled, setShowDisabled] = useState(false);
 
   const update = (id: string, field: 'watts' | 'hoursPerDay', raw: string) => {
     const val = parseFloat(raw);
@@ -67,32 +72,45 @@ export default function ElectricityClient() {
     >
       <div className="space-y-8">
 
-        {/* Rate input */}
-        <div className="flex items-center gap-4">
-          <p className="text-sm text-zinc-500 uppercase tracking-widest font-medium whitespace-nowrap">Rate / kWh €</p>
+        {/* Rate + currency */}
+        <div className="flex flex-wrap items-center gap-4">
+          <p className="text-sm text-zinc-500 uppercase tracking-widest font-medium whitespace-nowrap">Rate / kWh</p>
           <input
             type="number" min={0} step={0.01} value={rate}
             onChange={e => setRate(parseFloat(e.target.value) || 0)}
             className="w-28 bg-zinc-900 border border-zinc-800 rounded-lg text-white text-sm px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
+          <div className="flex gap-1.5">
+            {CURRENCY_OPTIONS.map(({ code, symbol }) => (
+              <button key={code} onClick={() => setCurrency(symbol)}
+                className={`px-2.5 h-8 rounded-lg border text-sm font-semibold transition-all ${
+                  currency === symbol
+                    ? 'border-emerald-500 text-emerald-400 bg-emerald-950/30'
+                    : 'border-zinc-700 text-zinc-500 hover:border-zinc-500 hover:text-zinc-300'
+                }`}>
+                {symbol}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Appliances table */}
         <div>
           {/* Header */}
-          <div className="grid grid-cols-[24px_1fr_90px_80px_64px] sm:grid-cols-[24px_1fr_90px_80px_64px_64px] gap-2 pb-2 border-b border-zinc-800">
+          <div className="grid grid-cols-[20px_1fr_72px_64px_56px] sm:grid-cols-[24px_1fr_90px_80px_64px_64px] gap-2 pb-2 border-b border-zinc-800">
             <span />
-            <span className="text-xs text-zinc-600 uppercase tracking-widest">Appliance</span>
+            <span className="hidden sm:block text-xs text-zinc-600 uppercase tracking-widest">Appliance</span>
+            <span className="sm:hidden" />
             <span className="text-xs text-zinc-600 uppercase tracking-widest text-center">Watts</span>
             <span className="text-xs text-zinc-600 uppercase tracking-widest text-center">h / day</span>
             <span className="text-xs text-zinc-600 uppercase tracking-widest text-right">kWh</span>
-            <span className="hidden sm:block text-xs text-zinc-600 uppercase tracking-widest text-right">€ / mo</span>
+            <span className="hidden sm:block text-xs text-zinc-600 uppercase tracking-widest text-right">{currency} / mo</span>
           </div>
 
-          {rows.map((a, i) => (
+          {rows.filter(a => showDisabled || a.enabled).map((a, i) => (
             <div
               key={a.id}
-              className={`grid grid-cols-[24px_1fr_90px_80px_64px] sm:grid-cols-[24px_1fr_90px_80px_64px_64px] gap-2 items-center py-2.5 border-b border-zinc-800/50 last:border-0 transition-opacity ${!a.enabled ? 'opacity-40' : ''}`}
+              className={`grid grid-cols-[20px_1fr_72px_64px_56px] sm:grid-cols-[24px_1fr_90px_80px_64px_64px] gap-2 items-center py-2.5 border-b border-zinc-800/50 last:border-0 transition-opacity ${!a.enabled ? 'opacity-40' : ''}`}
             >
               {/* Toggle */}
               <button
@@ -114,29 +132,40 @@ export default function ElectricityClient() {
                 <span className="text-sm text-zinc-300 truncate">{a.label}</span>
               </div>
 
-              <input type="number" min={0} step={1}   value={a.watts}      disabled={!a.enabled} onChange={e => update(a.id, 'watts',      e.target.value)} className={inputCls} />
-              <input type="number" min={0} step={0.1} value={a.hoursPerDay} disabled={!a.enabled} onChange={e => update(a.id, 'hoursPerDay', e.target.value)} className={inputCls} />
+              <input type="number" min={0} step={1}   value={a.watts}      disabled={!a.enabled} aria-label={`${a.label} watts`}        onChange={e => update(a.id, 'watts',      e.target.value)} onFocus={e => e.target.select()} className={inputCls} />
+              <input type="number" min={0} step={0.1} value={a.hoursPerDay} disabled={!a.enabled} aria-label={`${a.label} hours per day`} onChange={e => update(a.id, 'hoursPerDay', e.target.value)} onFocus={e => e.target.select()} className={inputCls} />
 
               <span className={`text-sm font-semibold tabular-nums text-right ${a.enabled && a.monthlyKwh > 0 ? 'text-white' : 'text-zinc-600'}`}>
                 {a.monthlyKwh.toFixed(1)}
               </span>
               <span className={`hidden sm:block text-sm font-semibold tabular-nums text-right ${a.enabled && a.monthlyCost > 0 ? 'text-emerald-400' : 'text-zinc-600'}`}>
-                €{a.monthlyCost.toFixed(2)}
+                {currency}{a.monthlyCost.toFixed(2)}
               </span>
             </div>
           ))}
+
+          {(() => {
+            const hiddenCount = rows.filter(a => !a.enabled).length;
+            if (hiddenCount === 0) return null;
+            return (
+              <button onClick={() => setShowDisabled(v => !v)}
+                className="w-full py-2.5 text-xs text-zinc-600 hover:text-zinc-400 uppercase tracking-widest font-medium transition-colors border-t border-zinc-800/50">
+                {showDisabled ? 'Hide disabled appliances' : `+ ${hiddenCount} disabled appliances`}
+              </button>
+            );
+          })()}
         </div>
 
         {/* Summary */}
         <div className="grid grid-cols-3 gap-6 pt-2 border-t border-zinc-800">
           {[
             { label: 'Monthly kWh', val: `${totalKwh.toFixed(1)} kWh` },
-            { label: 'Monthly Cost', val: `€${totalCost.toFixed(2)}` },
-            { label: 'Rate',         val: `€${rate.toFixed(2)}/kWh`  },
+            { label: 'Monthly Cost', val: `${currency}${totalCost.toFixed(2)}` },
+            { label: 'Rate',         val: `${currency}${rate.toFixed(2)}/kWh`  },
           ].map(item => (
             <div key={item.label}>
               <p className="text-xs text-zinc-500 uppercase tracking-widest mb-1">{item.label}</p>
-              <p className="text-xl font-black text-white tabular-nums">{item.val}</p>
+              <p className="text-base font-semibold text-white tabular-nums">{item.val}</p>
             </div>
           ))}
         </div>

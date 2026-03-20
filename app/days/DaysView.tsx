@@ -122,7 +122,7 @@ export default function DaysClient() {
               ].map(item => (
                 <div key={item.label}>
                   <p className="text-xs text-zinc-500 uppercase tracking-widest font-medium mb-2">{item.label}</p>
-                  <p className={`text-2xl font-black text-white leading-none ${item.mono ? 'tabular-nums tracking-tighter' : ''}`}>
+                  <p className={`text-lg font-semibold text-white leading-none ${item.mono ? 'tabular-nums tracking-tight' : ''}`}>
                     {item.val}
                   </p>
                 </div>

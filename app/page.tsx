@@ -91,17 +91,26 @@ const tools = [
 
 export default function HomePage() {
   return (
-    <div
-      style={{
-        minHeight: '100%',
-        background: `
-          radial-gradient(ellipse at 10% 15%, rgba(16,185,129,0.13) 0%, transparent 45%),
-          radial-gradient(ellipse at 88% 12%, rgba(59,130,246,0.11) 0%, transparent 42%),
-          radial-gradient(ellipse at 72% 85%, rgba(244,63,94,0.09) 0%, transparent 42%),
-          radial-gradient(ellipse at 25% 75%, rgba(251,191,36,0.07) 0%, transparent 48%)
-        `,
-      }}
-    >
+    <div className="relative" style={{ minHeight: '100%' }}>
+      {/* Background image with opacity */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
+        style={{
+          backgroundImage: `url(/sounds/img/jungle.png)`,
+          opacity: 0.09,
+        }}
+      />
+      {/* Gradient overlay to fade edges and keep dark tone */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: `
+            radial-gradient(ellipse at center, transparent 30%, #09090b 85%),
+            linear-gradient(to bottom, #09090b 0%, transparent 15%, transparent 85%, #09090b 100%)
+          `,
+        }}
+      />
+      <div className="relative z-10">
       <ToolWrapper
         title="Good Patrone"
         subtitle="Free online tools — no sign-up, no nonsense."
@@ -113,7 +122,9 @@ export default function HomePage() {
           <p className="text-2xl font-black text-white tracking-tight leading-snug">
             Simple tools.<br />No distractions.
           </p>
-          <p className="text-sm text-zinc-400 mt-2">Free, fast, no sign-up. Pick a tool below.</p>
+          <p className="text-sm text-zinc-400 mt-2 leading-relaxed">
+            Free, fast, no sign-up. Calculate your BMI, count days between dates, convert currencies live, estimate your water and electricity bills, and more — all in one place.
+          </p>
         </div>
 
         {/* Tool rows */}
@@ -122,7 +133,7 @@ export default function HomePage() {
             <Link
               key={href}
               href={href}
-              className={`group flex items-center gap-5 p-5 rounded-2xl bg-white/[0.03] border ${border} ${hoverBorder} hover:bg-white/[0.06] hover:shadow-lg ${glow} transition-all duration-200`}
+              className={`group flex items-center gap-5 p-5 rounded-2xl bg-zinc-950/80 border ${border} ${hoverBorder} hover:bg-zinc-900/80 hover:shadow-lg ${glow} transition-all duration-200`}
             >
               <div className={`w-12 h-12 rounded-xl ${bg} border border-white/10 flex items-center justify-center flex-shrink-0`}>
                 <Icon size={22} className={accent} strokeWidth={1.7} />
@@ -141,6 +152,7 @@ export default function HomePage() {
           ))}
         </div>
       </ToolWrapper>
+      </div>
     </div>
   );
 }
