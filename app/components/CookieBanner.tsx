@@ -5,24 +5,17 @@ import { Cookie } from 'lucide-react';
 
 declare global {
   interface Window {
-    dataLayer: unknown[];
     gtag: (...args: unknown[]) => void;
   }
 }
 
-function pushConsent(granted: boolean) {
-  if (typeof window === 'undefined') return;
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = function (...args) { window.dataLayer.push(args); };
+function updateConsent(granted: boolean) {
   const state = granted ? 'granted' : 'denied';
-  window.gtag('consent', 'update', {
+  window.gtag?.('consent', 'update', {
     ad_storage:              state,
+    analytics_storage:       state,
     ad_user_data:            state,
     ad_personalization:      state,
-    analytics_storage:       state,
-    functionality_storage:   'granted',
-    personalization_storage: state,
-    security_storage:        'granted',
   });
 }
 
@@ -35,20 +28,19 @@ export default function CookieBanner() {
 
   const accept = () => {
     localStorage.setItem('cookie-consent', 'accepted');
-    pushConsent(true);
+    updateConsent(true);
     setVisible(false);
   };
 
   const decline = () => {
     localStorage.setItem('cookie-consent', 'declined');
-    pushConsent(false);
+    updateConsent(false);
     setVisible(false);
   };
 
   if (!visible) return null;
 
   return (
-    /* Full-screen backdrop — blocks all interaction */
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md px-4">
       <div className="w-full max-w-sm bg-zinc-900/95 border border-zinc-700 rounded-2xl p-7 shadow-2xl flex flex-col gap-5">
 

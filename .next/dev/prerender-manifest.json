@@ -1,1 +1,11 @@
-{"version":4,"routes":{"/blog/how-much-water-do-you-really-use":{},"/blog/how-to-use-a-countdown-timer":{},"/blog/reduce-your-electricity-bill":{},"/blog/understanding-exchange-rates":{},"/blog/understanding-your-bmi":{},"/blog/days-between-dates":{},"/blog/stopwatch-for-interval-training":{},"/blog/currency-conversion-basics":{}},"dynamicRoutes":{"/blog/[slug]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/blog/[slug]","routeRegex":"^\\/blog\\/([^/]+?)(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"1ecf972322a90eef91752947f108135e","previewModeSigningKey":"19a05f141997df9818fa010112536f7fc48cc8b98082df3cb0dac64cbd02348e","previewModeEncryptionKey":"c485ce076fd0de27153093a63e2b820962d9be7587dadd96c4955af482497ddd"}}
+{
+  "version": 4,
+  "routes": {},
+  "dynamicRoutes": {},
+  "notFoundRoutes": [],
+  "preview": {
+    "previewModeId": "45351a8aea0e111ecb60b090b420f5ef",
+    "previewModeSigningKey": "4109d14363b9e2e6d25788fe534b0cfddaedc494982de38bc47021f51babae01",
+    "previewModeEncryptionKey": "a116b800f561fef234267187a302d4d92f96f6b09096683f39342a42b8229b3a"
+  }
+}
