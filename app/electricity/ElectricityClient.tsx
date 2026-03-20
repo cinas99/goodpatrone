@@ -35,6 +35,7 @@ const inputCls = 'w-full bg-zinc-900 border border-zinc-800 rounded-lg text-whit
 
 export default function ElectricityClient() {
   const [rate, setRate]               = useState(0.30);
+  const [rateInput, setRateInput]     = useState('0.30');
   const [currency, setCurrency]       = useState('€');
   const [appliances, setAppliances]   = useState<Appliance[]>(INITIAL);
   const [showDisabled, setShowDisabled] = useState(false);
@@ -76,8 +77,13 @@ export default function ElectricityClient() {
         <div className="flex flex-wrap items-center gap-4">
           <p className="text-sm text-zinc-500 uppercase tracking-widest font-medium whitespace-nowrap">Rate / kWh</p>
           <input
-            type="number" min={0} step={0.01} value={rate}
-            onChange={e => setRate(parseFloat(e.target.value) || 0)}
+            type="number" min={0} step={0.01} value={rateInput}
+            onChange={e => {
+              setRateInput(e.target.value);
+              const parsed = parseFloat(e.target.value);
+              if (!isNaN(parsed)) setRate(parsed);
+            }}
+            onFocus={e => e.target.select()}
             className="w-28 bg-zinc-900 border border-zinc-800 rounded-lg text-white text-sm px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
           <div className="flex gap-1.5">

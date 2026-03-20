@@ -22,17 +22,17 @@ All of them require precise timing.
 
 A wall clock or phone time display asks you to track elapsed time in your head — during exercise, that's a recipe for cheating. "Was that 30 seconds or 40?" You'll never be sure.
 
-A stopwatch gives you a single clear answer: how long this interval has been running. With lap functionality, you can record each interval and review your splits afterward.
+A stopwatch gives you a single clear answer: how long this interval has been running. Start it at the beginning of each effort and stop it when you're done — no guessing.
 
-## How to use lap timing
+## How to time your intervals
 
-Most stopwatches (including the one on this site) have a lap button. Here's how to use it for intervals:
+Here's a simple approach that works for any interval format:
 
 1. Start the timer at the beginning of your first work interval
-2. Press **Lap** at the end of each interval (work or rest)
-3. After your session, review the lap times to see your pacing
+2. Stop and reset at the end of each interval (work or rest)
+3. Keep a mental or written note of your times across sets
 
-This gives you a full record of every interval — useful for spotting where you faded or where you could have pushed harder.
+This gives you enough data to see your pacing trends without needing to manage anything complex mid-workout.
 
 ## Sample interval workouts by duration
 
@@ -50,15 +50,15 @@ This gives you a full record of every interval — useful for spotting where you
 
 **45+ minutes (running intervals)**
 - 400m hard effort / 2-minute walk × 8–12 repeats
-- Use lap to record each 400m split
+- Time each 400m effort and note it down after each rep
 
-## Reading your lap times
+## Analysing your times
 
-After a session, look at your lap times to understand your performance:
+After a session, look at your interval times to understand your performance:
 
 - **Consistent times** — good pacing, sustainable effort
-- **Early laps much faster** — you went out too hard; dial back the start
-- **Late laps much slower** — you faded; consider shorter intervals or longer rest
+- **Early intervals much faster** — you went out too hard; dial back the start
+- **Late intervals much slower** — you faded; consider shorter intervals or longer rest
 - **Progressively faster** — good negative split; excellent control
 
 ## Tips for interval training with a timer
@@ -67,7 +67,7 @@ After a session, look at your lap times to understand your performance:
 
 **Use sound alerts.** If available, turn on an audio alert for countdown timers so you're not staring at the screen mid-exercise.
 
-**Log your sessions.** Note the workout format and your average lap time. Progress in interval training often shows as doing the same work in less time.
+**Log your sessions.** Note the workout format and your average interval time. Progress in interval training often shows as doing the same work in less time.
 
 **Rest matters.** The rest interval is not wasted time — it's what makes the next work interval possible. Take the full rest, especially early in a training block.
 

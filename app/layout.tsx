@@ -72,10 +72,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}}
         />
 
-        {/* Preconnect to Google Fonts / AdSense if used */}
+        {/* Preconnect */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
+        {/* Google AdSense — after consent default, before page content */}
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5057449440229337"
+          crossOrigin="anonymous"
+        />
 
         <script
           type="application/ld+json"
