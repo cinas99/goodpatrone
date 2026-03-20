@@ -1,0 +1,16 @@
+{
+  "name": "Good Patrone",
+  "short_name": "Good Patrone",
+  "description": "Free online tools: BMI calculator, days between dates, stopwatch, countdown timer, currency converter, water and electricity usage.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

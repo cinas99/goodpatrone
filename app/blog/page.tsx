@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import ToolWrapper from '../components/ToolWrapper';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getAllPosts } from '../../lib/posts';
 
 export const metadata: Metadata = {
@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: 'Articles about time management, health metrics, fitness, and everyday tools.',
   alternates: { canonical: 'https://goodpatrone.com/blog' },
 };
+
+const POSTS_PER_PAGE = 5;
 
 const CATEGORY_STYLES: Record<string, { label: string; color: string; bg: string }> = {
   time:     { label: 'Time',     color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
@@ -23,8 +25,11 @@ function fmtDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
-export default function BlogPage() {
-  const posts = getAllPosts();
+export default function BlogPage({ searchParams }: { searchParams: { page?: string } }) {
+  const allPosts = getAllPosts();
+  const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+  const page = Math.min(Math.max(parseInt(searchParams.page ?? '1', 10) || 1, 1), totalPages);
+  const posts = allPosts.slice((page - 1) * POSTS_PER_PAGE, page * POSTS_PER_PAGE);
   const cat = CATEGORY_STYLES;
 
   return (
@@ -56,6 +61,40 @@ export default function BlogPage() {
             </Link>
           );
         })}
+
+        {totalPages > 1 && (
+          <div className="flex items-center justify-between pt-4 border-t border-zinc-800">
+            <Link
+              href={`/blog?page=${page - 1}`}
+              aria-disabled={page <= 1}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg border text-sm font-medium transition-all ${
+                page <= 1
+                  ? 'border-zinc-800 text-zinc-700 pointer-events-none'
+                  : 'border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200'
+              }`}
+            >
+              <ChevronLeft size={15} />
+              Previous
+            </Link>
+
+            <span className="text-xs text-zinc-600 tabular-nums">
+              Page {page} of {totalPages}
+            </span>
+
+            <Link
+              href={`/blog?page=${page + 1}`}
+              aria-disabled={page >= totalPages}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg border text-sm font-medium transition-all ${
+                page >= totalPages
+                  ? 'border-zinc-800 text-zinc-700 pointer-events-none'
+                  : 'border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200'
+              }`}
+            >
+              Next
+              <ChevronRight size={15} />
+            </Link>
+          </div>
+        )}
       </div>
     </ToolWrapper>
   );
