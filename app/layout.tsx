@@ -1,7 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import SidebarLayout from './components/SidebarLayout';
-import CookieBanner from './components/CookieBanner';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://goodpatrone.com'),
@@ -44,34 +43,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Consent Mode v2 — must fire BEFORE any Google scripts */}
-        <script
-          dangerouslySetInnerHTML={{ __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            // Default: all denied until user chooses
-            gtag('consent', 'default', {
-              ad_storage: 'denied',
-              analytics_storage: 'denied',
-              ad_user_data: 'denied',
-              ad_personalization: 'denied',
-              functionality_storage: 'granted',
-              security_storage: 'granted',
-              wait_for_update: 500
-            });
-            // If already consented in a previous session, apply immediately
-            var consent = localStorage.getItem('cookie-consent');
-            if (consent === 'accepted') {
-              gtag('consent', 'update', {
-                ad_storage: 'granted',
-                analytics_storage: 'granted',
-                ad_user_data: 'granted',
-                ad_personalization: 'granted'
-              });
-            }
-          `}}
-        />
-
         {/* Preconnect */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
@@ -98,7 +69,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <SidebarLayout>{children}</SidebarLayout>
-        <CookieBanner />
       </body>
     </html>
   );
