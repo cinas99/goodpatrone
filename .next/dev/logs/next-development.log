@@ -1,12 +1,50 @@
-[00:00:00.916] Server  LOG     ✓ Ready in 697ms
-[00:00:13.727] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:13.901] Browser WARN    AdSense head tag doesn't support data-nscript attribute.
-[00:00:30.341] Server  WARN    ⚠ Cross origin request detected from 192.168.1.10 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
-Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
-[00:00:30.391] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:30.549] Browser WARN    AdSense head tag doesn't support data-nscript attribute.
-[00:00:33.304] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:33.499] Browser WARN    AdSense head tag doesn't support data-nscript attribute.
-[00:02:56.551] Server  LOG     ✓ Compiled in 396ms
-[00:03:01.384] Server  LOG     ✓ Compiled in 89ms
-[00:03:04.779] Server  LOG     ✓ Compiled in 61ms
+[00:00:00.781] Server  LOG     ✓ Ready in 597ms
+[00:00:12.048] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:12.168] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" suppressHydrationWarning={true}>
+                          <head>
+                            <link>
+                            <link>
+                            <link>
+                            <script>
+                            <script
++                             type="application/ld+json"
+-                             type={null}
+                              dangerouslySetInnerHTML={{
++                               __html: "{\"@context\":\"https://schema.org\",\"@type\":\"WebSite\",\"name\":\"Good Pa..."
+-                               __html: ""
+                              }}
+-                             src="https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202603190101/show_..."
+                            >
+                          ...
+                  ...
+

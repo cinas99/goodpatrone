@@ -1,8 +1,9 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import {
-  Leaf, Home, Scale, CalendarDays, Timer, Clock as CountdownIcon,
+  Home, Scale, CalendarDays, Timer, Clock as CountdownIcon,
   DollarSign, Menu, X,
   Info, Mail, ShieldCheck, BookOpen, Droplets, Zap,
 } from 'lucide-react';
@@ -47,9 +48,7 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
       {/* Logo */}
       <div className="flex items-center justify-between px-2 mb-5">
         <Link href="/" onClick={onClose} className="flex items-center gap-2.5 group">
-          <div className="w-7 h-7 rounded-lg bg-emerald-950 border border-emerald-800 flex items-center justify-center group-hover:border-emerald-600 transition-colors">
-            <Leaf size={13} className="text-emerald-400" strokeWidth={2} />
-          </div>
+          <Image src="/logo.png" alt="Good Patrone" width={40} height={40} className="object-contain" />
           <span className="text-sm font-semibold text-white">Good Patrone</span>
         </Link>
         {onClose && (
@@ -111,7 +110,7 @@ export default function SidebarLayout({ children }: { children: React.ReactNode 
             <Menu size={20} />
           </button>
           <div className="flex items-center gap-2">
-            <Leaf size={13} className="text-emerald-400" strokeWidth={2} />
+            <Image src="/logo.png" alt="Good Patrone" width={24} height={24} className="object-contain" />
             <span className="text-white font-semibold text-sm">Good Patrone</span>
           </div>
         </div>

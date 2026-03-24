@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import ToolWrapper from './components/ToolWrapper';
 import Link from 'next/link';
-import { Scale, CalendarDays, Leaf, Timer, Clock, ArrowRight, DollarSign, Droplets, Zap } from 'lucide-react';
+import Image from 'next/image';
+import { Scale, CalendarDays, Timer, Clock, ArrowRight, DollarSign, Droplets, Zap } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Free Online Tools – BMI, Date Calculator, Stopwatch, Timer & More',
@@ -114,7 +115,7 @@ export default function HomePage() {
       <ToolWrapper
         title="Good Patrone"
         subtitle="Free online tools — no sign-up, no nonsense."
-        icon={<Leaf size={22} className="text-emerald-400" />}
+        icon={<Image src="/logo.png" alt="Good Patrone" width={40} height={40} className="object-contain" />}
         adSlot="home"
       >
         {/* Headline */}
