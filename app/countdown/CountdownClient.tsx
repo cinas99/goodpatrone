@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import ToolWrapper from '../components/ToolWrapper';
-import { Clock, Play, Pause, RotateCcw, RefreshCw, VolumeX } from 'lucide-react';
+import { Clock, Play, Pause, RotateCcw, RefreshCw, VolumeX, Music2 } from 'lucide-react';
 
 const PRESETS = [
   { label: '5 min',   ms:  5 * 60000 },
@@ -119,12 +119,7 @@ export default function CountdownClient() {
 
   const handleSelectSound = (mode: SoundMode) => {
     setSoundMode(mode);
-    if (mode !== 'off') {
-      const mp3 = MP3_SOUNDS.find(s => s.key === mode);
-      if (mp3) playMp3(mp3.src, false);
-    } else {
-      stopMp3();
-    }
+    if (mode === 'off') stopMp3();
   };
 
   const preview = () => {
@@ -209,7 +204,8 @@ export default function CountdownClient() {
             <div className="flex items-center gap-4">
               <button
                 onClick={preview}
-                className="text-sm text-emerald-500 hover:text-emerald-400 font-semibold transition-colors">
+                className="flex items-center gap-1.5 text-sm text-emerald-500 hover:text-emerald-400 font-semibold transition-colors">
+                <Music2 size={14} strokeWidth={2} />
                 Preview
               </button>
               <div className="flex gap-1.5">

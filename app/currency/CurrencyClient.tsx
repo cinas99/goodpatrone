@@ -25,16 +25,18 @@ export default function CurrencyClient() {
   const [updatedAt, setUpdatedAt] = useState<string | null>(null);
   const [loading,   setLoading]   = useState(false);
   const [error,     setError]     = useState(false);
+  const [slow,      setSlow]      = useState(false);
 
   const fetchRates = useCallback(async () => {
     setLoading(true);
     setError(false);
+    setSlow(false);
+    const slowTimer = setTimeout(() => setSlow(true), 5000);
     try {
       const targets = CURRENCIES.filter(c => c !== base).join(',');
       const res = await fetch(`https://api.frankfurter.app/latest?from=${base}&to=${targets}`, { cache: 'no-store' });
       if (!res.ok) throw new Error();
       const data = await res.json();
-      // include base itself as 1
       const full: Partial<Record<Currency, number>> = { [base]: 1 };
       for (const [k, v] of Object.entries(data.rates)) {
         full[k as Currency] = v as number;
@@ -44,7 +46,9 @@ export default function CurrencyClient() {
     } catch {
       setError(true);
     } finally {
+      clearTimeout(slowTimer);
       setLoading(false);
+      setSlow(false);
     }
   }, [base]);
 
@@ -115,6 +119,10 @@ export default function CurrencyClient() {
             <p className="text-xs text-zinc-600">
               Rates from {updatedAt} · ECB publishes once daily at ~16:00 CET
             </p>
+          )}
+
+          {slow && loading && (
+            <p className="text-sm text-zinc-500 py-4 text-center">Fetching rates is taking longer than usual — having difficulties connecting…</p>
           )}
 
           {error && (

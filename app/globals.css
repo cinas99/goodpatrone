@@ -170,11 +170,16 @@
   margin: 2rem 0;
 }
 
-/* BMI slider thumb — black fill with white border */
+/* BMI slider — larger touch area for mobile/iOS */
+input[type="range"].bmi-slider {
+  padding: 10px 0;
+  touch-action: pan-x;
+}
+
 input[type="range"].bmi-slider::-webkit-slider-thumb {
   appearance: none;
-  width: 14px;
-  height: 14px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: #000;
   border: 2px solid #fff;
@@ -182,8 +187,8 @@ input[type="range"].bmi-slider::-webkit-slider-thumb {
 }
 
 input[type="range"].bmi-slider::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: #000;
   border: 2px solid #fff;
