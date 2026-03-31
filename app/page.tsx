@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import ToolWrapper from './components/ToolWrapper';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Scale, CalendarDays, Timer, Clock, ArrowRight, DollarSign, Droplets, Zap } from 'lucide-react';
+import { Scale, CalendarDays, Timer, Clock, ArrowRight, DollarSign } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Free Online Tools – BMI, Date Calculator, Stopwatch, Timer & More',
@@ -66,28 +66,8 @@ const tools = [
     hoverBorder: 'hover:border-violet-500/40',
     glow: 'hover:shadow-violet-500/10',
   },
-  {
-    href: '/water',
-    label: 'Water Usage',
-    Icon: Droplets,
-    desc: 'Estimate daily consumption & monthly bill',
-    accent: 'text-cyan-400',
-    bg: 'bg-cyan-500/10',
-    border: 'border-cyan-500/20',
-    hoverBorder: 'hover:border-cyan-500/40',
-    glow: 'hover:shadow-cyan-500/10',
-  },
-  {
-    href: '/electricity',
-    label: 'Electricity',
-    Icon: Zap,
-    desc: 'Monthly cost by appliance & solar tip',
-    accent: 'text-yellow-400',
-    bg: 'bg-yellow-500/10',
-    border: 'border-yellow-500/20',
-    hoverBorder: 'hover:border-yellow-500/40',
-    glow: 'hover:shadow-yellow-500/10',
-  },
+  // { href: '/water',       label: 'Water Usage', ... },
+  // { href: '/electricity', label: 'Electricity',  ... },
 ];
 
 export default function HomePage() {

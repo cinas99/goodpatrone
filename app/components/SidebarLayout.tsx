@@ -5,7 +5,7 @@ import { useState } from 'react';
 import {
   Home, Scale, CalendarDays, Timer, Clock as CountdownIcon,
   DollarSign, Menu, X,
-  Info, Mail, ShieldCheck, BookOpen, Droplets, Zap,
+  Info, Mail, ShieldCheck, BookOpen,
 } from 'lucide-react';
 import Footer from './SiteFooter';
 
@@ -15,8 +15,8 @@ const tools = [
   { href: '/countdown',    label: 'Countdown',       Icon: CountdownIcon },
   { href: '/bmi',          label: 'BMI Calculator',  Icon: Scale         },
   { href: '/currency',     label: 'Currency',        Icon: DollarSign    },
-  { href: '/water',        label: 'Water Usage',     Icon: Droplets      },
-  { href: '/electricity',  label: 'Electricity',     Icon: Zap           },
+  // { href: '/water',        label: 'Water Usage',     Icon: Droplets      },
+  // { href: '/electricity',  label: 'Electricity',     Icon: Zap           },
 ];
 
 const pages = [

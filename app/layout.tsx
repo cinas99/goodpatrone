@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     default: 'Good Patrone – Free Online Tools',
     template: '%s | Good Patrone',
   },
-  description: 'Free online tools: BMI calculator, days between dates, stopwatch with lap tracking, and countdown timer. Fast, no ads, no signup required.',
+  description: 'Free online tools: BMI calculator, days between dates, stopwatch, countdown timer, currency converter, water usage and electricity cost calculators. Fast, no signup required.',
   keywords: ['BMI calculator', 'days between dates', 'stopwatch online', 'countdown timer', 'free online tools'],
   authors: [{ name: 'Good Patrone', url: 'https://goodpatrone.com' }],
   robots: {
